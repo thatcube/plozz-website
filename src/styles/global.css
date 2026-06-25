@@ -679,3 +679,38 @@ summary:focus-visible {
 .faq details > p a:hover {
   text-decoration: underline;
 }
+
+/* ---------- Disabled button ---------- */
+button.btn {
+  font: inherit;
+  font-weight: 600;
+}
+
+.btn-disabled,
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.btn-disabled:hover,
+.btn:disabled:hover {
+  background: var(--bg-card);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Plex chevron is taller than wide — preserve its aspect ratio. */
+.blogo-plex {
+  width: auto;
+  height: 13px;
+}
+
+.plogo-plex {
+  width: auto;
+  height: 42px;
+  margin: 0 4px;
+}
