@@ -1,41 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
 const GITHUB_URL = 'https://github.com/thatcube/Plozz';
 const SPONSOR_URL = 'https://github.com/sponsors/thatcube';
-// TODO: replace with your public TestFlight invite link once available.
+// TODO: replace with your public TestFlight invite link once the beta opens.
 const TESTFLIGHT_URL = 'https://testflight.apple.com/';
 
 const features = [
   {
     title: 'Jellyfin & Plex',
     body: 'Connect a Jellyfin or Plex server. Everything above the provider layer is identical, so Home, detail, and playback feel exactly the same either way.',
-    icon: 'server',
+    icon: 'ph:hard-drives',
   },
   {
     title: 'Couch-friendly sign-in',
     body: 'Jellyfin Quick Connect and Plex Link show a code and sign you in — no typing passwords with the remote. Your session is restored on relaunch.',
-    icon: 'key',
+    icon: 'ph:key',
   },
   {
     title: 'Cinematic detail pages',
     body: 'Full-bleed backdrops that fade into the background, with logos, overviews, ratings, and focus-driven season tabs for series done right.',
-    icon: 'film',
+    icon: 'ph:film-slate',
   },
   {
     title: 'Plays anything',
     body: 'Direct play whenever possible, with automatic on-device engine routing for tricky formats like AV1, 10-bit HEVC, and image-based subtitles.',
-    icon: 'play',
+    icon: 'ph:play-circle',
   },
   {
     title: 'Resume & watched state',
     body: 'Pick up right where you left off. Per-episode watched badges, "mark watched up to here," and progress reported back to your server.',
-    icon: 'bookmark',
+    icon: 'ph:bookmark-simple',
   },
   {
     title: 'Made yours',
     body: 'System, Dark, OLED, and Light themes. Multiple local profiles. Full caption customization — font, size, color, opacity, background, and edges.',
-    icon: 'sliders',
+    icon: 'ph:sliders-horizontal',
   },
 ];
 
@@ -92,17 +93,6 @@ const faqs = [
     a: `Open an issue on <a href="${GITHUB_URL}/issues" target="_blank" rel="noopener">GitHub</a> \u2014 that\u2019s the best place to report bugs and request features.`,
   },
 ];
-
-const icons: Record<string, string> = {
-  server:
-    '<rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><line x1="7" y1="7" x2="7" y2="7"/><line x1="7" y1="17" x2="7" y2="17"/>',
-  key: '<circle cx="8" cy="15" r="4"/><line x1="10.85" y1="12.15" x2="19" y2="4"/><line x1="18" y1="5" x2="20" y2="7"/><line x1="15" y1="8" x2="17" y2="10"/>',
-  film: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="3" y1="9" x2="7" y2="9"/><line x1="3" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="21" y2="9"/><line x1="17" y1="15" x2="21" y2="15"/>',
-  play: '<polygon points="6 4 20 12 6 20 6 4"/>',
-  bookmark: '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
-  sliders:
-    '<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',
-};
 ---
 
 <Layout>
@@ -137,11 +127,11 @@ const icons: Record<string, string> = {
         </p>
         <div class="hero-cta">
           <button class="btn btn-disabled" type="button" disabled aria-disabled="true" title="The TestFlight beta opens once Apple approves the build for external testing.">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+            <Icon name="ph:clock" />
             TestFlight beta — pending Apple approval
           </button>
           <a class="btn btn-primary" href={GITHUB_URL} target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.85.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+            <Icon name="simple-icons:github" />
             View on GitHub
           </a>
         </div>
@@ -175,7 +165,7 @@ const icons: Record<string, string> = {
             features.map((f) => (
               <div class="card">
                 <div class="icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[f.icon]} />
+                  <Icon name={f.icon} />
                 </div>
                 <h3>{f.title}</h3>
                 <p>{f.body}</p>
@@ -245,13 +235,13 @@ const icons: Record<string, string> = {
         </div>
         <div class="platforms">
           <div class="platform">
-            <svg class="picon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <Icon name="ph:television-simple" class="picon" />
             <h3>Apple TV</h3>
             <span class="status live">Available now</span>
             <p>Native tvOS 17+ app, tuned for the remote and the big screen.</p>
           </div>
           <div class="platform future">
-            <svg class="picon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+            <Icon name="ph:device-mobile" class="picon" />
             <h3>iPhone &amp; iPad</h3>
             <span class="status soon">Maybe later</span>
             <p>On the radar — no promises, but the architecture is ready for it.</p>
@@ -274,7 +264,7 @@ const icons: Record<string, string> = {
               <details>
                 <summary>
                   {item.q}
-                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                  <Icon name="ph:caret-down" class="chev" />
                 </summary>
                 <p set:html={item.a} />
               </details>
@@ -295,11 +285,11 @@ const icons: Record<string, string> = {
           </p>
           <div class="oss-cta">
             <a class="btn btn-primary" href={GITHUB_URL} target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.07 6.6.86-4.85 4.55 1.23 6.52L12 17.9l-5.88 3.1 1.23-6.52L2.5 9.43l6.6-.86L12 2.5z"/></svg>
+              <Icon name="ph:star-fill" />
               Star on GitHub
             </a>
             <a class="btn btn-sponsor" href={SPONSOR_URL} target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.2C.6 9 1.4 5.7 4.2 4.6 6.3 3.8 8.5 4.6 9.8 6.3L12 9l2.2-2.7c1.3-1.7 3.5-2.5 5.6-1.7C22.6 5.7 23.4 9 22 11.8 19.5 16.4 12 21 12 21z"/></svg>
+              <Icon name="ph:heart-fill" />
               Sponsor
             </a>
           </div>

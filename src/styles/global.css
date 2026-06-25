@@ -318,7 +318,7 @@ section {
 .card .icon svg {
   width: 22px;
   height: 22px;
-  stroke: var(--brand);
+  color: var(--brand);
 }
 
 .card h3 {
@@ -386,7 +386,7 @@ section {
   width: 40px;
   height: 40px;
   margin: 0 auto 14px;
-  stroke: var(--brand);
+  color: var(--brand);
 }
 
 .platform h3 {
@@ -655,13 +655,13 @@ summary:focus-visible {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  stroke: var(--text-dim);
+  color: var(--text-dim);
   transition: transform 0.2s ease;
 }
 
 .faq details[open] summary .chev {
   transform: rotate(180deg);
-  stroke: var(--brand);
+  color: var(--brand);
 }
 
 .faq details > p {
