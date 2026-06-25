@@ -1,17 +1,266 @@
+/* ==========================================================================
+   Plozz — pixel design system
+   Pixel display fonts + a reusable pixel-corner box primitive (.pxbox).
+   Body copy stays in a clean sans for readability; everything structural
+   (frames, buttons, labels, headings) goes pixel. Zero client JS.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Pixelify Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/pixelify-sans-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Silkscreen";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/silkscreen-400-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Silkscreen";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/silkscreen-700-latin.woff2") format("woff2");
+}
+
 :root {
   --bg: #0a0c10;
   --bg-elev: #11151c;
   --bg-card: #131922;
-  --border: #1e2733;
+  --border: #273345;
+  --border-bright: #3a4a63;
   --text: #e8edf4;
   --text-muted: #98a4b3;
   --text-dim: #6b7889;
   --brand: #00a4dc;
-  --brand-dark: #007aaf;
+  --brand-dark: #006c9c;
+  --brand-darker: #004563;
+  --brand-2: #aa5cc3;
+  --brand-2-dark: #6d2f86;
   --brand-glow: rgba(0, 164, 220, 0.35);
-  --radius: 16px;
+  --brand-2-glow: rgba(170, 92, 195, 0.32);
   --maxw: 1080px;
+
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --font-pixel: "Pixelify Sans", "Silkscreen", system-ui, sans-serif;
+  --font-label: "Silkscreen", "Pixelify Sans", var(--font-mono);
+
+  /* Pixel-corner primitive controls (overridable per component) */
+  --s: 3px;          /* one pixel "step" */
+  --s2: 6px;         /* two steps */
+  --s3: 9px;         /* three steps = corner size (finer = rounder) */
+  --px-bw: 3px;      /* pixel border thickness */
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
+  --px-bevel: 3px;   /* emboss line thickness = 1 "pixel" (matches border) */
+  --px-band: calc(var(--s3) + var(--px-bevel));    /* keeps the wrapped corner fully lit */
+  /* Inset emboss frame: a 1px-high light line just INSIDE the top border and a
+     dark line just inside the bottom border. Painted on ::before and revealed as
+     a thin frame by the inset face (::after), so it traces the rounded-pixel
+     corners. --px-bevel = line thickness; --px-band = corner-follow depth. */
+  /* Two emboss tone sets so each context tunes independently:
+     - control: interactive, dark-bordered elements (buttons, chips). The white
+       highlight reads against the dark border, so the bevel pops.
+     - surface: light-bordered, non-interactive elements (cards, sections, FAQ).
+       Their light border already lights the top edge, so the highlight stays
+       faint and depth comes from a soft bottom shadow — no blending. */
+  --px-hi: rgba(255, 255, 255, 0.08);   /* control highlight */
+  --px-lo: rgba(0, 0, 0, 0.42);         /* control shadow */
+  --px-hi-surface: rgba(255, 255, 255, 0.03);
+  --px-lo-surface: rgba(0, 0, 0, 0.26);
+  --px-shade: linear-gradient(
+    180deg,
+    var(--px-hi) 0,
+    var(--px-hi) var(--px-band),
+    transparent var(--px-band),
+    transparent calc(100% - var(--px-band)),
+    var(--px-lo) calc(100% - var(--px-band)),
+    var(--px-lo) 100%
+  );
+  --px-shade-surface: linear-gradient(
+    180deg,
+    var(--px-hi-surface) 0,
+    var(--px-hi-surface) var(--px-band),
+    transparent var(--px-band),
+    transparent calc(100% - var(--px-band)),
+    var(--px-lo-surface) calc(100% - var(--px-band)),
+    var(--px-lo-surface) 100%
+  );
+  --px-shape: polygon(
+    var(--s3) 0,
+    calc(100% - var(--s3)) 0,
+    calc(100% - var(--s3)) var(--s),
+    calc(100% - var(--s2)) var(--s),
+    calc(100% - var(--s2)) var(--s2),
+    calc(100% - var(--s)) var(--s2),
+    calc(100% - var(--s)) var(--s3),
+    100% var(--s3),
+    100% calc(100% - var(--s3)),
+    calc(100% - var(--s)) calc(100% - var(--s3)),
+    calc(100% - var(--s)) calc(100% - var(--s2)),
+    calc(100% - var(--s2)) calc(100% - var(--s2)),
+    calc(100% - var(--s2)) calc(100% - var(--s)),
+    calc(100% - var(--s3)) calc(100% - var(--s)),
+    calc(100% - var(--s3)) 100%,
+    var(--s3) 100%,
+    var(--s3) calc(100% - var(--s)),
+    var(--s2) calc(100% - var(--s)),
+    var(--s2) calc(100% - var(--s2)),
+    var(--s) calc(100% - var(--s2)),
+    var(--s) calc(100% - var(--s3)),
+    0 calc(100% - var(--s3)),
+    0 var(--s3),
+    var(--s) var(--s3),
+    var(--s) var(--s2),
+    var(--s2) var(--s2),
+    var(--s2) var(--s),
+    var(--s3) var(--s),
+    var(--s3) 0
+  );
+
+  /* Inner shape: same as --px-shape but with a 2-step corner (one step tighter).
+     Used by ::before/::after so the outer 3-step element border stays a uniform
+     1 "pixel" all the way around the corner instead of doubling/thinning. */
+  --px-shape-inner: polygon(
+    var(--s2) 0,
+    calc(100% - var(--s2)) 0,
+    calc(100% - var(--s2)) var(--s),
+    calc(100% - var(--s)) var(--s),
+    calc(100% - var(--s)) var(--s2),
+    100% var(--s2),
+    100% calc(100% - var(--s2)),
+    calc(100% - var(--s)) calc(100% - var(--s2)),
+    calc(100% - var(--s)) calc(100% - var(--s)),
+    calc(100% - var(--s2)) calc(100% - var(--s)),
+    calc(100% - var(--s2)) 100%,
+    var(--s2) 100%,
+    var(--s2) calc(100% - var(--s)),
+    var(--s) calc(100% - var(--s)),
+    var(--s) calc(100% - var(--s2)),
+    0 calc(100% - var(--s2)),
+    0 var(--s2),
+    var(--s) var(--s2),
+    var(--s) var(--s),
+    var(--s2) var(--s),
+    var(--s2) 0
+  );
+
+  /* Pixel "pill" for chips/badges (fixed 36px tall, 3px grid). Outer is a true
+     pixel circle (radius 6) so the ends read round; the inner layers are derived
+     by morphological erosion (not slicing) so the black border + emboss ring stay
+     at least 1px everywhere and never pinch, even where the circle curves hardest.
+     --px-pill   = outer silhouette / black border
+     --px-pill-2 = ::before, >=1px border (2px at the shoulders)
+     --px-pill-3 = ::after face, >=1px emboss ring. */
+  --px-pill: polygon(
+    calc(100% - 4 * var(--s)) 0,
+    calc(100% - 4 * var(--s)) calc(1 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(1 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(2 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(2 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(3 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(4 * var(--s)),
+    100% calc(4 * var(--s)),
+    100% calc(5 * var(--s)),
+    100% calc(6 * var(--s)),
+    100% calc(7 * var(--s)),
+    100% calc(8 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(8 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(9 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(10 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(10 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(11 * var(--s)),
+    calc(100% - 4 * var(--s)) calc(11 * var(--s)),
+    calc(100% - 4 * var(--s)) 100%,
+    calc(4 * var(--s)) 100%,
+    calc(4 * var(--s)) calc(11 * var(--s)),
+    calc(2 * var(--s)) calc(11 * var(--s)),
+    calc(2 * var(--s)) calc(10 * var(--s)),
+    calc(1 * var(--s)) calc(10 * var(--s)),
+    calc(1 * var(--s)) calc(9 * var(--s)),
+    calc(1 * var(--s)) calc(8 * var(--s)),
+    0 calc(8 * var(--s)),
+    0 calc(7 * var(--s)),
+    0 calc(6 * var(--s)),
+    0 calc(5 * var(--s)),
+    0 calc(4 * var(--s)),
+    calc(1 * var(--s)) calc(4 * var(--s)),
+    calc(1 * var(--s)) calc(3 * var(--s)),
+    calc(1 * var(--s)) calc(2 * var(--s)),
+    calc(2 * var(--s)) calc(2 * var(--s)),
+    calc(2 * var(--s)) calc(1 * var(--s)),
+    calc(4 * var(--s)) calc(1 * var(--s)),
+    calc(4 * var(--s)) 0
+  );
+  --px-pill-2: polygon(
+    calc(100% - 4 * var(--s)) 0,
+    calc(100% - 4 * var(--s)) calc(1 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(1 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(2 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(2 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(3 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(4 * var(--s)),
+    100% calc(4 * var(--s)),
+    100% calc(5 * var(--s)),
+    100% calc(6 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(6 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(7 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(8 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(8 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(9 * var(--s)),
+    calc(100% - 4 * var(--s)) calc(9 * var(--s)),
+    calc(100% - 4 * var(--s)) 100%,
+    calc(4 * var(--s)) 100%,
+    calc(4 * var(--s)) calc(9 * var(--s)),
+    calc(2 * var(--s)) calc(9 * var(--s)),
+    calc(2 * var(--s)) calc(8 * var(--s)),
+    calc(1 * var(--s)) calc(8 * var(--s)),
+    calc(1 * var(--s)) calc(7 * var(--s)),
+    calc(1 * var(--s)) calc(6 * var(--s)),
+    0 calc(6 * var(--s)),
+    0 calc(5 * var(--s)),
+    0 calc(4 * var(--s)),
+    calc(1 * var(--s)) calc(4 * var(--s)),
+    calc(1 * var(--s)) calc(3 * var(--s)),
+    calc(1 * var(--s)) calc(2 * var(--s)),
+    calc(2 * var(--s)) calc(2 * var(--s)),
+    calc(2 * var(--s)) calc(1 * var(--s)),
+    calc(4 * var(--s)) calc(1 * var(--s)),
+    calc(4 * var(--s)) 0
+  );
+  --px-pill-3: polygon(
+    calc(100% - 4 * var(--s)) 0,
+    calc(100% - 4 * var(--s)) calc(1 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(1 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(2 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(2 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(3 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(4 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(5 * var(--s)),
+    calc(100% - 1 * var(--s)) calc(6 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(6 * var(--s)),
+    calc(100% - 2 * var(--s)) calc(7 * var(--s)),
+    calc(100% - 4 * var(--s)) calc(7 * var(--s)),
+    calc(100% - 4 * var(--s)) 100%,
+    calc(4 * var(--s)) 100%,
+    calc(4 * var(--s)) calc(7 * var(--s)),
+    calc(2 * var(--s)) calc(7 * var(--s)),
+    calc(2 * var(--s)) calc(6 * var(--s)),
+    calc(1 * var(--s)) calc(6 * var(--s)),
+    calc(1 * var(--s)) calc(5 * var(--s)),
+    calc(1 * var(--s)) calc(4 * var(--s)),
+    calc(1 * var(--s)) calc(3 * var(--s)),
+    calc(1 * var(--s)) calc(2 * var(--s)),
+    calc(2 * var(--s)) calc(2 * var(--s)),
+    calc(2 * var(--s)) calc(1 * var(--s)),
+    calc(4 * var(--s)) calc(1 * var(--s)),
+    calc(4 * var(--s)) 0
+  );
 }
 
 * {
@@ -53,6 +302,45 @@ svg {
   padding: 0 24px;
 }
 
+/* Headings (clean sans; pixel personality comes from the frames) */
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* ==========================================================================
+   Pixel-corner box primitive
+   Element paints the border colour; ::after paints the inset fill behind the
+   content (z-index:-1, inside the clip's own stacking context). Result: a
+   chunky pixel border with pixel-stepped corners, on any element, text-safe.
+   ========================================================================== */
+.pxbox {
+  position: relative;
+  background: var(--px-bc);
+  clip-path: var(--px-shape);
+}
+
+.pxbox::before {
+  content: "";
+  position: absolute;
+  inset: var(--px-bw);
+  z-index: -1;
+  background: var(--px-shade-surface), var(--px-bg);
+  clip-path: var(--px-shape-inner);
+}
+
+.pxbox::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--px-bw) + var(--px-bevel)) var(--px-bw);
+  z-index: -1;
+  background: var(--px-bg);
+  clip-path: var(--px-shape-inner);
+}
+
 /* ---------- Header ---------- */
 .site-header {
   position: sticky;
@@ -61,14 +349,14 @@ svg {
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   background: rgba(10, 12, 16, 0.72);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
 }
 
 .site-header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: 66px;
 }
 
 .brand {
@@ -76,20 +364,20 @@ svg {
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   letter-spacing: -0.01em;
 }
 
 .brand img {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   image-rendering: pixelated;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 26px;
 }
 
 .nav a {
@@ -105,10 +393,10 @@ svg {
 
 .nav .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 26px;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 760px) {
   .nav .nav-links {
     display: none;
   }
@@ -116,43 +404,51 @@ svg {
 
 /* ---------- Buttons ---------- */
 .btn {
+  --s: 3px;
+  --s2: 6px;
+  --s3: 9px;
+  --px-bw: 3px;
+  --px-bc: #000;
+  --px-bg: var(--bg-card);
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 20px;
-  border-radius: 999px;
+  padding: 12px 20px;
+  font-family: var(--font-pixel);
   font-weight: 600;
-  font-size: 0.95rem;
-  border: 1px solid transparent;
+  font-size: 0.98rem;
+  color: var(--text);
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-  white-space: nowrap;
+  background: var(--px-bc);
+  clip-path: var(--px-shape);
+  transition: transform 0.12s ease, filter 0.15s ease;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: var(--px-bw);
+  z-index: -1;
+  background: var(--px-shade), var(--px-bg);
+  clip-path: var(--px-shape-inner);
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--px-bw) + var(--px-bevel)) var(--px-bw);
+  z-index: -1;
+  background: var(--px-bg);
+  clip-path: var(--px-shape-inner);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
 }
 
 .btn:active {
-  transform: translateY(1px);
-}
-
-.btn-primary {
-  background: var(--brand);
-  color: #00121a;
-  box-shadow: 0 6px 24px -8px var(--brand-glow);
-}
-
-.btn-primary:hover {
-  background: #19b4e8;
-  box-shadow: 0 8px 30px -6px var(--brand-glow);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border);
-}
-
-.btn-ghost:hover {
-  border-color: #2e3a49;
-  background: var(--bg-elev);
+  transform: translateY(0);
 }
 
 .btn svg {
@@ -160,12 +456,43 @@ svg {
   height: 18px;
 }
 
+.btn-primary {
+  --px-bc: #000;
+  --px-bg: var(--brand);
+  color: #00121a;
+  filter: drop-shadow(0 5px 14px var(--brand-glow));
+}
+
+.btn-primary:hover {
+  --px-bg: #18b6ea;
+}
+
+.btn-ghost {
+  --px-bc: #000;
+  --px-bg: var(--bg);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  --px-bc: var(--brand);
+}
+
+.btn svg {
+  position: relative;
+}
+
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  padding: 96px 0 80px;
+  padding: 104px 0 88px;
   text-align: center;
   overflow: hidden;
+  border-bottom: 2px solid var(--border);
+}
+
+.hero .container {
+  position: relative;
+  z-index: 3;
 }
 
 .hero::before {
@@ -180,30 +507,34 @@ svg {
   opacity: 0.55;
   pointer-events: none;
   filter: blur(8px);
+  z-index: 2;
 }
 
 .hero-logo {
-  width: 96px;
-  height: 96px;
+  width: 104px;
+  height: 104px;
   margin: 0 auto 28px;
   image-rendering: pixelated;
   filter: drop-shadow(0 10px 30px var(--brand-glow));
 }
 
 .hero h1 {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.4rem, 5.5vw, 3.9rem);
   font-weight: 800;
-  margin-bottom: 20px;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-bottom: 22px;
 }
 
 .hero h1 .accent {
-  color: var(--brand);
+  background: linear-gradient(100deg, var(--brand) 0%, var(--brand-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero p.lead {
-  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
   color: var(--text-muted);
   max-width: 640px;
   margin: 0 auto 36px;
@@ -218,7 +549,8 @@ svg {
 
 .hero-note {
   margin-top: 22px;
-  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   color: var(--text-dim);
 }
 
@@ -231,41 +563,69 @@ svg {
 }
 
 .badge {
+  --px-bw: 3px;
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
+  --px-shade: linear-gradient(
+    180deg,
+    var(--px-hi-surface) 0,
+    var(--px-hi-surface) calc(3 * var(--s)),
+    transparent calc(3 * var(--s)),
+    transparent calc(100% - 3 * var(--s)),
+    var(--px-lo-surface) calc(100% - 3 * var(--s)),
+    var(--px-lo-surface) 100%
+  );
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  font-size: 0.82rem;
+  gap: 8px;
+  height: 36px;
+  padding: 0 28px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   color: var(--text-muted);
-  font-weight: 500;
+  background: var(--px-bc);
+  clip-path: var(--px-pill);
+}
+
+.badge::before {
+  content: "";
+  position: absolute;
+  inset: var(--px-bw);
+  z-index: -1;
+  background: var(--px-shade), var(--px-bg);
+  clip-path: var(--px-pill-2);
+}
+
+.badge::after {
+  content: "";
+  position: absolute;
+  inset: calc(2 * var(--px-bw));
+  z-index: -1;
+  background: var(--px-bg);
+  clip-path: var(--px-pill-3);
 }
 
 .badge .dot {
   width: 7px;
   height: 7px;
-  border-radius: 50%;
   background: var(--brand);
 }
 
 /* ---------- Sections ---------- */
 section {
-  padding: 72px 0;
+  padding: 76px 0;
 }
 
 .section-head {
   text-align: center;
-  max-width: 620px;
+  max-width: 640px;
   margin: 0 auto 48px;
 }
 
 .section-head h2 {
-  font-size: clamp(1.7rem, 4vw, 2.4rem);
-  letter-spacing: -0.02em;
-  font-weight: 700;
-  margin-bottom: 14px;
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  margin-bottom: 16px;
 }
 
 .section-head p {
@@ -275,12 +635,17 @@ section {
 
 .eyebrow {
   display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--brand);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "> ";
+  color: var(--brand-2);
 }
 
 /* ---------- Feature grid ---------- */
@@ -291,27 +656,33 @@ section {
 }
 
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  --s: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --px-bw: 3px;
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
   padding: 28px;
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  border-color: #2a3644;
-  background: var(--bg-elev);
+  transform: translateY(-4px);
+  --px-bc: var(--brand);
+  --px-bg: var(--bg-elev);
 }
 
 .card .icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 11px;
+  --s: 3px;
+  --s2: 6px;
+  --s3: 9px;
+  --px-bw: 2px;
+  --px-bc: rgba(0, 164, 220, 0.4);
+  --px-bg: rgba(0, 164, 220, 0.12);
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
-  background: rgba(0, 164, 220, 0.12);
-  border: 1px solid rgba(0, 164, 220, 0.2);
   margin-bottom: 18px;
 }
 
@@ -322,10 +693,8 @@ section {
 }
 
 .card h3 {
-  font-size: 1.12rem;
-  font-weight: 650;
+  font-size: 1.08rem;
   margin-bottom: 8px;
-  letter-spacing: -0.01em;
 }
 
 .card p {
@@ -333,31 +702,92 @@ section {
   font-size: 0.95rem;
 }
 
-/* ---------- Providers / split ---------- */
-.providers {
+/* ---------- Providers ---------- */
+.provider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.provider-card {
+  --s: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --px-bw: 3px;
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
   display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.provider-chip {
-  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-weight: 600;
-  font-size: 1.05rem;
+  gap: 18px;
+  padding: 26px 28px;
+  transition: transform 0.18s ease;
 }
 
-.provider-chip .pdot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+.provider-card:hover {
+  transform: translateY(-4px);
+  --px-bc: var(--brand-2);
+}
+
+.provider-card .plogo {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+}
+
+.provider-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.provider-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+/* ---------- How it works ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+}
+
+.step {
+  --s: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --px-bw: 3px;
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
+  padding: 30px 28px 28px;
+}
+
+.step .num {
+  --s: 3px;
+  --s2: 6px;
+  --s3: 9px;
+  --px-bw: 2px;
+  --px-bc: var(--brand-dark);
+  --px-bg: rgba(0, 164, 220, 0.14);
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.step h3 {
+  font-size: 1.06rem;
+  margin-bottom: 7px;
+}
+
+.step p {
+  color: var(--text-muted);
+  font-size: 0.94rem;
 }
 
 /* ---------- Platforms ---------- */
@@ -370,35 +800,40 @@ section {
 }
 
 .platform {
+  --s: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --px-bw: 3px;
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
   text-align: center;
   padding: 32px 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
 }
 
 .platform.future {
-  opacity: 0.62;
-  border-style: dashed;
+  --px-bc: var(--border);
+  opacity: 0.7;
 }
 
 .platform .picon {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   margin: 0 auto 14px;
   color: var(--brand);
 }
 
 .platform h3 {
-  font-size: 1.15rem;
-  margin-bottom: 6px;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
 }
 
 .platform .status {
-  font-size: 0.82rem;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
 .platform .status.live {
@@ -412,206 +847,7 @@ section {
 .platform p {
   color: var(--text-muted);
   font-size: 0.9rem;
-  margin-top: 8px;
-}
-
-/* ---------- Open source CTA ---------- */
-.oss {
-  text-align: center;
-}
-
-.oss-card {
-  background: linear-gradient(160deg, var(--bg-card) 0%, #0d1219 100%);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 56px 32px;
-  position: relative;
-  overflow: hidden;
-}
-
-.oss-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, var(--brand-glow) 0%, transparent 55%);
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.oss-card h2 {
-  font-size: clamp(1.6rem, 4vw, 2.3rem);
-  letter-spacing: -0.02em;
-  margin-bottom: 14px;
-  position: relative;
-}
-
-.oss-card p {
-  color: var(--text-muted);
-  max-width: 520px;
-  margin: 0 auto 28px;
-  position: relative;
-}
-
-.oss-cta {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-/* ---------- Footer ---------- */
-.site-footer {
-  border-top: 1px solid var(--border);
-  padding: 40px 0;
-  color: var(--text-dim);
-  font-size: 0.9rem;
-}
-
-.site-footer .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 18px;
-}
-
-.footer-links {
-  display: flex;
-  gap: 22px;
-}
-
-.footer-links a {
-  color: var(--text-muted);
-  transition: color 0.15s ease;
-}
-
-.footer-links a:hover {
-  color: var(--text);
-}
-
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.footer-brand img {
-  width: 22px;
-  height: 22px;
-  image-rendering: pixelated;
-}
-
-/* ---------- Focus accessibility ---------- */
-a:focus-visible,
-.btn:focus-visible,
-summary:focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ---------- Brand logos ---------- */
-.brand-logo {
-  display: block;
-}
-
-.hero .badge .blogo {
-  width: 14px;
-  height: 14px;
-}
-
-/* ---------- Provider lockups ---------- */
-.provider-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.provider-card {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 26px 28px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: transform 0.18s ease, border-color 0.18s ease;
-}
-
-.provider-card:hover {
-  transform: translateY(-3px);
-  border-color: #2a3644;
-}
-
-.provider-card .plogo {
-  width: 46px;
-  height: 46px;
-  flex-shrink: 0;
-}
-
-.provider-card h3 {
-  font-size: 1.2rem;
-  font-weight: 650;
-  margin-bottom: 3px;
-}
-
-.provider-card p {
-  color: var(--text-muted);
-  font-size: 0.92rem;
-}
-
-/* ---------- How it works ---------- */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 18px;
-  counter-reset: step;
-}
-
-.step {
-  position: relative;
-  padding: 30px 28px 28px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-.step .num {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  background: rgba(0, 164, 220, 0.12);
-  border: 1px solid rgba(0, 164, 220, 0.25);
-  color: var(--brand);
-  font-weight: 700;
-  font-size: 1.05rem;
-  margin-bottom: 16px;
-}
-
-.step h3 {
-  font-size: 1.1rem;
-  margin-bottom: 7px;
-  letter-spacing: -0.01em;
-}
-
-.step p {
-  color: var(--text-muted);
-  font-size: 0.94rem;
+  margin-top: 10px;
 }
 
 /* ---------- FAQ ---------- */
@@ -624,15 +860,20 @@ summary:focus-visible {
 }
 
 .faq details {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  transition: border-color 0.18s ease;
+  --s: 3px;
+  --s2: 6px;
+  --s3: 9px;
+  --px-bw: 3px;
+  --px-bc: var(--border);
+  --px-bg: var(--bg-card);
 }
 
 .faq details[open] {
-  border-color: #2a3644;
+  --px-bc: var(--brand);
+}
+
+.faq details:has(summary:focus-visible) {
+  --px-bc: var(--brand);
 }
 
 .faq summary {
@@ -680,27 +921,134 @@ summary:focus-visible {
   text-decoration: underline;
 }
 
+/* ---------- Open source CTA ---------- */
+.oss {
+  text-align: center;
+}
+
+.oss-card {
+  --s: 5px;
+  --s2: 10px;
+  --s3: 15px;
+  --px-bw: 3px;
+  --px-bc: var(--border-bright);
+  --px-bg: var(--bg-card);
+  padding: 56px 32px;
+  overflow: hidden;
+}
+
+.oss-card::after {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 164, 220, 0.16) 0%, transparent 60%),
+    var(--px-bg);
+}
+
+.oss-card h2 {
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.oss-card p {
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 28px;
+  position: relative;
+}
+
+.oss-cta {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 2px solid var(--border);
+  padding: 40px 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 22px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.footer-brand img {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+}
+
 /* ---------- Disabled button ---------- */
 button.btn {
   font: inherit;
+  font-family: var(--font-pixel);
   font-weight: 600;
 }
 
 .btn-disabled,
 .btn:disabled {
+  --px-bc: #1a2230;
+  --px-bg: var(--bg-card);
   cursor: not-allowed;
   opacity: 0.55;
-  background: var(--bg-card);
   color: var(--text-muted);
-  border-color: var(--border);
-  box-shadow: none;
+  filter: none;
 }
 
 .btn-disabled:hover,
 .btn:disabled:hover {
-  background: var(--bg-card);
-  box-shadow: none;
   transform: none;
+}
+
+/* ---------- Sponsor button ---------- */
+.btn-sponsor {
+  --px-bc: #1a2230;
+  --px-bg: var(--bg);
+  color: var(--text);
+}
+
+.btn-sponsor svg {
+  fill: #db61a2;
+}
+
+.btn-sponsor:hover {
+  --px-bc: #db61a2;
+}
+
+/* ---------- Brand logos ---------- */
+.hero .badge .blogo {
+  width: 14px;
+  height: 14px;
 }
 
 /* Plex chevron is taller than wide — preserve its aspect ratio. */
@@ -715,18 +1063,124 @@ button.btn {
   margin: 0 4px;
 }
 
-/* ---------- Sponsor button ---------- */
-.btn-sponsor {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border);
+/* ---------- Focus accessibility ---------- */
+.nav a:focus-visible,
+.footer-links a:focus-visible,
+.faq summary:focus-visible,
+.faq details > p a:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
 }
 
-.btn-sponsor svg {
-  fill: #db61a2;
+.btn:focus-visible {
+  --px-bc: var(--brand);
+  outline: none;
+  filter: drop-shadow(0 0 0 3px var(--brand-glow));
 }
 
-.btn-sponsor:hover {
-  border-color: #db61a2;
-  background: rgba(219, 97, 162, 0.1);
+/* ---------- Hero: poster wall + CRT texture ---------- */
+.poster-wall {
+  position: absolute;
+  inset: -8% -2% 0;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(120% 78% at 50% 30%, transparent 18%, #000 72%);
+  mask-image: radial-gradient(120% 78% at 50% 30%, transparent 18%, #000 72%);
+}
+
+.poster-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: clamp(78px, 11vw, 132px);
+  flex-shrink: 0;
+  animation: poster-drift 38s linear infinite;
+  will-change: transform;
+}
+
+.poster-col:nth-child(even) {
+  animation-direction: reverse;
+  animation-duration: 46s;
+}
+
+.poster-col:nth-child(3) {
+  animation-duration: 54s;
+}
+
+@keyframes poster-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.poster {
+  aspect-ratio: 2 / 3;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 -28px 40px -22px rgba(0, 0, 0, 0.7),
+    0 8px 24px -16px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.16) 0,
+    rgba(0, 0, 0, 0.16) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.5;
+}
+
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    transparent 22%,
+    transparent 70%,
+    var(--bg) 100%
+  );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .poster-col {
+    animation: none;
+  }
 }

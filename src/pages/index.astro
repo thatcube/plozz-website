@@ -34,6 +34,11 @@ const features = [
     icon: 'ph:bookmark-simple',
   },
   {
+    title: 'Trakt scrobbling',
+    body: 'Connect Trakt to automatically scrobble what you watch to your Trakt.tv history. A couch-friendly device code signs you in — approve it at trakt.tv/activate. Each profile links its own account.',
+    icon: 'ph:broadcast',
+  },
+  {
     title: 'Made yours',
     body: 'System, Dark, OLED, and Light themes. Multiple local profiles. Full caption customization — font, size, color, opacity, background, and edges.',
     icon: 'ph:sliders-horizontal',
@@ -62,6 +67,21 @@ const steps = [
     body: 'Approve a short code with Quick Connect or Plex Link. No typing passwords with the remote.',
   },
 ];
+
+// Decorative hero "poster wall": deterministic gradient tiles, no images.
+const posterPalettes = [
+  ['#0a3d5c', '#00a4dc'],
+  ['#3a1d52', '#aa5cc3'],
+  ['#0c3b3a', '#16b3a6'],
+  ['#4a3208', '#cc7c19'],
+  ['#102a52', '#3f6fd1'],
+  ['#3d0f2e', '#c2417f'],
+  ['#0a2c1c', '#1f9d57'],
+  ['#2a1450', '#6a4fd0'],
+];
+const posterColumns = [0, 1, 2, 3, 4].map((col) =>
+  Array.from({ length: 5 }, (_, i) => posterPalettes[(col * 3 + i * 2) % posterPalettes.length])
+);
 
 const faqs = [
   {
@@ -117,13 +137,25 @@ const faqs = [
   <main>
     <!-- Hero -->
     <section class="hero">
+      <div class="poster-wall" aria-hidden="true">
+        {
+          posterColumns.map((col) => (
+            <div class="poster-col">
+              {[...col, ...col].map(([a, b]) => (
+                <div class="poster" style={`background:linear-gradient(160deg, ${a}, ${b})`} />
+              ))}
+            </div>
+          ))
+        }
+      </div>
+      <div class="hero-veil" aria-hidden="true"></div>
       <div class="container">
         <img class="hero-logo" src="/logo.svg" alt="Plozz" width="96" height="96" />
         <h1>Your media library,<br /><span class="accent">native on Apple TV.</span></h1>
         <p class="lead">
-          Plozz is a free, open-source Apple TV app for your own server. Point it at
-          Jellyfin or Plex and watch your library with a fast, cinematic, made-for-tvOS
-          interface.
+          Plozz is a free, open-source Apple TV app for the server you already run.
+          Point it at Jellyfin or Plex and get a fast, cinematic, made-for-tvOS
+          library. Your server, your rules — no account, no tracking, no nonsense.
         </p>
         <div class="hero-cta">
           <button class="btn btn-disabled" type="button" disabled aria-disabled="true" title="The TestFlight beta opens once Apple approves the build for external testing.">
@@ -163,8 +195,8 @@ const faqs = [
         <div class="grid">
           {
             features.map((f) => (
-              <div class="card">
-                <div class="icon">
+              <div class="card pxbox">
+                <div class="icon pxbox">
                   <Icon name={f.icon} />
                 </div>
                 <h3>{f.title}</h3>
@@ -185,14 +217,14 @@ const faqs = [
           <p>Plozz never hosts your media. It connects to a server you already run.</p>
         </div>
         <div class="provider-grid">
-          <div class="provider-card">
+          <div class="provider-card pxbox">
             <svg class="plogo" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="jf-card" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#AA5CC3"/><stop offset="100%" stop-color="#00A4DC"/></linearGradient></defs><path fill="url(#jf-card)" d={JELLYFIN_PATH} /></svg>
             <div>
               <h3>Jellyfin</h3>
               <p>The free, open-source media server. Zero-config LAN discovery and Quick Connect.</p>
             </div>
           </div>
-          <div class="provider-card">
+          <div class="provider-card pxbox">
             <svg class="plogo plogo-plex" viewBox="0 0 610 1001" aria-hidden="true"><defs><linearGradient id="plex-card" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F9BE03"/><stop offset="100%" stop-color="#CC7C19"/></linearGradient></defs><path fill="url(#plex-card)" d={PLEX_PATH} /></svg>
             <div>
               <h3>Plex</h3>
@@ -214,8 +246,8 @@ const faqs = [
         <div class="steps">
           {
             steps.map((s) => (
-              <div class="step">
-                <div class="num">{s.n}</div>
+              <div class="step pxbox">
+                <div class="num pxbox">{s.n}</div>
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
               </div>
@@ -234,13 +266,13 @@ const faqs = [
           <p>Plozz is built for tvOS first. iPhone and iPad may follow.</p>
         </div>
         <div class="platforms">
-          <div class="platform">
+          <div class="platform pxbox">
             <Icon name="ph:television-simple" class="picon" />
             <h3>Apple TV</h3>
             <span class="status live">Available now</span>
             <p>Native tvOS 17+ app, tuned for the remote and the big screen.</p>
           </div>
-          <div class="platform future">
+          <div class="platform future pxbox">
             <Icon name="ph:device-mobile" class="picon" />
             <h3>iPhone &amp; iPad</h3>
             <span class="status soon">Maybe later</span>
@@ -261,7 +293,7 @@ const faqs = [
         <div class="faq">
           {
             faqs.map((item) => (
-              <details>
+              <details class="pxbox">
                 <summary>
                   {item.q}
                   <Icon name="ph:caret-down" class="chev" />
@@ -277,7 +309,7 @@ const faqs = [
     <!-- Open source -->
     <section id="open-source" class="oss">
       <div class="container">
-        <div class="oss-card">
+        <div class="oss-card pxbox">
           <h2>Free and open source</h2>
           <p>
             Plozz is MIT-licensed and built in the open. Read the code, file an issue,
