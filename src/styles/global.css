@@ -503,3 +503,179 @@ section {
   height: 22px;
   image-rendering: pixelated;
 }
+
+/* ---------- Focus accessibility ---------- */
+a:focus-visible,
+.btn:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Brand logos ---------- */
+.brand-logo {
+  display: block;
+}
+
+.hero .badge .blogo {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- Provider lockups ---------- */
+.provider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.provider-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.provider-card:hover {
+  transform: translateY(-3px);
+  border-color: #2a3644;
+}
+
+.provider-card .plogo {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+}
+
+.provider-card h3 {
+  font-size: 1.2rem;
+  font-weight: 650;
+  margin-bottom: 3px;
+}
+
+.provider-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+/* ---------- How it works ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding: 30px 28px 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.step .num {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(0, 164, 220, 0.12);
+  border: 1px solid rgba(0, 164, 220, 0.25);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+}
+
+.step h3 {
+  font-size: 1.1rem;
+  margin-bottom: 7px;
+  letter-spacing: -0.01em;
+}
+
+.step p {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+}
+
+/* ---------- FAQ ---------- */
+.faq {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq details {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.18s ease;
+}
+
+.faq details[open] {
+  border-color: #2a3644;
+}
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary .chev {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-dim);
+  transition: transform 0.2s ease;
+}
+
+.faq details[open] summary .chev {
+  transform: rotate(180deg);
+  stroke: var(--brand);
+}
+
+.faq details > p {
+  padding: 0 22px 22px;
+  color: var(--text-muted);
+  font-size: 0.96rem;
+  margin: 0;
+}
+
+.faq details > p a {
+  color: var(--brand);
+  font-weight: 500;
+}
+
+.faq details > p a:hover {
+  text-decoration: underline;
+}
