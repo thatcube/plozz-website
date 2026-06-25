@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://plozz.app/sitemap-index.xml

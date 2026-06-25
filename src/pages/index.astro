@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const GITHUB_URL = 'https://github.com/thatcube/Plozz';
+const SPONSOR_URL = 'https://github.com/sponsors/thatcube';
+// TODO: replace with your public TestFlight invite link once available.
+const TESTFLIGHT_URL = 'https://testflight.apple.com/';
+
+const features = [
+  {
+    title: 'Jellyfin & Plex',
+    body: 'Connect a Jellyfin or Plex server. Everything above the provider layer is identical, so Home, detail, and playback feel exactly the same either way.',
+    icon: 'server',
+  },
+  {
+    title: 'Couch-friendly sign-in',
+    body: 'Jellyfin Quick Connect and Plex Link show a code and sign you in — no typing passwords with the remote. Your session is restored on relaunch.',
+    icon: 'key',
+  },
+  {
+    title: 'Cinematic detail pages',
+    body: 'Full-bleed backdrops that fade into the background, with logos, overviews, ratings, and focus-driven season tabs for series done right.',
+    icon: 'film',
+  },
+  {
+    title: 'Plays anything',
+    body: 'Direct play whenever possible, with automatic on-device engine routing for tricky formats like AV1, 10-bit HEVC, and image-based subtitles.',
+    icon: 'play',
+  },
+  {
+    title: 'Resume & watched state',
+    body: 'Pick up right where you left off. Per-episode watched badges, "mark watched up to here," and progress reported back to your server.',
+    icon: 'bookmark',
+  },
+  {
+    title: 'Made yours',
+    body: 'System, Dark, OLED, and Light themes. Multiple local profiles. Full caption customization — font, size, color, opacity, background, and edges.',
+    icon: 'sliders',
+  },
+];
+
+const icons: Record<string, string> = {
+  server:
+    '<rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><line x1="7" y1="7" x2="7" y2="7"/><line x1="7" y1="17" x2="7" y2="17"/>',
+  key: '<circle cx="8" cy="15" r="4"/><line x1="10.85" y1="12.15" x2="19" y2="4"/><line x1="18" y1="5" x2="20" y2="7"/><line x1="15" y1="8" x2="17" y2="10"/>',
+  film: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="3" y1="9" x2="7" y2="9"/><line x1="3" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="21" y2="9"/><line x1="17" y1="15" x2="21" y2="15"/>',
+  play: '<polygon points="6 4 20 12 6 20 6 4"/>',
+  bookmark: '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+  sliders:
+    '<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',
+};
+---
+
+<Layout>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/">
+        <img src="/logo.svg" alt="" width="28" height="28" />
+        <span>Plozz</span>
+      </a>
+      <nav class="nav">
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#platforms">Platforms</a>
+          <a href="#open-source">Open source</a>
+        </div>
+        <a class="btn btn-ghost" href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <img class="hero-logo" src="/logo.svg" alt="Plozz" width="96" height="96" />
+        <h1>Your media library,<br /><span class="accent">native on Apple TV.</span></h1>
+        <p class="lead">
+          Plozz is a free, open-source Apple TV app for your own server. Point it at
+          Jellyfin or Plex and watch your library with a fast, cinematic, made-for-tvOS
+          interface.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c-1.7 0-3 1.4-3 1.4S12.2 3 10.5 3C8 3 6 5 6 7.8c0 3.6 6 9.2 7.5 9.2S21 11.4 21 7.8C21 5 19 3 16.5 3z" opacity="0"/><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 5h2v5h3l-4 5-4-5h3V7z"/></svg>
+            Join the Apple TV beta
+          </a>
+          <a class="btn btn-ghost" href={GITHUB_URL} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.85.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <p class="hero-note">Free forever · No account, no tracking · MIT licensed</p>
+
+        <div class="badges">
+          <span class="badge"><span class="dot"></span> Jellyfin</span>
+          <span class="badge"><span class="dot"></span> Plex</span>
+          <span class="badge"><span class="dot"></span> tvOS 17+</span>
+          <span class="badge"><span class="dot"></span> Open source</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">What you get</span>
+          <h2>Built for the living room</h2>
+          <p>Everything you'd expect from a great tvOS app — and nothing you don't.</p>
+        </div>
+        <div class="grid">
+          {
+            features.map((f) => (
+              <div class="card">
+                <div class="icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[f.icon]} />
+                </div>
+                <h3>{f.title}</h3>
+                <p>{f.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Providers -->
+    <section style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">One app, your server</span>
+          <h2>Bring your own backend</h2>
+          <p>Plozz never hosts your media. It connects to a server you already run.</p>
+        </div>
+        <div class="providers">
+          <span class="provider-chip"><span class="pdot" style="background:#00a4dc"></span> Jellyfin</span>
+          <span class="provider-chip"><span class="pdot" style="background:#e5a00d"></span> Plex</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platforms -->
+    <section id="platforms" style="background:var(--bg-elev);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Where it runs</span>
+          <h2>Apple TV today</h2>
+          <p>Plozz is built for tvOS first. iPhone and iPad may follow.</p>
+        </div>
+        <div class="platforms">
+          <div class="platform">
+            <svg class="picon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <h3>Apple TV</h3>
+            <span class="status live">Available now</span>
+            <p>Native tvOS 17+ app, tuned for the remote and the big screen.</p>
+          </div>
+          <div class="platform future">
+            <svg class="picon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+            <h3>iPhone &amp; iPad</h3>
+            <span class="status soon">Maybe later</span>
+            <p>On the radar — no promises, but the architecture is ready for it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open source -->
+    <section id="open-source" class="oss">
+      <div class="container">
+        <div class="oss-card">
+          <h2>Free and open source</h2>
+          <p>
+            Plozz is MIT-licensed and built in the open. Read the code, file an issue,
+            or contribute a feature. If it's useful to you, sponsorship keeps it going.
+          </p>
+          <div class="oss-cta">
+            <a class="btn btn-primary" href={GITHUB_URL} target="_blank" rel="noopener">Star on GitHub</a>
+            <a class="btn btn-ghost" href={SPONSOR_URL} target="_blank" rel="noopener">Sponsor ❤</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-brand">
+        <img src="/logo.svg" alt="" width="22" height="22" />
+        <span>Plozz</span>
+      </div>
+      <div class="footer-links">
+        <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
+        <a href={SPONSOR_URL} target="_blank" rel="noopener">Sponsor</a>
+        <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener">Support</a>
+      </div>
+      <div>© {new Date().getFullYear()} Plozz · MIT</div>
+    </div>
+  </footer>
+</Layout>
