@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const GITHUB_URL = 'https://github.com/thatcube/Plozz';
+const SPONSOR_URL = 'https://github.com/sponsors/thatcube';
+const CONTACT_EMAIL = 'feedback@plozz.app';
+const LAST_UPDATED = 'June 29, 2026';
+---
+
+<Layout
+  title="Privacy Policy — Plozz"
+  description="Plozz takes a minimal-data approach: it collects nothing, stores your server credentials only on your device, and connects directly to the Jellyfin or Plex servers you choose."
+>
+  <main class="legal">
+    <div class="container">
+      <a class="legal-home" href="/">
+        <img src="/logo.svg" alt="" width="28" height="28" />
+        <span>Plozz</span>
+      </a>
+
+      <h1>Privacy Policy</h1>
+      <p class="legal-updated">Last updated: {LAST_UPDATED}</p>
+
+      <p>
+        Plozz is a client app for connecting to your own Jellyfin and Plex media
+        servers. We take a minimal-data approach.
+      </p>
+
+      <h2>What we collect</h2>
+      <p>
+        Nothing. Plozz does not collect, store, or transmit any personal data to
+        us or any third party. We have no analytics or tracking.
+      </p>
+
+      <h2>Your server details</h2>
+      <p>
+        The server addresses and login credentials you enter are stored locally
+        on your device (in the system Keychain) and are used only to connect to
+        the servers you choose. They are never sent to us.
+      </p>
+
+      <h2>Network connections</h2>
+      <p>
+        Plozz communicates directly with the Jellyfin or Plex servers you
+        configure. Any data handling on those servers is governed by their own
+        privacy policies and the policies of whoever operates them.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        Plozz is not directed at children and does not knowingly collect data
+        from anyone.
+      </p>
+
+      <h2>Changes</h2>
+      <p>We may update this policy; changes will be posted at this URL.</p>
+
+      <h2>Contact</h2>
+      <p>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-brand">
+        <img src="/logo.svg" alt="" width="22" height="22" />
+        <span>Plozz</span>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/privacy">Privacy</a>
+        <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
+        <a href={SPONSOR_URL} target="_blank" rel="noopener">Sponsor</a>
+        <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener">Support</a>
+      </div>
+      <div>© {new Date().getFullYear()} Plozz · MIT</div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .legal {
+    padding: 64px 0 88px;
+  }
+
+  .legal .container {
+    max-width: 760px;
+  }
+
+  .legal-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    transition: color 0.15s ease;
+  }
+
+  .legal-home:hover {
+    color: var(--text);
+  }
+
+  .legal-home img {
+    width: 28px;
+    height: 28px;
+    image-rendering: pixelated;
+  }
+
+  .legal h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    margin-bottom: 8px;
+  }
+
+  .legal-updated {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+  }
+
+  .legal h2 {
+    font-size: 1.2rem;
+    margin-top: 36px;
+    margin-bottom: 10px;
+  }
+
+  .legal p {
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .legal a {
+    color: var(--brand);
+  }
+
+  .legal a:hover {
+    text-decoration: underline;
+  }
+</style>
