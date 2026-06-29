@@ -342,66 +342,6 @@ h3 {
 }
 
 /* ---------- Header ---------- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  background: rgba(10, 12, 16, 0.72);
-  border-bottom: 2px solid var(--border);
-}
-
-.site-header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 66px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.2rem;
-  letter-spacing: -0.01em;
-}
-
-.brand img {
-  width: 30px;
-  height: 30px;
-  image-rendering: pixelated;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
-
-.nav a {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: color 0.15s ease;
-}
-
-.nav a:hover {
-  color: var(--text);
-}
-
-.nav .nav-links {
-  display: flex;
-  gap: 26px;
-}
-
-@media (max-width: 760px) {
-  .nav .nav-links {
-    display: none;
-  }
-}
-
 /* ---------- Buttons ---------- */
 .btn {
   --s: 3px;
@@ -484,7 +424,10 @@ h3 {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  padding: 104px 0 88px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 88px 0;
   text-align: center;
   overflow: hidden;
   border-bottom: 2px solid var(--border);
@@ -511,9 +454,9 @@ h3 {
 }
 
 .hero-logo {
-  width: 104px;
-  height: 104px;
-  margin: 0 auto 28px;
+  width: 156px;
+  height: 156px;
+  margin: 0 auto 32px;
   image-rendering: pixelated;
   filter: drop-shadow(0 10px 30px var(--brand-glow));
 }
@@ -1064,7 +1007,6 @@ button.btn {
 }
 
 /* ---------- Focus accessibility ---------- */
-.nav a:focus-visible,
 .footer-links a:focus-visible,
 .faq summary:focus-visible,
 .faq details > p a:focus-visible {

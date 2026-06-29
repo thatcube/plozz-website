@@ -29,6 +29,11 @@ const features = [
     icon: 'ph:play-circle',
   },
   {
+    title: 'Music, too',
+    body: 'Your music library comes along for the ride. Browse artists, albums, and playlists, then play full albums or queue tracks with album art and metadata on the big screen.',
+    icon: 'ph:music-notes',
+  },
+  {
     title: 'Resume & watched state',
     body: 'Pick up right where you left off. Per-episode watched badges, "mark watched up to here," and progress reported back to your server.',
     icon: 'ph:bookmark-simple',
@@ -116,24 +121,6 @@ const faqs = [
 ---
 
 <Layout>
-  <header class="site-header">
-    <div class="container">
-      <a class="brand" href="/">
-        <img src="/logo.svg" alt="" width="28" height="28" />
-        <span>Plozz</span>
-      </a>
-      <nav class="nav">
-        <div class="nav-links">
-          <a href="#features">Features</a>
-          <a href="#how">How it works</a>
-          <a href="#platforms">Platforms</a>
-          <a href="#faq">FAQ</a>
-        </div>
-        <a class="btn btn-ghost" href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
-      </nav>
-    </div>
-  </header>
-
   <main>
     <!-- Hero -->
     <section class="hero">
@@ -155,7 +142,8 @@ const faqs = [
         <p class="lead">
           Plozz is a free, open-source Apple TV app for the server you already run.
           Point it at Jellyfin or Plex and get a fast, cinematic, made-for-tvOS
-          library. Your server, your rules — no account, no tracking, no nonsense.
+          library — movies, shows, and music. Your server, your rules — no account,
+          no tracking, no nonsense.
         </p>
         <div class="hero-cta">
           <button class="btn btn-disabled" type="button" disabled aria-disabled="true" title="The TestFlight beta opens once Apple approves the build for external testing.">
