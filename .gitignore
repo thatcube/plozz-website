@@ -2,6 +2,12 @@
 dist/
 .output/
 
+# wrangler / cloudflare local state
+.wrangler/
+
+# design hook cache
+.impeccable/
+
 # dependencies
 node_modules/
 

@@ -1,0 +1,21 @@
+# Cloudflare Pages configuration.
+# The static site is built by Astro (`npm run build` → dist/).
+# The tracker OAuth relay runs as Pages Functions in functions/ (ported from the
+# former standalone Worker that used to live in the thatcube/Plozz repo).
+
+name = "plozz-website"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist"
+
+# KV namespace shared with the old Worker, so in-flight sessions/redeem codes
+# survive the migration. Bound as env.AUTH_KV inside functions/.
+[[kv_namespaces]]
+binding = "AUTH_KV"
+id = "152ec5bca6e1429d82e5b93e0fc549c3"
+
+# Public OAuth client IDs (safe to commit — these are not secrets).
+# The MAL_CLIENT_SECRET is set separately as an encrypted Pages secret:
+#   npx wrangler pages secret put MAL_CLIENT_SECRET --project-name plozz-website
+[vars]
+MAL_CLIENT_ID = "453e05d6355620ecc1047e9dac4dd184"
+ANILIST_CLIENT_ID = "44569"
