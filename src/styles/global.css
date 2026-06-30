@@ -439,12 +439,38 @@ h3 {
   z-index: 3;
 }
 
-.hero-logo {
+.hero-logo-wrap {
+  position: relative;
   width: 156px;
   height: 156px;
   margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -120%;
+  z-index: -2;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(65, 198, 245, 0.26) 0%,
+    rgba(0, 164, 220, 0.16) 18%,
+    rgba(0, 164, 220, 0.08) 34%,
+    rgba(0, 164, 220, 0.03) 52%,
+    rgba(0, 164, 220, 0) 75%
+  );
+  filter: blur(22px);
+}
+
+.hero-logo {
+  width: 156px;
+  height: 156px;
   image-rendering: pixelated;
-  filter: drop-shadow(0 10px 30px var(--brand-glow));
+  filter: drop-shadow(0 0 18px rgba(0, 164, 220, 0.34));
 }
 
 .hero h1 {
