@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 
 const GITHUB_URL = 'https://github.com/thatcube/Plozz';
-const SPONSOR_URL = 'https://github.com/sponsors/thatcube';
+const DONATE_URL = 'https://github.com/sponsors/thatcube';
 // TODO: replace with your public TestFlight invite link once the beta opens.
 const TESTFLIGHT_URL = 'https://testflight.apple.com/';
 ---
@@ -14,9 +14,11 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/';
     <section class="hero">
       <div class="container">
         <div class="hero-logo-wrap">
-          <img class="hero-logo" src="/logo.svg" alt="Plozz" width="96" height="96" />
+          <img class="hero-logo" src="/logo.svg" alt="" aria-hidden="true" width="96" height="96" />
         </div>
-        <h1>Plozz</h1>
+        <h1 class="hero-title">
+          <img class="hero-wordmark" src="/plozz-wordmark.svg" alt="Plozz" width="56" height="28" />
+        </h1>
         <p class="lead">Native tvOS app for Jellyfin &amp; Plex. Free and open source.</p>
         <div class="hero-cta">
           <button class="btn btn-primary btn-gray" type="button" disabled aria-disabled="true" title="The TestFlight beta opens once Apple approves the build for external testing.">
@@ -42,8 +44,11 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/';
       <div class="footer-links">
         <a href="/privacy">Privacy</a>
         <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
-        <a href={SPONSOR_URL} target="_blank" rel="noopener">Sponsor</a>
-        <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener">Support</a>
+        <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener">Send feedback</a>
+        <a class="btn btn-ghost btn-sm" href={DONATE_URL} target="_blank" rel="noopener">
+          <Icon name="ph:heart" />
+          Donate
+        </a>
       </div>
       <div>© {new Date().getFullYear()} Plozz · GPL-3.0</div>
     </div>
