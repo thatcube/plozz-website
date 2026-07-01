@@ -1,10 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import SavedSections from '../components/SavedSections.astro';
+import { faqs, stripHtml } from '../data/faqs';
 
 const GITHUB_URL = 'https://github.com/thatcube/Plozz';
 const DONATE_URL = 'https://github.com/sponsors/thatcube';
 const TESTFLIGHT_URL = 'https://testflight.apple.com/join/EKfReNMu';
+const SITE = 'https://plozz.app';
+
+const softwareLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Plozz',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'tvOS 17+',
+  description:
+    'Plozz is a free, open-source native Apple TV (tvOS) client for Jellyfin and Plex. Watch your own movies, shows, and music with Quick Connect sign-in, resume support, and native tvOS playback.',
+  url: SITE,
+  image: `${SITE}/og-image.png`,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+  isAccessibleForFree: true,
+  author: { '@type': 'Organization', name: 'thatcube', url: 'https://github.com/thatcube' },
+  sameAs: [GITHUB_URL],
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: stripHtml(f.a) },
+  })),
+};
 ---
 
 <Layout>
@@ -16,7 +46,8 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/join/EKfReNMu';
           <img class="hero-logo" src="/logo.svg" alt="" aria-hidden="true" width="96" height="96" />
         </div>
         <h1 class="hero-title">
-          <img class="hero-wordmark" src="/plozz-wordmark.svg" alt="Plozz" width="56" height="28" />
+          <img class="hero-wordmark" src="/plozz-wordmark.svg" alt="" aria-hidden="true" width="56" height="28" />
+          <span class="sr-only">Plozz — native Jellyfin &amp; Plex client for Apple TV</span>
         </h1>
         <p class="lead">Native tvOS app for Jellyfin &amp; Plex. Free and open source.</p>
         <div class="hero-cta">
@@ -31,6 +62,8 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/join/EKfReNMu';
         </div>
       </div>
     </section>
+
+    <SavedSections />
 
   </main>
 
@@ -52,4 +85,7 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/join/EKfReNMu';
       <div>© {new Date().getFullYear()} Plozz · GPL-3.0</div>
     </div>
   </footer>
+
+  <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 </Layout>

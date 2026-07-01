@@ -7,8 +7,8 @@
 // To restore: import this into src/pages/index.astro and render <SavedSections />
 // inside <main>, after the hero <section>.
 import { Icon } from 'astro-icon/components';
+import { faqs, GITHUB_URL } from '../data/faqs';
 
-const GITHUB_URL = 'https://github.com/thatcube/Plozz';
 const SPONSOR_URL = 'https://github.com/sponsors/thatcube';
 
 const features = [
@@ -74,37 +74,6 @@ const steps = [
     n: 3,
     title: 'Sign in with a code',
     body: 'Approve a short code with Quick Connect or Plex Link. No typing passwords with the remote.',
-  },
-];
-
-const faqs = [
-  {
-    q: 'Is Plozz really free?',
-    a: 'Yes. Plozz is free software, licensed under the GPL-3.0 and open source — no subscriptions, no ads, no upsells. If it\u2019s useful to you, sponsorship is welcome but never required.',
-  },
-  {
-    q: 'Do I need my own server?',
-    a: 'Yes. Plozz is a player for a Jellyfin or Plex server that you run. It doesn\u2019t host, provide, or stream any media itself.',
-  },
-  {
-    q: 'Does Plozz collect my data or track me?',
-    a: 'No accounts and no analytics. Your credentials live in the Apple TV Keychain and are only ever sent to your own server.',
-  },
-  {
-    q: 'How do I install it?',
-    a: 'An Apple TV TestFlight beta is on the way \u2014 it opens once Apple approves the build for external testing. A public App Store release is planned after that.',
-  },
-  {
-    q: 'Will there be an iPhone or iPad app?',
-    a: 'Maybe. tvOS is the focus today, but the codebase is structured so iOS and iPadOS are possible later. No promises yet.',
-  },
-  {
-    q: 'Jellyfin or Plex \u2014 which should I use?',
-    a: 'Either. Plozz treats both the same, so just use whichever server you already run.',
-  },
-  {
-    q: 'I found a bug or want a feature.',
-    a: `Open an issue on <a href="${GITHUB_URL}/issues" target="_blank" rel="noopener">GitHub</a> \u2014 that\u2019s the best place to report bugs and request features.`,
   },
 ];
 ---
