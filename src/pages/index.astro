@@ -4,8 +4,7 @@ import { Icon } from 'astro-icon/components';
 
 const GITHUB_URL = 'https://github.com/thatcube/Plozz';
 const DONATE_URL = 'https://github.com/sponsors/thatcube';
-// TODO: replace with your public TestFlight invite link once the beta opens.
-const TESTFLIGHT_URL = 'https://testflight.apple.com/';
+const TESTFLIGHT_URL = 'https://testflight.apple.com/join/EKfReNMu';
 ---
 
 <Layout>
@@ -21,11 +20,11 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/';
         </h1>
         <p class="lead">Native tvOS app for Jellyfin &amp; Plex. Free and open source.</p>
         <div class="hero-cta">
-          <button class="btn btn-primary btn-gray" type="button" disabled aria-disabled="true" title="The TestFlight beta opens once Apple approves the build for external testing.">
-            <Icon name="ph:clock" />
-            TestFlight beta soon
-          </button>
-          <a class="btn btn-primary" href={GITHUB_URL} target="_blank" rel="noopener">
+          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+            <Icon name="simple-icons:apple" />
+            Join the TestFlight beta
+          </a>
+          <a class="btn btn-light btn-lg" href={GITHUB_URL} target="_blank" rel="noopener">
             <Icon name="simple-icons:github" />
             GitHub
           </a>

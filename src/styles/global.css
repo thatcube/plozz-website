@@ -1082,6 +1082,54 @@ button.btn {
   transform: none;
 }
 
+/* Larger CTA scale for the hero action row. */
+.btn-lg {
+  padding: 15px 28px;
+  font-size: 1.06rem;
+  gap: 10px;
+}
+
+.btn-lg svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Primary hero action (TestFlight): the current brand-blue button, pushed to
+   stand out with a stronger blue bloom and a subtle lift so it reads as THE
+   call to action next to the white GitHub button. */
+.btn-cta {
+  filter: drop-shadow(0 8px 22px rgba(0, 164, 220, 0.6))
+    drop-shadow(0 2px 8px rgba(0, 164, 220, 0.45));
+}
+
+.btn-cta:hover {
+  filter: drop-shadow(0 10px 28px rgba(0, 164, 220, 0.72))
+    drop-shadow(0 3px 10px rgba(0, 164, 220, 0.5));
+}
+
+/* The Apple glyph's optical center sits low (weighted body + top leaf), so it
+   reads slightly below the text baseline — lift it a touch to center it. */
+.btn-cta svg {
+  transform: translateY(-2px);
+}
+
+/* Near-white pixel button (GitHub): almost-white face, black border, a crisp
+   white top highlight and a soft gray drop shadow so it pops off the dark hero
+   as the light counterpart to the blue TestFlight CTA. */
+.btn-light {
+  --px-bc: #000;
+  --px-bg: #eef1f6;
+  --px-hi: rgba(255, 255, 255, 0.9);
+  --px-lo: rgba(0, 0, 0, 0.22);
+  color: #0a0c10;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
+}
+
+.btn-light:hover {
+  --px-bg: #ffffff;
+  filter: drop-shadow(0 9px 20px rgba(0, 0, 0, 0.5));
+}
+
 /* ---------- Sponsor button ---------- */
 .btn-sponsor {
   --px-bc: #1a2230;
