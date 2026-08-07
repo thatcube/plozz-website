@@ -1102,52 +1102,6 @@ h3 {
 
 /* The merge is drawn with the same hairlines the ledger uses: several inputs
    collapse through one rule into a single output. */
-.merge-diagram {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(28px, 5vw, 64px) auto;
-  align-items: center;
-  gap: 0;
-}
-
-.merge-inputs {
-  position: relative;
-  list-style: none;
-  margin: 0;
-  padding: 0 clamp(16px, 2.4vw, 28px) 0 0;
-  border-right: 1px solid var(--border-bright);
-}
-
-.merge-inputs li {
-  padding: 11px 0;
-  font-size: 0.94rem;
-  line-height: 1.3;
-  color: var(--text-muted);
-  text-align: right;
-}
-
-/* The connector: a hairline from the midpoint of the stack to the result. */
-.merge-diagram::before {
-  content: '';
-  grid-column: 2;
-  grid-row: 1;
-  height: 1px;
-  background: var(--border-bright);
-}
-
-.merge-output {
-  grid-column: 3;
-  grid-row: 1;
-  margin: 0;
-  padding: 14px 20px;
-  border: 1px solid var(--border-bright);
-  border-radius: 999px;
-  font-size: 1rem;
-  font-weight: 560;
-  letter-spacing: -0.015em;
-  white-space: nowrap;
-  color: var(--text);
-  background: #141416;
-}
 
 
 /* ---------- 5. Closer (open, type-led) ---------- */
@@ -1219,31 +1173,6 @@ h3 {
 
 
   /* Stack the diagram: the connector becomes the rule under the inputs. */
-  .merge-diagram {
-    grid-template-columns: 1fr;
-    justify-items: start;
-    gap: 20px;
-  }
-
-  .merge-inputs {
-    width: 100%;
-    padding: 0 0 20px;
-    border-right: 0;
-    border-bottom: 1px solid var(--border-bright);
-  }
-
-  .merge-inputs li {
-    text-align: left;
-  }
-
-  .merge-diagram::before {
-    display: none;
-  }
-
-  .merge-output {
-    grid-column: 1;
-    grid-row: auto;
-  }
 
 
 }
@@ -2927,7 +2856,12 @@ a.cell:hover .cell-arrow {
    here, so no row repeats it. */
 
 
-/* ---------- Merge diagram ---------- */
+/* ---------- Source hub ----------
+   Four sources wired into one library. The SVG and the HTML pills share one
+   coordinate space: the container's aspect-ratio matches the viewBox, so the
+   wires land on the pills at any width. Sizing runs on `cqw` against the
+   container, which lets the whole figure shrink together rather than needing a
+   breakpoint per column width. */
 .merge-slab {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 }
@@ -2937,48 +2871,114 @@ a.cell:hover .cell-arrow {
   justify-content: center;
 }
 
-.merge-diagram {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(24px, 4vw, 56px) auto;
-  align-items: center;
+.hub {
+  container-type: inline-size;
+  position: relative;
+  aspect-ratio: 160 / 100;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
 }
 
-.merge-inputs {
+.hub-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+}
+
+.hub-wire {
+  stroke: var(--border-bright);
+  stroke-width: 1;
+}
+
+/* A short dash running each wire inward, so the direction of travel reads
+   without a single arrowhead. */
+.hub-pulse {
+  stroke: rgba(255, 255, 255, 0.34);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 11 89;
+  animation: hub-pulse 4.6s linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes hub-pulse {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hub-nodes {
   list-style: none;
   margin: 0;
-  padding: 0 clamp(14px, 2vw, 24px) 0 0;
-  border-right: 1px solid var(--border-bright);
+  padding: 0;
 }
 
-.merge-inputs li {
-  padding: 11px 0;
-  font-size: 0.94rem;
-  line-height: 1.3;
-  color: var(--text-muted);
-  text-align: right;
-}
-
-.merge-diagram::before {
-  content: '';
-  grid-column: 2;
-  grid-row: 1;
-  height: 1px;
-  background: var(--border-bright);
-}
-
-.merge-output {
-  grid-column: 3;
-  grid-row: 1;
-  margin: 0;
-  padding: 13px 19px;
+.hub-node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  max-width: 42cqw;
+  padding: clamp(7px, 1.4cqw, 11px) clamp(13px, 2.6cqw, 19px);
   border: 1px solid var(--border-bright);
   border-radius: var(--r-pill);
-  font-size: 0.98rem;
-  font-weight: 560;
-  letter-spacing: -0.015em;
-  white-space: nowrap;
-  color: var(--text);
   background: #141416;
+  font-size: clamp(11px, 2.35cqw, 15px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.hub-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(13px, 3cqw, 22px);
+}
+
+.hub-core-mark {
+  display: grid;
+  place-items: center;
+  width: clamp(58px, 14cqw, 96px);
+  height: clamp(58px, 14cqw, 96px);
+  border: 1px solid var(--border-bright);
+  border-radius: 50%;
+  background: #141416;
+  box-shadow: 0 0 0 clamp(6px, 1.4cqw, 10px) #0b0b0c;
+}
+
+.hub-core-mark img {
+  width: clamp(26px, 6.4cqw, 44px);
+  height: auto;
+  /* The mark's antennas take box height with almost no visual weight, so the
+     solid body reads low unless it is lifted. */
+  transform: translateY(-2px);
+}
+
+.hub-core-label {
+  font-size: clamp(11px, 2.3cqw, 14px);
+  letter-spacing: -0.01em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-pulse {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* ---------- iCloud slab ---------- */
@@ -3037,31 +3037,72 @@ a.cell:hover .cell-arrow {
   }
 }
 
+/* Below this the orbit has no room, so the same four sources stack and run
+   down a single spine into the library. */
 @media (max-width: 560px) {
-  .merge-diagram {
-    grid-template-columns: 1fr;
-    justify-items: start;
-    gap: 18px;
+  .hub {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
   }
 
-  .merge-inputs {
-    width: 100%;
-    padding: 0 0 18px;
-    border-right: 0;
-    border-bottom: 1px solid var(--border-bright);
-  }
-
-  .merge-inputs li {
-    text-align: left;
-  }
-
-  .merge-diagram::before {
+  .hub-wires {
     display: none;
   }
 
-  .merge-output {
-    grid-column: 1;
-    grid-row: auto;
+  .hub-nodes {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .hub-nodes::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    bottom: -14px;
+    width: 1px;
+    background: var(--border-bright);
+    transform: translateX(-0.5px);
+  }
+
+  .hub-node {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    max-width: 100%;
+    padding: 9px 16px;
+    font-size: 0.86rem;
+    white-space: normal;
+  }
+
+  .hub-core {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    gap: 10px;
+  }
+
+  .hub-core-mark {
+    width: 68px;
+    height: 68px;
+    box-shadow: none;
+  }
+
+  .hub-core-mark img {
+    width: 30px;
+  }
+
+  .hub-core-label {
+    font-size: 0.95rem;
   }
 }
 
