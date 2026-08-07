@@ -2856,12 +2856,13 @@ a.cell:hover .cell-arrow {
    here, so no row repeats it. */
 
 
-/* ---------- Library merge ----------
-   Four sources feeding one library. The library is the hero and the sources
-   are typographic, so the weight sits where the claim does. The SVG and the
-   HTML labels share one coordinate space: the container's aspect-ratio matches
-   the viewBox, so the curves stay anchored to the labels at any width, and the
-   rest is sized in `cqw` against the container rather than the viewport. */
+/* ---------- Confluence ----------
+   Four sources becoming one library. The incoming strands are dim and the
+   merged strand is luminous, because the composition should say the
+   combination is the valuable thing. The curves are SVG and the shelf is HTML,
+   so the spines reflow on their own when the figure stacks; both are placed
+   from the same viewBox coordinates, and the container's aspect-ratio matches
+   that viewBox, so a percentage means the same thing in either one. */
 .merge-slab {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 }
@@ -2871,16 +2872,16 @@ a.cell:hover .cell-arrow {
   justify-content: center;
 }
 
-.merge {
+.conf {
   container-type: inline-size;
   position: relative;
   aspect-ratio: 160 / 100;
   width: 100%;
-  max-width: 660px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
-.merge-feeds {
+.conf-art {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -2889,23 +2890,23 @@ a.cell:hover .cell-arrow {
   fill: none;
 }
 
-.merge-feed {
-  stroke: var(--border-bright);
-  stroke-width: 1;
+.conf-strand {
+  stroke: #34343a;
+  stroke-width: 0.5;
 }
 
-/* A soft dash running each curve toward the join, so the direction of travel
-   reads without an arrowhead. */
-.merge-flow {
-  stroke: rgba(255, 255, 255, 0.32);
-  stroke-width: 1.5;
+/* A soft dash running each strand toward the join, easing in, so the direction
+   of travel reads without an arrowhead. */
+.conf-travel {
+  stroke: rgba(255, 255, 255, 0.34);
+  stroke-width: 0.7;
   stroke-linecap: round;
-  stroke-dasharray: 12 88;
-  animation: merge-flow 5s linear infinite;
+  stroke-dasharray: 9 91;
+  animation: conf-travel 5.2s cubic-bezier(0.55, 0, 0.75, 0.35) infinite;
   animation-delay: var(--delay, 0s);
 }
 
-@keyframes merge-flow {
+@keyframes conf-travel {
   from {
     stroke-dashoffset: 100;
   }
@@ -2914,15 +2915,28 @@ a.cell:hover .cell-arrow {
   }
 }
 
-.merge-sources {
+.conf-bloom {
+  stroke: url(#conf-beam);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.conf-beam {
+  stroke: url(#conf-beam);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+.conf-sources {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.merge-source {
+.conf-source {
   position: absolute;
-  right: 72.5%;
+  right: 71.25%;
   top: var(--y);
   transform: translateY(-50%);
   font-size: clamp(11px, 2.3cqw, 15px);
@@ -2933,88 +2947,61 @@ a.cell:hover .cell-arrow {
   white-space: nowrap;
 }
 
-.merge-library {
+/* The spines stand on the beam, so the merged strand is literally the shelf
+   everything landed on. */
+.conf-shelf {
   position: absolute;
-  left: 52%;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(5px, 1.2cqw, 8px);
-  padding: clamp(8px, 1.8cqw, 12px);
-  border: 1px solid var(--border-bright);
-  border-radius: clamp(8px, 1.8cqw, 13px);
-  background: #131315;
+  left: var(--left);
+  right: var(--right);
+  bottom: var(--base);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap);
 }
 
-.merge-art {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  border-radius: clamp(3px, 0.7cqw, 5px);
-  background: var(--art);
-  overflow: hidden;
+/* The reflection is what stops the shelf floating in an empty half. It hangs
+   from the beam instead of standing on it, and dies out well before the edge.
+   The mask is authored in the element's own space and then flipped with it, so
+   the opaque end is written as the bottom to land next to the beam. */
+.conf-shelf.is-reflection {
+  bottom: auto;
+  top: var(--base);
+  transform: scaleY(-1);
+  opacity: 0.2;
+  mask-image: linear-gradient(to bottom, transparent 58%, #000);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 58%, #000);
+  pointer-events: none;
 }
 
-/* A little sheen off the top edge, so the tiles read as artwork rather than
-   flat swatches. */
-.merge-art::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+.conf-spine {
+  /* Lit by the beam: catching it where it arrives, settling to neutral along
+     the run. --t is the spine's eased position from 0 to 1. */
+  --c: color-mix(in oklab, #45454d calc(var(--t) * 100%), #5fa9c6);
+
+  width: var(--w);
+  height: var(--h);
+  border-radius: clamp(1px, 0.35cqw, 3px) clamp(1px, 0.35cqw, 3px) 0 0;
   background: linear-gradient(
-    173deg,
-    rgba(255, 255, 255, 0.09),
-    rgba(255, 255, 255, 0) 42%
+    177deg,
+    color-mix(in oklab, var(--c) 80%, #ffffff),
+    var(--c)
   );
 }
 
-/* An off-centre light source per tile, which is what gives each one a subject
-   instead of an even wash. */
-.merge-art::after {
-  content: '';
+.conf-result {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    62% 44% at var(--fx) var(--fy),
-    rgba(255, 255, 255, 0.16),
-    rgba(0, 0, 0, 0) 68%
-  );
-}
-
-/* Progress and a watched tick are what stop a grid of rectangles reading as a
-   loading skeleton: they say this is a library someone is part way through. */
-.merge-progress {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  height: clamp(2px, 0.5cqw, 3px);
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.merge-progress::after {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: var(--p);
-  background: var(--brand);
-}
-
-.merge-watched {
-  position: absolute;
-  top: clamp(3px, 0.7cqw, 5px);
-  right: clamp(3px, 0.7cqw, 5px);
-  z-index: 1;
-  width: clamp(4px, 0.9cqw, 6px);
-  height: clamp(4px, 0.9cqw, 6px);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
+  left: var(--x);
+  top: var(--y);
+  transform: translateY(-50%);
+  font-size: clamp(13px, 2.9cqw, 19px);
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .merge-flow {
+  .conf-travel {
     animation: none;
     opacity: 0;
   }
@@ -3076,83 +3063,91 @@ a.cell:hover .cell-arrow {
   }
 }
 
-/* Below this the fan has no room, so the sources stack above the library and
-   run down a single spine into it. */
+/* Below this the fan has no room, so the sources stack and run down a single
+   thread onto the shelf. The shelf itself survives the reflow because it is
+   HTML — the spines just relax into a full-width row. */
 @media (max-width: 560px) {
-  .merge {
+  .conf {
     aspect-ratio: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 0;
   }
 
-  .merge-feeds {
+  .conf-art {
     display: none;
   }
 
-  .merge-sources {
+  .conf-sources {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
     width: 100%;
   }
 
-  .merge-sources::before {
+  .conf-sources::before {
     content: '';
     position: absolute;
     left: 50%;
-    top: 16px;
-    bottom: -16px;
+    top: 14px;
+    bottom: -26px;
     width: 1px;
-    background: var(--border-bright);
+    background: #34343a;
     transform: translateX(-0.5px);
   }
 
-  .merge-source {
+  .conf-source {
     position: relative;
     right: auto;
     top: auto;
     transform: none;
     padding: 0 12px;
     background: #0b0b0c;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     text-align: center;
   }
 
-  .merge-library {
+  .conf-result {
+    position: relative;
+    left: auto;
+    top: auto;
+    order: 2;
+    margin-top: 28px;
+    transform: none;
+    font-size: 1.05rem;
+  }
+
+  .conf-shelf {
     position: relative;
     left: auto;
     right: auto;
-    top: auto;
-    transform: none;
+    bottom: auto;
+    order: 3;
     width: 100%;
-    gap: 8px;
-    padding: 12px;
-    border-radius: 12px;
+    margin-top: 12px;
+    padding-bottom: 1px;
+    /* The beam is gone with the SVG, so the shelf carries its own line. */
+    background: linear-gradient(
+        to right,
+        #eaf8fe,
+        var(--brand) 30%,
+        rgba(0, 164, 220, 0.15)
+      )
+      bottom / 100% 1px no-repeat;
+    gap: 0.35cqw;
   }
 
-  .merge-art {
-    border-radius: 4px;
-  }
-
-  /* Two rows is enough to read as a wall; three makes the section run long on
-     a phone. */
-  .merge-art:nth-child(n + 9) {
+  .conf-shelf.is-reflection {
     display: none;
   }
 
-  .merge-progress {
-    height: 3px;
-  }
-
-  .merge-watched {
-    top: 5px;
-    right: 5px;
-    width: 6px;
-    height: 6px;
+  .conf-spine {
+    width: auto;
+    flex: var(--fw) 1 0;
+    height: var(--h);
   }
 }
 
