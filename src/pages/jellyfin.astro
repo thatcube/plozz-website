@@ -10,7 +10,7 @@ import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Direct plays your files instead of making Jellyfin transcode them.";
+const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Direct plays 4K HDR and Dolby Vision without making Jellyfin transcode. No subscription and no Pro tier.";
 
 const compatibility = [
   {
@@ -72,8 +72,8 @@ const compatibility = [
     >
       <ul class="proof">
         <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
-        <li><span>Dolby Atmos</span><span>Passed through untouched</span></li>
-        <li><span>TrueHD and DTS</span><span>Bridged to lossless FLAC</span></li>
+        <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
+        <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
         <li><span>Your server</span><span>Sends the file, nothing more</span></li>
       </ul>
     </Showcase>

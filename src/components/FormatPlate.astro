@@ -1,0 +1,19 @@
+---
+import { MARQUEE_FORMATS, LONG_TAIL } from '../data/site';
+---
+
+<div class="formats">
+  <ul class="format-marquee">
+    {MARQUEE_FORMATS.map((format) => (
+      <li>
+        <h3>{format.name}</h3>
+        <p class="format-claim">{format.claim}</p>
+        <p class="format-detail">{format.detail}</p>
+      </li>
+    ))}
+  </ul>
+
+  <p class="format-tail">
+    <span>And the rest of it.</span> {LONG_TAIL}
+  </p>
+</div>

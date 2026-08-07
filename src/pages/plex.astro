@@ -10,7 +10,7 @@ import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Plex client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Direct play instead of transcoding, and subtitle search without a Plex Pass.";
+const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Direct play 4K HDR without transcoding, and subtitle search without a Plex Pass.";
 
 const compatibility = [
   {
@@ -72,8 +72,8 @@ const compatibility = [
     >
       <ul class="proof">
         <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
-        <li><span>Dolby Atmos</span><span>Passed through untouched</span></li>
-        <li><span>TrueHD and DTS</span><span>Bridged to lossless FLAC</span></li>
+        <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
+        <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
         <li><span>Your server</span><span>Sends the file, nothing more</span></li>
       </ul>
     </Showcase>

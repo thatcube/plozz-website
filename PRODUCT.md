@@ -38,8 +38,20 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
   design. Lead with the question a person arrives with, answer it in one line,
   then show the thing working.
 - Real option names belong inside a demo, not in a table of their own.
+- A grid of identical chips is a data dump wearing rounded corners. Pick the two
+  or three items people actually recognise, say what each one means for them,
+  and put the long tail in one quiet line.
 - Follow the natural-writing rules: no promotional verbs, no rule of three, no false
   ranges, sparing em dashes, sentence case headings.
+
+## Competitors, verified 2026-08-07
+
+Infuse Pro ($1.99/mo, $16.99/yr, $99.99 lifetime) gates Dolby Atmos, TrueHD and
+DTS-HD MA, AirPlay, cloud storage and library sync. Emby's iPhone app stops
+after one minute without an unlock or Premiere, and gates downloads and
+in-player subtitle search. Plex Pass gates offline downloads. Jellyfin is fully
+free. Infuse's Dolby Vision tier and Plex's remote-streaming policy could not be
+verified from a primary source, so neither is claimed anywhere on the site.
 
 ## Claims we must not make
 
@@ -47,6 +59,9 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
 - Music playback of any kind, including Last.fm scrobbling.
 - "Ratings with no API key." Only AniList is keyless. IMDb, Rotten Tomatoes and
   Metacritic need the user's own OMDb key.
+- "Atmos passthrough" without qualification. E-AC-3 with JOC is stream-copied and
+  is real Atmos. TrueHD Atmos is bridged and loses its object metadata, so say
+  where Atmos comes from rather than implying every source survives.
 - "Professionally localized." The 36 languages ship, but they are machine
   translated and machine reviewed, and every string is tagged needs_review.
 - Sign-in flows as a selling point. Quick Connect, Plex Link and discovery are

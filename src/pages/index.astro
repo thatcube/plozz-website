@@ -4,9 +4,9 @@ import { Icon } from 'astro-icon/components';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
-import Showcase from '../components/Showcase.astro';
-import SubtitleLab from '../components/SubtitleLab.astro';
-import { GITHUB_URL, TESTFLIGHT_URL, SITE } from '../data/site';
+import FormatPlate from '../components/FormatPlate.astro';
+import { PAYWALLED, DONATION_AMOUNTS } from '../data/site';
+import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from '../data/site';
 
 const heroScreenshots = [
   {
@@ -167,18 +167,35 @@ const softwareLd = {
       </div>
     </section>
 
-    <Showcase
-      question="Subtitles you can actually read."
-      answer="Plozz draws its own, so they look the same on every server."
-      detail="Seven typefaces, two of them made for people who find subtitles hard to read. Then size, position, colour, background and outline, plus a separate brightness for HDR so white text stops searing in a dark room."
-      panel
-    >
-      <SubtitleLab />
-    </Showcase>
-
-    <section class="more-link">
+    <section class="plays-everything" aria-labelledby="plays-heading">
       <div class="container">
-        <a class="text-link" href="/features">The other questions people ask</a>
+        <div class="plays-head">
+          <h2 id="plays-heading">Dolby Vision, HDR10+ and Atmos.<br />Straight off the file.</h2>
+          <p>Plozz decodes on the device, so your server never transcodes and nothing is flattened on the way to your TV.</p>
+        </div>
+
+        <FormatPlate />
+
+      </div>
+    </section>
+
+    <section class="nopay" aria-labelledby="nopay-heading">
+      <div class="container">
+        <div class="nopay-body">
+          <div class="nopay-copy">
+            <h2 id="nopay-heading">None of it costs anything.</h2>
+            <p>Every one of these is a paid tier somewhere else. Plozz has no Pro version, because there is nothing to put in it.</p>
+          </div>
+          <ul class="nopay-list">
+            {PAYWALLED.map((item) => (
+              <li>
+                <span class="nopay-feature">{item.feature}</span>
+                <span class="nopay-who">{item.who}</span>
+                <span class="nopay-us">Free</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -233,6 +250,32 @@ const softwareLd = {
           </div>
         </div>
        </div>
+      </div>
+    </section>
+
+    <section class="donate" aria-labelledby="donate-heading">
+      <div class="container">
+        <div class="donate-body">
+          <div class="donate-copy">
+            <h2 id="donate-heading">Free is not the same as costless.</h2>
+            <p>No paid tier, no ads, nothing to unlock, and that is not changing. It does still cost something to make: the Apple Developer Program every year, and the occasional Apple TV to test on.</p>
+          </div>
+          <div class="donate-action">
+            <ul class="donate-amounts">
+              {DONATION_AMOUNTS.map((amount) => (
+                <li>
+                  <a href={`${DONATE_URL}?frequency=one-time&amount=${amount}`} target="_blank" rel="noopener">
+                    <span class="sr-only">Sponsor </span>${amount}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a class="donate-custom" href={DONATE_URL} target="_blank" rel="noopener">
+              Another amount, or monthly
+            </a>
+            <p class="donate-aside">Goes through GitHub Sponsors. Nothing in the app changes either way.</p>
+          </div>
+        </div>
       </div>
     </section>
 
