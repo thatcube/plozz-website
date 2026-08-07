@@ -2435,7 +2435,6 @@ button.btn {
   }
 }
 
-/* ---------- Nothing behind a paywall ---------- */
 .nopay {
   padding: clamp(28px, 3.5vw, 44px) 0;
 }
@@ -2923,34 +2922,10 @@ a.cell:hover .cell-arrow {
   }
 }
 
-/* ---------- Paywall rows ---------- */
-.paywall-slab li:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
-}
 
 /* A claim and who charges for it. The heading already says these are free
    here, so no row repeats it. */
-.paywall-row {
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 18px;
-  padding-block: clamp(18px, 2vw, 24px);
-}
 
-.paywall-feature {
-  font-size: 1rem;
-  font-weight: 560;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-.paywall-who {
-  flex: none;
-  font-size: 0.88rem;
-  color: var(--text-dim);
-  text-align: right;
-}
 
 /* ---------- Merge diagram ---------- */
 .merge-slab {
@@ -3346,4 +3321,14 @@ a.cell:hover .cell-arrow {
   width: 100%;
   height: auto;
   border-radius: var(--r-md);
+}
+
+/* A closing line under a slab, set quiet so the slab stays the subject. */
+.band-note {
+  max-width: 62ch;
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-dim);
+  text-wrap: pretty;
 }

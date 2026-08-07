@@ -66,7 +66,15 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
   the app is free either way. Brandon's own GitHub Sponsors wording is the
   reference for tone: warm, humble, and easy to walk past.
 
-## Competitors, verified 2026-08-07
+## Never name a competitor's price
+
+Say what Plozz does and that it is free. Do not name another app's paid tier,
+do not frame a feature as "they charge for this", and do not run a comparison
+table. It reads as punching sideways, it puts someone else's brand on our
+page, and it goes stale the moment they change their pricing. The features are
+the argument on their own.
+
+## Competitor research, for our own reference only, verified 2026-08-07
 
 Infuse Pro ($1.99/mo, $16.99/yr, $99.99 lifetime) gates Dolby Atmos, TrueHD and
 DTS-HD MA, AirPlay, cloud storage and library sync. Emby's iPhone app stops

@@ -8,7 +8,7 @@ import SiteScripts from "../components/SiteScripts.astro";
 import Marquee from "../components/Marquee.astro";
 import CircadianLab from "../components/CircadianLab.astro";
 import CircadianDial from "../components/CircadianDial.astro";
-import { PAYWALLED, DONATION_AMOUNTS } from "../data/site";
+import { INCLUDED, DONATION_AMOUNTS } from "../data/site";
 import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from "../data/site";
 
 const heroScreenshots = [
@@ -162,7 +162,7 @@ const softwareLd = {
             </div>
             <div class="cell-foot">
               <h3>Plex</h3>
-              <p>Subtitle search without a Plex Pass.</p>
+              <p>Subtitle search and styling in the player.</p>
               <span class="cell-go"
                 >See how it works<span class="cell-arrow" aria-hidden="true"
                 ></span></span
@@ -316,19 +316,19 @@ const softwareLd = {
     <section class="band" aria-labelledby="nopay-heading">
       <div class="container">
         <div class="band-head">
-          <h2 id="nopay-heading">Free where other players charge.</h2>
+          <h2 id="nopay-heading">Everything is included.</h2>
         </div>
 
-        <ul class="slab paywall-slab" style="--cols: 2">
-          {
-            PAYWALLED.map((item) => (
-              <li class="cell paywall-row">
-                <span class="paywall-feature">{item.feature}</span>
-                <span class="paywall-who">{item.who}</span>
-              </li>
-            ))
-          }
+        <ul class="slab" style="--cols: 3">
+          {INCLUDED.map((item) => (
+            <li class="cell">
+              <h3>{item.name}</h3>
+              <p>{item.detail}</p>
+            </li>
+          ))}
         </ul>
+
+        <p class="band-note">No subscription, no unlock, no Pro version. There is only one version of Plozz and you already have all of it.</p>
       </div>
     </section>
 

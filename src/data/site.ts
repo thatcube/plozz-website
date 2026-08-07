@@ -113,14 +113,19 @@ export const FORMAT_CAVEATS = [
  * streaming policy and Infuse's Dolby Vision tier could not be verified, so
  * neither appears here.
  */
-export const PAYWALLED = [
-  { feature: 'Dolby Atmos', who: 'Infuse Pro' },
-  { feature: 'TrueHD and DTS-HD MA', who: 'Infuse Pro' },
-  { feature: 'AirPlay', who: 'Infuse Pro' },
-  { feature: 'Library sync across devices', who: 'Infuse Pro' },
-  { feature: 'Offline downloads', who: 'Plex Pass and Emby Premiere' },
-  { feature: 'Subtitle search in the player', who: 'Emby Premiere' },
-  { feature: 'Playing past one minute on iPhone', who: 'Emby' },
+/**
+ * The features other players reserve for a paid tier. Named by what they do
+ * for the viewer rather than by who charges for them: calling out a
+ * competitor's pricing reads as punching sideways and goes stale the moment
+ * they change it.
+ */
+export const INCLUDED = [
+  { name: 'Dolby Atmos', detail: 'The bitstream reaches your receiver untouched.' },
+  { name: 'TrueHD and DTS-HD MA', detail: 'Lossless audio, decoded on the device.' },
+  { name: 'AirPlay', detail: 'Send what you are watching to another screen.' },
+  { name: 'Offline downloads', detail: 'Take a film or a whole season with you.' },
+  { name: 'Subtitle search', detail: 'Find and load one without leaving the scene.' },
+  { name: 'iCloud sync', detail: 'Servers and progress across your devices.' },
 ];
 
 // GitHub Sponsors prefills its checkout from these, so one tap is one donation.
