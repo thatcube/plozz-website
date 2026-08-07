@@ -2795,7 +2795,7 @@ button.btn {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(26px, 4vw, 56px);
-  align-items: start;
+  align-items: center;
   padding: clamp(30px, 3.4vw, 44px) clamp(26px, 3.4vw, 44px);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -2830,7 +2830,7 @@ button.btn {
 }
 
 .donate-action {
-  padding-top: 3px;
+  display: flex;
 }
 
 .donate-amounts a {
@@ -2855,10 +2855,23 @@ button.btn {
   background: var(--text);
 }
 
-/* Sits in the same row as the amounts and lands on the plain Sponsors page,
-   for monthly or any other figure. */
-.donate-other {
-  color: var(--text-dim);
+/* Carries a little more weight than the presets, since it is the one that
+   works for any amount. The arrow marks it as leaving the site. */
+.donate-amounts a.donate-go {
+  gap: 6px;
+  padding-inline: 16px;
+  border-color: var(--border-bright);
+  color: var(--text);
+}
+
+.donate-go svg {
+  width: 13px;
+  height: 13px;
+  opacity: 0.6;
+}
+
+.donate-go:hover svg {
+  opacity: 1;
 }
 
 
