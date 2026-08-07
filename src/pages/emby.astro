@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import PageHero from '../components/PageHero.astro';
+import FactSection from '../components/FactSection.astro';
+import { TESTFLIGHT_URL } from '../data/site';
+
+const title = 'Emby client for Apple TV, iPhone and iPad — Plozz';
+const description =
+  'Plozz is a free, open source Emby client for Apple TV, iPhone and iPad. Emby sits alongside Jellyfin, Plex and network shares in one library.';
+
+const signIn = [
+  {
+    name: 'Password sign-in',
+    detail: 'Pick your user and sign in. Plozz keeps the session in the Keychain.',
+  },
+  {
+    name: 'Auto-discovery',
+    detail: 'Emby servers on your network are found over Bonjour and by checking the usual ports.',
+  },
+  {
+    name: 'Alongside everything else',
+    detail: 'Emby is a first-class source, not a compatibility mode bolted onto a Jellyfin client.',
+  },
+];
+
+const howItWorks = [
+  {
+    name: 'A shared client, with the differences handled',
+    detail:
+      'Emby and Jellyfin both speak MediaBrowser, so they share one client in Plozz. Where they diverge, such as how each reports HDR or formats studio IDs, Plozz detects it and adapts.',
+  },
+  {
+    name: 'MKV plays as-is',
+    detail: 'Matroska is demuxed on the device, so Emby is not asked to transcode.',
+  },
+  {
+    name: 'Dolby Vision and Atmos',
+    detail: 'Dolby Vision profiles 5 and 8, HDR10, HLG, and Atmos passthrough.',
+  },
+];
+
+const library = [
+  {
+    name: 'One library across servers',
+    detail: 'Emby merges into the same Home and Search as your other servers, or stays in its own rows.',
+  },
+  {
+    name: 'Watch state travels',
+    detail:
+      'Finishing something updates every connected server that holds it, or only the one you played it from.',
+  },
+  {
+    name: 'Hide what you do not want',
+    detail: 'Any library can be hidden from Home and Search without disconnecting the server.',
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <SiteHeader />
+
+  <main>
+    <PageHero
+      eyebrow="Emby"
+      title="An Emby client that treats Emby as a first-class citizen."
+      lead="Emby is not an afterthought here. It gets the same discovery, the same player, and the same place in your merged library as Plex and Jellyfin."
+    />
+
+    <FactSection title="Getting in" facts={signIn} />
+
+    <FactSection
+      title="How Emby is handled"
+      lead="Emby and Jellyfin are close relatives, which is useful right up until it is not."
+      facts={howItWorks}
+      panel
+    />
+
+    <FactSection title="Your library" facts={library} />
+
+    <section class="closer" aria-labelledby="emby-closer">
+      <div class="container">
+        <h2 id="emby-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <div class="closer-cta">
+          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+            Join the TestFlight beta
+          </a>
+          <a class="btn btn-light btn-lg" href="/features">See every setting</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <SiteScripts />
+</Layout>

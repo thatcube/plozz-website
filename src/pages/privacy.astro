@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
 
 const GITHUB_URL = 'https://github.com/thatcube/Plozz';
 const SPONSOR_URL = 'https://github.com/sponsors/thatcube';
@@ -122,22 +124,8 @@ const LAST_UPDATED = 'July 2, 2026';
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-brand">
-        <img src="/logo.svg" alt="" width="22" height="22" />
-        <span>Plozz</span>
-      </div>
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/privacy">Privacy</a>
-        <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
-        <a href={SPONSOR_URL} target="_blank" rel="noopener">Sponsor</a>
-        <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener">Support</a>
-      </div>
-      <div>© {new Date().getFullYear()} Plozz · GPL-3.0</div>
-    </div>
-  </footer>
+  <SiteFooter />
+  <SiteScripts />
 </Layout>
 
 <style>

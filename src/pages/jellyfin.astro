@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import PageHero from '../components/PageHero.astro';
+import FactSection from '../components/FactSection.astro';
+import { TESTFLIGHT_URL } from '../data/site';
+
+const title = 'Jellyfin client for Apple TV, iPhone and iPad — Plozz';
+const description =
+  'Plozz is a free, open source Jellyfin client for Apple TV, iPhone and iPad. Sign in with Quick Connect, play MKV without transcoding, and search subtitles from inside the player.';
+
+const signIn = [
+  {
+    name: 'Quick Connect',
+    detail: 'Approve the sign-in from your phone or browser. You never type a password on the remote.',
+  },
+  {
+    name: 'Auto-discovery',
+    detail: 'Plozz looks for Jellyfin on your local network over Bonjour and by checking the usual ports.',
+  },
+  {
+    name: 'Several servers at once',
+    detail: 'Sign in to more than one Jellyfin, and to Plex, Emby and network shares alongside it.',
+  },
+];
+
+const playback = [
+  {
+    name: 'MKV plays as-is',
+    detail:
+      'Plozz demuxes Matroska on the device, so the server hands over the original file instead of transcoding it. HEVC, H.264, VP9 and AV1.',
+  },
+  {
+    name: 'Dolby Vision and Atmos',
+    detail: 'Dolby Vision profiles 5 and 8, HDR10, HLG, and Atmos passthrough.',
+  },
+  {
+    name: 'Awkward audio still works',
+    detail: 'TrueHD and DTS bitstreams are bridged to lossless FLAC on the fly rather than dropped.',
+  },
+  {
+    name: 'Skip intros and credits',
+    detail:
+      'Reads Jellyfin Media Segments, or the Intro Skipper plugin. Four modes: off, a Skip button, skip after a five second grace period, or skip instantly.',
+  },
+];
+
+const subtitles = [
+  {
+    name: 'Search and download in the player',
+    detail: 'Find a subtitle mid-scene and load it into the running session. No API key to paste in.',
+  },
+  {
+    name: 'SDH handled properly',
+    detail: 'Prefer non-SDH, prefer SDH, only SDH, or only non-SDH. Same four levels for forced subtitles.',
+  },
+  {
+    name: 'Different rules per content type',
+    detail: 'Anime, movies, TV and everything else can each have their own subtitle and audio-language policy.',
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <SiteHeader />
+
+  <main>
+    <PageHero
+      eyebrow="Jellyfin"
+      title="A Jellyfin client that plays your files, not a transcode of them."
+      lead="Plozz signs in with Quick Connect, finds your server by itself, and plays Matroska on the device so Jellyfin does not have to re-encode anything."
+    />
+
+    <FactSection
+      title="Getting in"
+      lead="Jellyfin sign-in on a TV is usually the worst part. It is two taps here."
+      facts={signIn}
+    />
+
+    <FactSection
+      title="Playback"
+      lead="The player is built on AetherEngine, an open source FFmpeg-based engine."
+      facts={playback}
+      panel
+    />
+
+    <FactSection
+      title="Subtitles"
+      lead="Plozz draws its own subtitles, which is why there is so much to change."
+      facts={subtitles}
+    />
+
+    <section class="closer" aria-labelledby="jellyfin-closer">
+      <div class="container">
+        <h2 id="jellyfin-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <div class="closer-cta">
+          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+            Join the TestFlight beta
+          </a>
+          <a class="btn btn-light btn-lg" href="/features">See every setting</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <SiteScripts />
+</Layout>

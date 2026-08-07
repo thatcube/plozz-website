@@ -1,0 +1,81 @@
+---
+// Shared behaviour for every page: the header that gets out of the way on the
+// way down, and the live GitHub star count.
+---
+
+<script>
+  const header = document.querySelector('.site-header');
+
+  if (header) {
+    let previousY = window.scrollY;
+    let ticking = false;
+
+    const updateHeader = () => {
+      const currentY = Math.max(window.scrollY, 0);
+      const scrollingDown = currentY > previousY;
+
+      header.classList.toggle('is-hidden', scrollingDown && currentY > header.offsetHeight);
+      previousY = currentY;
+      ticking = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateHeader);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  const applyGithubStars = (stars) => {
+    const formatted = new Intl.NumberFormat('en', {
+      notation: stars >= 1000 ? 'compact' : 'standard',
+      maximumFractionDigits: 1,
+    }).format(stars);
+
+    document.querySelectorAll('[data-github-stars]').forEach((element) => {
+      element.textContent = formatted;
+    });
+
+    document.querySelectorAll('[data-github-stars-badge]').forEach((element) => {
+      element.setAttribute('aria-label', `${stars.toLocaleString()} GitHub stars`);
+    });
+
+    document.querySelectorAll('.github-link').forEach((element) => {
+      element.setAttribute('aria-label', `GitHub — ${stars.toLocaleString()} stars`);
+    });
+  };
+
+  const cacheKey = 'plozz-github-stars';
+  const cacheLifetime = 6 * 60 * 60 * 1000;
+
+  try {
+    const cached = JSON.parse(localStorage.getItem(cacheKey) ?? 'null');
+
+    if (cached && Date.now() - cached.savedAt < cacheLifetime) {
+      applyGithubStars(cached.stars);
+    } else {
+      fetch('https://api.github.com/repos/thatcube/Plozz', {
+        headers: { Accept: 'application/vnd.github+json' },
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+          return response.json();
+        })
+        .then((repository) => {
+          const stars = repository.stargazers_count;
+          if (!Number.isInteger(stars)) return;
+
+          applyGithubStars(stars);
+          localStorage.setItem(cacheKey, JSON.stringify({ stars, savedAt: Date.now() }));
+        })
+        .catch(() => {});
+    }
+  } catch {
+    // Keep the build-time count when storage or the API is unavailable.
+  }
+</script>

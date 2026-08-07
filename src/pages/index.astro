@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import ControlRows from '../components/ControlRows.astro';
+import { GITHUB_URL, TESTFLIGHT_URL, SITE } from '../data/site';
 
-const GITHUB_URL = 'https://github.com/thatcube/Plozz';
-const DONATE_URL = 'https://github.com/sponsors/thatcube';
-const TESTFLIGHT_URL = 'https://testflight.apple.com/join/EKfReNMu';
-const SITE = 'https://plozz.app';
 const heroScreenshots = [
   {
     src: '/screenshots/plozz-tv.webp',
@@ -28,9 +29,9 @@ const softwareLd = {
   '@type': 'SoftwareApplication',
   name: 'Plozz',
   applicationCategory: 'MultimediaApplication',
-  operatingSystem: 'iOS, iPadOS, tvOS',
+  operatingSystem: 'tvOS, iOS, iPadOS',
   description:
-    'Plozz is a free, open source media player built in Swift for iPhone, iPad, and Apple TV. Connect Plex, Jellyfin, Emby, SMB, NFS, WebDAV, SFTP, and FTP.',
+    'Plozz is a free, open source media player built in Swift for Apple TV, iPhone, and iPad. Connect Plex, Jellyfin, Emby, SMB, NFS, WebDAV, SFTP, and FTP.',
   url: SITE,
   image: `${SITE}/og-image.png`,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -42,25 +43,7 @@ const softwareLd = {
 ---
 
 <Layout>
-  <header class="site-header">
-    <div class="container">
-      <a class="site-brand" href="/" aria-label="Plozz home">
-        <img src="/logo.svg" alt="" width="32" height="32" />
-        <span>Plozz</span>
-      </a>
-      <nav aria-label="Main navigation">
-        <a class="github-link" href={GITHUB_URL} target="_blank" rel="noopener">
-          <Icon name="simple-icons:github" />
-          <span class="sr-only">GitHub</span>
-          <span class="github-stars" data-github-stars-badge aria-label="7 GitHub stars">
-            <span data-github-stars>7</span>
-            <span>stars</span>
-          </span>
-        </a>
-        <a class="header-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">TestFlight</a>
-      </nav>
-    </div>
-  </header>
+  <SiteHeader />
 
   <main>
     <section class="hero">
@@ -134,19 +117,19 @@ const softwareLd = {
         <dl class="ledger">
           <div class="ledger-row">
             <dt><img class="lockup-jellyfin" src="/providers/jellyfin.svg" alt="Jellyfin" /></dt>
-            <dd>Quick Connect</dd>
+            <dd><a href="/jellyfin">Quick Connect</a></dd>
           </div>
           <div class="ledger-row">
             <dt><img class="lockup-plex" src="/providers/plex.svg" alt="Plex" /></dt>
-            <dd>Plex Link</dd>
+            <dd><a href="/plex">Plex Link</a></dd>
           </div>
           <div class="ledger-row">
             <dt><img class="lockup-emby" src="/providers/emby.png" alt="Emby" /></dt>
-            <dd>Password sign-in</dd>
+            <dd><a href="/emby">Password sign-in</a></dd>
           </div>
           <div class="ledger-row ledger-row-shares">
             <dt><span>SMB</span><span>NFS</span><span>WebDAV</span><span>SFTP</span><span>FTP</span></dt>
-            <dd>Address and credentials</dd>
+            <dd><a href="/network-shares">Address and credentials</a></dd>
           </div>
         </dl>
       </div>
@@ -170,30 +153,14 @@ const softwareLd = {
       </div>
     </section>
 
-    <section class="plays" aria-labelledby="plays-heading">
+    <section class="controls-section" aria-labelledby="controls-heading">
       <div class="container">
-        <div class="plays-intro">
-          <h2 id="plays-heading">Movies, shows, anime, and music.</h2>
-          <p>Every play scrobbles to the service you already use. Music gets a real player &mdash; queue, now playing, and background audio.</p>
+        <div class="controls-intro">
+          <h2 id="controls-heading">Made to be fiddled with.</h2>
+          <p>Every option here is real, named exactly as it appears in Settings. There are a few hundred more.</p>
         </div>
-        <dl class="plays-grid">
-          <div>
-            <dt>Movies</dt>
-            <dd>Trakt · Simkl</dd>
-          </div>
-          <div>
-            <dt>Shows</dt>
-            <dd>Trakt · Simkl</dd>
-          </div>
-          <div>
-            <dt>Anime</dt>
-            <dd>AniList · MyAnimeList</dd>
-          </div>
-          <div>
-            <dt>Music</dt>
-            <dd>Last.fm</dd>
-          </div>
-        </dl>
+        <ControlRows />
+        <a class="text-link" href="/features">See what else you can change</a>
       </div>
     </section>
 
@@ -268,109 +235,11 @@ const softwareLd = {
 
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-brand">
-        <img src="/logo.svg" alt="" width="22" height="22" />
-        <span>Plozz</span>
-      </div>
-      <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a class="github-link" href={GITHUB_URL} target="_blank" rel="noopener">
-          <Icon name="simple-icons:github" />
-          <span class="sr-only">GitHub</span>
-          <span class="github-stars" data-github-stars-badge aria-label="7 GitHub stars">
-            <span data-github-stars>7</span>
-            <span>stars</span>
-          </span>
-        </a>
-        <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener">Send feedback</a>
-        <a class="btn btn-ghost btn-sm" href={DONATE_URL} target="_blank" rel="noopener">
-          <Icon name="ph:heart" />
-          Donate
-        </a>
-      </div>
-      <div>© {new Date().getFullYear()} Plozz · GPL-3.0</div>
-    </div>
-  </footer>
+  <SiteFooter />
 
   <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />
+  <SiteScripts />
   <script>
-    const header = document.querySelector('.site-header');
-
-    if (header) {
-      let previousY = window.scrollY;
-      let ticking = false;
-
-      const updateHeader = () => {
-        const currentY = Math.max(window.scrollY, 0);
-        const scrollingDown = currentY > previousY;
-
-        header.classList.toggle('is-hidden', scrollingDown && currentY > header.offsetHeight);
-        previousY = currentY;
-        ticking = false;
-      };
-
-      window.addEventListener(
-        'scroll',
-        () => {
-          if (!ticking) {
-            window.requestAnimationFrame(updateHeader);
-            ticking = true;
-          }
-        },
-        { passive: true }
-      );
-    }
-
-    const applyGithubStars = (stars) => {
-      const formatted = new Intl.NumberFormat('en', {
-        notation: stars >= 1000 ? 'compact' : 'standard',
-        maximumFractionDigits: 1,
-      }).format(stars);
-
-      document.querySelectorAll('[data-github-stars]').forEach((element) => {
-        element.textContent = formatted;
-      });
-
-      document.querySelectorAll('[data-github-stars-badge]').forEach((element) => {
-        element.setAttribute('aria-label', `${stars.toLocaleString()} GitHub stars`);
-      });
-
-      document.querySelectorAll('.github-link').forEach((element) => {
-        element.setAttribute('aria-label', `GitHub — ${stars.toLocaleString()} stars`);
-      });
-    };
-
-    const cacheKey = 'plozz-github-stars';
-    const cacheLifetime = 6 * 60 * 60 * 1000;
-
-    try {
-      const cached = JSON.parse(localStorage.getItem(cacheKey) ?? 'null');
-
-      if (cached && Date.now() - cached.savedAt < cacheLifetime) {
-        applyGithubStars(cached.stars);
-      } else {
-        fetch('https://api.github.com/repos/thatcube/Plozz', {
-          headers: { Accept: 'application/vnd.github+json' },
-        })
-          .then((response) => {
-            if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
-            return response.json();
-          })
-          .then((repository) => {
-            const stars = repository.stargazers_count;
-            if (!Number.isInteger(stars)) return;
-
-            applyGithubStars(stars);
-            localStorage.setItem(cacheKey, JSON.stringify({ stars, savedAt: Date.now() }));
-          })
-          .catch(() => {});
-      }
-    } catch {
-      // Keep the build-time count when storage or the API is unavailable.
-    }
-
     const gallery = document.querySelector('[data-hero-gallery]');
 
     if (gallery) {

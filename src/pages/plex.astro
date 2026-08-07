@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import PageHero from '../components/PageHero.astro';
+import FactSection from '../components/FactSection.astro';
+import { TESTFLIGHT_URL } from '../data/site';
+
+const title = 'Plex client for Apple TV, iPhone and iPad — Plozz';
+const description =
+  'Plozz is a free, open source Plex client for Apple TV, iPhone and iPad. Sign in with Plex Link, switch Plex Home users, and search subtitles without Plex Pass.';
+
+const signIn = [
+  {
+    name: 'Plex Link',
+    detail: 'Enter the code on another device and you are in. No password on the remote.',
+  },
+  {
+    name: 'Plex Home users',
+    detail: 'Switch between the people in your Plex Home, with PIN entry where a user has one set.',
+  },
+  {
+    name: 'Not only Plex',
+    detail: 'Your Plex server sits beside Jellyfin, Emby and network shares in the same library.',
+  },
+];
+
+const playback = [
+  {
+    name: 'Direct play by default',
+    detail:
+      'Matroska is demuxed on the device, so Plex sends the original file rather than spending CPU on a transcode.',
+  },
+  {
+    name: 'Dolby Vision and Atmos',
+    detail: 'Dolby Vision profiles 5 and 8, HDR10, HLG, and Atmos passthrough.',
+  },
+  {
+    name: 'Real format badges',
+    detail:
+      'Detail pages show the Dolby Vision, Atmos, Digital+ and DTS marks, plus resolution tier and channel layout.',
+  },
+  {
+    name: 'Skip intros and credits',
+    detail:
+      'Uses the markers Plex generates with a Plex Pass. Four modes: off, a Skip button, skip after a five second grace period, or skip instantly.',
+  },
+];
+
+const subtitles = [
+  {
+    name: 'Subtitle search without Plex Pass',
+    detail:
+      'Plozz reads the Plex subtitle catalogue directly, so searching and downloading works on a free account.',
+  },
+  {
+    name: 'SDH and forced preferences',
+    detail:
+      'Four levels each, sent to Plex natively as search parameters rather than filtered after the fact.',
+  },
+  {
+    name: 'It remembers per series',
+    detail:
+      'Change the audio track or subtitle on one episode and the choice sticks for the whole series, even across servers.',
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <SiteHeader />
+
+  <main>
+    <PageHero
+      eyebrow="Plex"
+      title="A Plex client for people who keep hitting the paywall."
+      lead="Subtitle search works without a Plex Pass. Files direct play instead of transcoding. Your Plex library sits next to every other server you own."
+    />
+
+    <FactSection
+      title="Getting in"
+      lead="Plex Link, then pick which of your Plex Home users you are."
+      facts={signIn}
+    />
+
+    <FactSection
+      title="Playback"
+      lead="The less your Plex server has to do, the better everything looks."
+      facts={playback}
+      panel
+    />
+
+    <FactSection
+      title="Subtitles"
+      lead="Plozz draws its own subtitles, so this is not the Plex subtitle experience."
+      facts={subtitles}
+    />
+
+    <section class="closer" aria-labelledby="plex-closer">
+      <div class="container">
+        <h2 id="plex-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <div class="closer-cta">
+          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+            Join the TestFlight beta
+          </a>
+          <a class="btn btn-light btn-lg" href="/features">See every setting</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <SiteScripts />
+</Layout>

@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+import { GITHUB_URL, TESTFLIGHT_URL, NAV_LINKS, GITHUB_STARS_SEED } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="site-brand" href="/" aria-label="Plozz home">
+      <img src="/logo.svg" alt="" width="32" height="32" />
+      <span>Plozz</span>
+    </a>
+    <nav aria-label="Main navigation">
+      {NAV_LINKS.map((link) => (
+        <a
+          class="nav-link"
+          href={link.href}
+          aria-current={path === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a class="github-link" href={GITHUB_URL} target="_blank" rel="noopener">
+        <Icon name="simple-icons:github" />
+        <span class="sr-only">GitHub</span>
+        <span class="github-stars" data-github-stars-badge aria-label={`${GITHUB_STARS_SEED} GitHub stars`}>
+          <span data-github-stars>{GITHUB_STARS_SEED}</span>
+          <span>stars</span>
+        </span>
+      </a>
+      <a class="header-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">TestFlight</a>
+    </nav>
+  </div>
+</header>

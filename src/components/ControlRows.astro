@@ -1,0 +1,25 @@
+---
+import { CONTROL_ROWS } from '../data/site';
+
+export interface Props {
+  rows?: typeof CONTROL_ROWS;
+}
+
+const { rows = CONTROL_ROWS } = Astro.props;
+---
+
+<ul class="controls" aria-label="Settings you can change in Plozz">
+  {rows.map((row) => (
+    <li class="control-row">
+      <div class="control-head">
+        <span class="control-label">{row.label}</span>
+        <span class="control-detail">{row.detail}</span>
+      </div>
+      <div class="control-track">
+        {row.options.map((option, index) => (
+          <span class:list={['control-step', { 'is-set': index === row.active }]}>{option}</span>
+        ))}
+      </div>
+    </li>
+  ))}
+</ul>

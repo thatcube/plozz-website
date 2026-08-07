@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+import { TESTFLIGHT_URL, GITHUB_URL } from '../data/site';
+
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  lead: string;
+  cta?: boolean;
+}
+
+const { eyebrow, title, lead, cta = true } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="container">
+    {eyebrow && <p class="page-hero-eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    <p class="page-hero-lead">{lead}</p>
+    {cta && (
+      <div class="page-hero-cta">
+        <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+          <Icon name="simple-icons:apple" />
+          Join the TestFlight beta
+        </a>
+        <a class="btn btn-light btn-lg" href={GITHUB_URL} target="_blank" rel="noopener">
+          <Icon name="simple-icons:github" />
+          Read the source
+        </a>
+      </div>
+    )}
+  </div>
+</section>

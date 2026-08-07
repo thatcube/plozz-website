@@ -1,0 +1,260 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import PageHero from '../components/PageHero.astro';
+import FactSection from '../components/FactSection.astro';
+import ControlRows from '../components/ControlRows.astro';
+import { TESTFLIGHT_URL } from '../data/site';
+
+const title = 'Every setting in Plozz — free media player for Apple TV';
+const description =
+  'Subtitle styling with nine controls and seven fonts, circadian warmth, spoiler protection, six density steps, skip-intro modes and per-profile everything. All free and open source.';
+
+const subtitles = [
+  {
+    name: 'Nine things to change',
+    detail:
+      'Font, weight, size, vertical position, horizontal offset, colour, opacity, background box and outline. Plozz draws subtitles itself rather than handing them to the system.',
+  },
+  {
+    name: 'Seven faces, two of them for reading trouble',
+    detail:
+      'Atkinson Hyperlegible, which the Braille Institute designed so similar letters stop looking alike, and OpenDyslexic. Then System, SF Rounded, Roboto, Lexend and Fredoka.',
+  },
+  {
+    name: 'Dim subtitles on HDR only',
+    detail:
+      'A separate luminance scale from 0.2 to 1.0, so white text stops searing a hole in a dark HDR scene without touching SDR.',
+  },
+  {
+    name: 'Four presets to start from',
+    detail: 'Clean, Boxed, Outline and Classic Yellow.',
+  },
+  {
+    name: 'SDH, four ways',
+    detail:
+      'Prefer non-SDH, prefer SDH, only SDH, or only non-SDH. Forced subtitles have the same four levels.',
+  },
+  {
+    name: 'Search without an API key',
+    detail:
+      'Find and download a subtitle from inside the player, on Plex and Jellyfin, and load it into the scene you are already watching.',
+  },
+];
+
+const audio = [
+  {
+    name: 'Original or dubbed, on purpose',
+    detail:
+      'Pick the spoken language of the title, your device language, or a specific language. Anime in Japanese and everything else dubbed is a two-second setup.',
+  },
+  {
+    name: 'Rules per content type',
+    detail: 'Anime, movies, TV and everything else can each have their own audio and subtitle policy.',
+  },
+  {
+    name: 'It remembers per series',
+    detail:
+      'Switch track once and the whole series keeps it, matched across servers by TVDB, TMDB, IMDb, AniList, MAL and AniDB IDs.',
+  },
+];
+
+const playback = [
+  {
+    name: 'MKV without a transcode',
+    detail:
+      'Plozz demuxes Matroska on the device using AetherEngine, so the server sends the original file. HEVC, H.264, VP9 and AV1.',
+  },
+  {
+    name: 'Dolby Vision and Atmos',
+    detail: 'Profiles 5 and 8, plus HDR10, HLG and Atmos passthrough. Profile 7 dual-layer is not supported.',
+  },
+  {
+    name: 'TrueHD and DTS survive',
+    detail: 'Bitstreams AVPlayer will not take are bridged to lossless FLAC instead of being dropped.',
+  },
+  {
+    name: 'Skip intros and credits',
+    detail:
+      'Off, a Skip button, skip after a five second grace period you can cancel, or skip instantly. Needs markers from Plex Pass or the Jellyfin Intro Skipper.',
+  },
+  {
+    name: 'Rewind on resume',
+    detail:
+      'Come back to a half-watched film and start a few seconds early. Seventeen steps, tightest at the low end where it matters.',
+  },
+  {
+    name: 'Skip button intervals',
+    detail: 'Forward and backward set separately, from 1, 3, 5, 10, 15, 30 or 60 seconds.',
+  },
+];
+
+const look = [
+  {
+    name: 'Four themes',
+    detail: 'System, Light, Dark and Pure Black for OLED panels.',
+  },
+  {
+    name: 'Six density steps',
+    detail: 'Micro to Huge, taking the poster grid from ten columns down to five. The largest step is a low-vision mode.',
+  },
+  {
+    name: 'Cards or posters',
+    detail: 'Framed cards with a glass border, or borderless artwork that runs bigger.',
+  },
+  {
+    name: 'Mark watched, or mark unwatched',
+    detail: 'A check on what you have seen, or a corner flag on what you have not, the way Infuse and old Plex did it.',
+  },
+  {
+    name: 'Sidebar or tab bar',
+    detail: 'A collapsible sidebar like the system TV app, or a classic tab bar across the top.',
+  },
+  {
+    name: 'Override the glass',
+    detail: 'Force transparency on or off regardless of what tvOS Reduce Transparency is set to.',
+  },
+];
+
+const night = [
+  {
+    name: 'Warmth and darkness, separately',
+    detail: 'Six steps each, from None through to On Fire and Can’t See. They are honest names.',
+  },
+  {
+    name: 'Real sunrise and sunset',
+    detail:
+      'Apple TV has no location APIs, so Plozz does the NOAA solar calculation on-device from a city you pick. Nothing is sent anywhere.',
+  },
+  {
+    name: 'Or just set the times',
+    detail: 'Two clock times, or leave it on permanently. The fade between states is adjustable too.',
+  },
+];
+
+const spoilers = [
+  {
+    name: 'Hide what you have not seen',
+    detail:
+      'Episode artwork and text stay hidden for unwatched episodes. Blur the real image, or swap in generic art so the frame is never even loaded.',
+  },
+  {
+    name: 'Hide ratings until watched',
+    detail: 'A separate toggle, so a bad score cannot colour your evening before you start.',
+  },
+  {
+    name: 'It knows you have started',
+    detail:
+      'Once you are partway into an episode the thumbnail comes back, because you have already seen it. The title and synopsis stay hidden until you finish.',
+  },
+];
+
+const home = [
+  {
+    name: 'Build the hero carousel',
+    detail:
+      'Choose from Continue Watching, Watchlist, random from your library, or trending. Reorder them, cap it between one and twenty items, set the rotation anywhere from four to sixty seconds.',
+  },
+  {
+    name: 'Merge libraries or keep them apart',
+    detail: 'One cross-server Home feed, or separate rows per library. Any library can be hidden outright.',
+  },
+  {
+    name: 'Profiles for the household',
+    detail:
+      'Every setting on this page is per-profile, so nobody else has to live with your density, your subtitles or your bedtime.',
+  },
+];
+
+const trust = [
+  {
+    name: 'No analytics. None.',
+    detail: 'There is no analytics SDK in the app. Nothing counts what you watch or when you open it.',
+  },
+  {
+    name: 'Crash reporting is off until you turn it on',
+    detail:
+      'If you do, identity, server addresses, URLs and network breadcrumbs are stripped before anything leaves the device.',
+  },
+  {
+    name: 'Ratings without an account',
+    detail:
+      'IMDb, Rotten Tomatoes and Metacritic scores appear without you pasting in an API key or signing up for anything.',
+  },
+  {
+    name: 'Anime tracking',
+    detail: 'Connect AniList, MyAnimeList or Simkl if you keep a list.',
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <SiteHeader />
+
+  <main>
+    <PageHero
+      eyebrow="Features"
+      title="The settings are the point."
+      lead="Most players decide for you. Plozz has an opinion but will happily be overruled. Here is what you can change."
+    />
+
+    <section class="controls-section" aria-labelledby="controls-heading">
+      <div class="container">
+        <div class="controls-intro">
+          <h2 id="controls-heading">Named as they are in the app</h2>
+          <p>Nothing here is marketing language. These are the actual option names.</p>
+        </div>
+        <ControlRows />
+      </div>
+    </section>
+
+    <FactSection
+      title="Subtitles"
+      lead="The deepest part of the app, and the reason a lot of people stay."
+      facts={subtitles}
+      panel
+    />
+
+    <FactSection title="Audio" facts={audio} />
+
+    <FactSection
+      title="Playback"
+      lead="Built on AetherEngine, an open source FFmpeg-based engine."
+      facts={playback}
+      panel
+    />
+
+    <FactSection title="How it looks" facts={look} />
+
+    <FactSection
+      title="Circadian mode"
+      lead="tvOS has no Night Shift and no brightness API, so Plozz built one."
+      facts={night}
+      panel
+    />
+
+    <FactSection title="Spoiler protection" facts={spoilers} />
+
+    <FactSection title="Home and profiles" facts={home} panel />
+
+    <FactSection title="What it does not do" facts={trust} />
+
+    <section class="closer" aria-labelledby="features-closer">
+      <div class="container">
+        <h2 id="features-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <div class="closer-cta">
+          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+            Join the TestFlight beta
+          </a>
+          <a class="btn btn-light btn-lg" href="/">Back to the start</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <SiteScripts />
+</Layout>

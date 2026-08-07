@@ -14,7 +14,10 @@ Explain what Plozz supports, establish trust in the open-source project, and dri
 
 ## Brand Personality
 
-Dark, playful, and crafted. Plozz should feel like a focused native media player with a distinctive pixel-art identity rather than a generic software landing page.
+Dark, precise, and slightly dry. Plozz is a media player for people who care about
+settings, so the site should sound like it was written by the person who built it.
+The Plozz logo keeps its pixel-art identity; everything else is modern Apple-like
+interface chrome.
 
 ## Anti-references
 
@@ -30,6 +33,18 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
 - Use authentic provider assets without altering their artwork.
 - Make every visible word earn its place; prefer short labels over explanatory copy.
 - Vary section treatment by importance instead of repeating the same container pattern.
+- Round every surface. The radius scale is --r-xl / --r-lg / --r-md / --r-sm / --r-pill.
+- Quote the app's real option names instead of describing them. "Toasty" beats "warmth control".
+- Follow the natural-writing rules: no promotional verbs, no rule of three, no false
+  ranges, sparing em dashes, sentence case headings.
+
+## Claims we must not make
+
+- Trakt. It is being removed from the app.
+- Music playback of any kind, including Last.fm scrobbling.
+- Localization. The 36-language work is on an unmerged branch.
+- Parental-control PIN, bitmap (PGS) subtitles, dual-subtitle UI, and the live
+  subtitle preview panel. Modelled in code but not shipping.
 
 ## Accessibility & Inclusion
 
