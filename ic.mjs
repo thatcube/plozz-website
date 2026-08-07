@@ -1,0 +1,13 @@
+import fs from 'fs';
+const list=await (await fetch('http://localhost:9352/json/list')).json();
+const page=list.find(t=>t.type==='page'); const ws=new WebSocket(page.webSocketDebuggerUrl);
+let id=0; const p=new Map(); const send=(m,q={})=>new Promise(r=>{const i=++id;p.set(i,r);ws.send(JSON.stringify({id:i,method:m,params:q}));});
+await new Promise(r=>ws.onopen=r); ws.onmessage=e=>{const m=JSON.parse(e.data); if(m.id&&p.has(m.id)){p.get(m.id)(m.result);p.delete(m.id);}};
+await send('Page.enable');
+await send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:2,mobile:false});
+await send('Page.navigate',{url:'http://localhost:4322/'}); await new Promise(r=>setTimeout(r,2200));
+await send('Runtime.evaluate',{expression:'window.scrollTo(0,document.body.scrollHeight)'}); await new Promise(r=>setTimeout(r,1600));
+await send('Runtime.evaluate',{expression:'window.scrollTo(0,0)'}); await new Promise(r=>setTimeout(r,700));
+const b=JSON.parse((await send('Runtime.evaluate',{expression:`(()=>{const r=document.querySelector('.icloud-slab').getBoundingClientRect();return JSON.stringify({y:Math.round(r.top+window.scrollY-14),h:Math.round(r.height+28)});})()`,returnByValue:true})).result.value);
+const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:{x:60,y:b.y,width:1320,height:b.h,scale:1}});
+fs.writeFileSync('/tmp/ic.png',Buffer.from(r.data,'base64')); console.log('saved'); ws.close();

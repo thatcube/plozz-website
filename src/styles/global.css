@@ -1275,13 +1275,6 @@ h3 {
 }
 
 /* ---------- iCloud sync ---------- */
-.icloud-sync .panel {
-  border-color: #f2f2f3;
-  background: #f2f2f3;
-  color: #0a0a0b;
-}
-
-
 .icloud-devices {
   position: relative;
   width: min(46vw, 540px);
@@ -3108,7 +3101,6 @@ a.cell:hover .cell-arrow {
 .icloud-visual {
   grid-row: span 2;
   justify-content: center;
-  background: #f2f2f3;
 }
 
 /* ---------- Showcase slab ---------- */
