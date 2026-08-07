@@ -2856,12 +2856,12 @@ a.cell:hover .cell-arrow {
    here, so no row repeats it. */
 
 
-/* ---------- Source hub ----------
-   Four sources wired into one library. The SVG and the HTML pills share one
-   coordinate space: the container's aspect-ratio matches the viewBox, so the
-   wires land on the pills at any width. Sizing runs on `cqw` against the
-   container, which lets the whole figure shrink together rather than needing a
-   breakpoint per column width. */
+/* ---------- Library merge ----------
+   Four sources feeding one library. The library is the hero and the sources
+   are typographic, so the weight sits where the claim does. The SVG and the
+   HTML labels share one coordinate space: the container's aspect-ratio matches
+   the viewBox, so the curves stay anchored to the labels at any width, and the
+   rest is sized in `cqw` against the container rather than the viewport. */
 .merge-slab {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 }
@@ -2871,16 +2871,16 @@ a.cell:hover .cell-arrow {
   justify-content: center;
 }
 
-.hub {
+.merge {
   container-type: inline-size;
   position: relative;
   aspect-ratio: 160 / 100;
   width: 100%;
-  max-width: 620px;
+  max-width: 660px;
   margin: 0 auto;
 }
 
-.hub-wires {
+.merge-feeds {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -2889,23 +2889,23 @@ a.cell:hover .cell-arrow {
   fill: none;
 }
 
-.hub-wire {
+.merge-feed {
   stroke: var(--border-bright);
   stroke-width: 1;
 }
 
-/* A short dash running each wire inward, so the direction of travel reads
-   without a single arrowhead. */
-.hub-pulse {
-  stroke: rgba(255, 255, 255, 0.34);
+/* A soft dash running each curve toward the join, so the direction of travel
+   reads without an arrowhead. */
+.merge-flow {
+  stroke: rgba(255, 255, 255, 0.32);
   stroke-width: 1.5;
   stroke-linecap: round;
-  stroke-dasharray: 11 89;
-  animation: hub-pulse 4.6s linear infinite;
+  stroke-dasharray: 12 88;
+  animation: merge-flow 5s linear infinite;
   animation-delay: var(--delay, 0s);
 }
 
-@keyframes hub-pulse {
+@keyframes merge-flow {
   from {
     stroke-dashoffset: 100;
   }
@@ -2914,68 +2914,107 @@ a.cell:hover .cell-arrow {
   }
 }
 
-.hub-nodes {
+.merge-sources {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.hub-node {
+.merge-source {
   position: absolute;
-  left: var(--x);
+  right: 72.5%;
   top: var(--y);
-  transform: translate(-50%, -50%);
-  max-width: 42cqw;
-  padding: clamp(7px, 1.4cqw, 11px) clamp(13px, 2.6cqw, 19px);
-  border: 1px solid var(--border-bright);
-  border-radius: var(--r-pill);
-  background: #141416;
-  font-size: clamp(11px, 2.35cqw, 15px);
+  transform: translateY(-50%);
+  font-size: clamp(11px, 2.3cqw, 15px);
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: var(--text-muted);
+  text-align: right;
   white-space: nowrap;
 }
 
-.hub-core {
+.merge-library {
   position: absolute;
-  left: 50%;
+  left: 52%;
+  right: 0;
   top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(13px, 3cqw, 22px);
-}
-
-.hub-core-mark {
+  transform: translateY(-50%);
   display: grid;
-  place-items: center;
-  width: clamp(58px, 14cqw, 96px);
-  height: clamp(58px, 14cqw, 96px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(5px, 1.2cqw, 8px);
+  padding: clamp(8px, 1.8cqw, 12px);
   border: 1px solid var(--border-bright);
+  border-radius: clamp(8px, 1.8cqw, 13px);
+  background: #131315;
+}
+
+.merge-art {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: clamp(3px, 0.7cqw, 5px);
+  background: var(--art);
+  overflow: hidden;
+}
+
+/* A little sheen off the top edge, so the tiles read as artwork rather than
+   flat swatches. */
+.merge-art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    173deg,
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0) 42%
+  );
+}
+
+/* An off-centre light source per tile, which is what gives each one a subject
+   instead of an even wash. */
+.merge-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    62% 44% at var(--fx) var(--fy),
+    rgba(255, 255, 255, 0.16),
+    rgba(0, 0, 0, 0) 68%
+  );
+}
+
+/* Progress and a watched tick are what stop a grid of rectangles reading as a
+   loading skeleton: they say this is a library someone is part way through. */
+.merge-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: clamp(2px, 0.5cqw, 3px);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.merge-progress::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--p);
+  background: var(--brand);
+}
+
+.merge-watched {
+  position: absolute;
+  top: clamp(3px, 0.7cqw, 5px);
+  right: clamp(3px, 0.7cqw, 5px);
+  z-index: 1;
+  width: clamp(4px, 0.9cqw, 6px);
+  height: clamp(4px, 0.9cqw, 6px);
   border-radius: 50%;
-  background: #141416;
-  box-shadow: 0 0 0 clamp(6px, 1.4cqw, 10px) #0b0b0c;
-}
-
-.hub-core-mark img {
-  width: clamp(26px, 6.4cqw, 44px);
-  height: auto;
-  /* The mark's antennas take box height with almost no visual weight, so the
-     solid body reads low unless it is lifted. */
-  transform: translateY(-2px);
-}
-
-.hub-core-label {
-  font-size: clamp(11px, 2.3cqw, 14px);
-  letter-spacing: -0.01em;
-  color: var(--text-muted);
-  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.72);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hub-pulse {
+  .merge-flow {
     animation: none;
     opacity: 0;
   }
@@ -3037,72 +3076,83 @@ a.cell:hover .cell-arrow {
   }
 }
 
-/* Below this the orbit has no room, so the same four sources stack and run
-   down a single spine into the library. */
+/* Below this the fan has no room, so the sources stack above the library and
+   run down a single spine into it. */
 @media (max-width: 560px) {
-  .hub {
+  .merge {
     aspect-ratio: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
   }
 
-  .hub-wires {
+  .merge-feeds {
     display: none;
   }
 
-  .hub-nodes {
+  .merge-sources {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     width: 100%;
   }
 
-  .hub-nodes::before {
+  .merge-sources::before {
     content: '';
     position: absolute;
     left: 50%;
-    top: 18px;
-    bottom: -14px;
+    top: 16px;
+    bottom: -16px;
     width: 1px;
     background: var(--border-bright);
     transform: translateX(-0.5px);
   }
 
-  .hub-node {
+  .merge-source {
     position: relative;
-    left: auto;
+    right: auto;
     top: auto;
     transform: none;
-    max-width: 100%;
-    padding: 9px 16px;
+    padding: 0 12px;
+    background: #0b0b0c;
     font-size: 0.86rem;
-    white-space: normal;
+    text-align: center;
   }
 
-  .hub-core {
+  .merge-library {
     position: relative;
     left: auto;
+    right: auto;
     top: auto;
     transform: none;
-    gap: 10px;
+    width: 100%;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 12px;
   }
 
-  .hub-core-mark {
-    width: 68px;
-    height: 68px;
-    box-shadow: none;
+  .merge-art {
+    border-radius: 4px;
   }
 
-  .hub-core-mark img {
-    width: 30px;
+  /* Two rows is enough to read as a wall; three makes the section run long on
+     a phone. */
+  .merge-art:nth-child(n + 9) {
+    display: none;
   }
 
-  .hub-core-label {
-    font-size: 0.95rem;
+  .merge-progress {
+    height: 3px;
+  }
+
+  .merge-watched {
+    top: 5px;
+    right: 5px;
+    width: 6px;
+    height: 6px;
   }
 }
 

@@ -1,0 +1,107 @@
+---
+/**
+ * Four sources merging into one library.
+ *
+ * The library is the hero: a wall of artwork with watch progress on it, which
+ * is what the merge actually produces. The sources are typographic and light,
+ * feeding it through curves that converge on a single point at its edge.
+ *
+ * Label rows and curve endpoints are given in the SVG's own viewBox units and
+ * reused as percentages, and the container carries a matching aspect-ratio, so
+ * the curves stay anchored to the labels at every size without skewing.
+ * Everything else is sized in `cqw` against the container, which lets the
+ * figure shrink as a whole rather than needing a breakpoint per column width.
+ */
+const VB = { w: 160, h: 100 };
+const FROM_X = 48; // where a curve leaves its label
+const JOIN = { x: 82, y: 50 }; // where all four become one
+
+const sources = [
+  { label: 'Your Plex', y: 14 },
+  { label: 'Your Jellyfin', y: 38 },
+  { label: 'A friend’s Emby', y: 62 },
+  { label: 'The NAS in the closet', y: 86 },
+];
+
+/** A flat-ended S: horizontal where it leaves the label and where it lands. */
+const curve = (y: number) =>
+  `M ${FROM_X} ${y} C 65 ${y} 65 ${JOIN.y} ${JOIN.x} ${JOIN.y}`;
+
+/**
+ * Artwork stand-ins. Each tile gets a hue, plus an off-centre light source, so
+ * the wall reads as a shelf of different things rather than a row of swatches.
+ * Lightness stays low enough that nothing competes with the accent.
+ */
+const art = [
+  { h: 210, s: 34, l: 28, fx: 30, fy: 32, progress: 62 },
+  { h: 352, s: 34, l: 24, fx: 68, fy: 26, watched: true },
+  { h: 266, s: 28, l: 26, fx: 44, fy: 62 },
+  { h: 168, s: 30, l: 20, fx: 72, fy: 44 },
+  { h: 20, s: 46, l: 27, fx: 36, fy: 24 },
+  { h: 222, s: 32, l: 18, fx: 58, fy: 70, progress: 28 },
+  { h: 300, s: 24, l: 24, fx: 26, fy: 46 },
+  { h: 128, s: 26, l: 19, fx: 64, fy: 34, watched: true },
+  { h: 6, s: 38, l: 23, fx: 50, fy: 28 },
+  { h: 192, s: 34, l: 22, fx: 34, fy: 66 },
+  { h: 280, s: 26, l: 20, fx: 70, fy: 38, progress: 84 },
+  { h: 38, s: 38, l: 23, fx: 42, fy: 52 },
+];
+
+const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(3)}%`;
+---
+
+<figure class="merge">
+  <svg
+    class="merge-feeds"
+    viewBox={`0 0 ${VB.w} ${VB.h}`}
+    preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
+  >
+    {
+      sources.map((s) => (
+        <path
+          class="merge-feed"
+          d={curve(s.y)}
+          vector-effect="non-scaling-stroke"
+        />
+      ))
+    }
+    {
+      sources.map((s, i) => (
+        <path
+          class="merge-flow"
+          d={curve(s.y)}
+          pathLength="100"
+          style={`--delay: ${(i * 1.15).toFixed(2)}s`}
+          vector-effect="non-scaling-stroke"
+        />
+      ))
+    }
+  </svg>
+
+  <ul class="merge-sources">
+    {
+      sources.map((s) => (
+        <li class="merge-source" style={`--y: ${pct(s.y, VB.h)}`}>
+          {s.label}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="merge-library" aria-hidden="true">
+    {
+      art.map((a) => (
+        <span
+          class="merge-art"
+          style={`--art: linear-gradient(155deg, hsl(${a.h} ${a.s}% ${a.l + 9}%), hsl(${a.h + 12} ${Math.max(a.s - 8, 10)}% ${a.l - 8}%)); --fx: ${a.fx}%; --fy: ${a.fy}%`}
+        >
+          {a.progress ? (
+            <span class="merge-progress" style={`--p: ${a.progress}%`} />
+          ) : null}
+          {a.watched ? <span class="merge-watched" /> : null}
+        </span>
+      ))
+    }
+  </div>
+</figure>
