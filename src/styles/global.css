@@ -2864,6 +2864,12 @@ button.btn {
   color: var(--text);
 }
 
+/* Same specificity as the base rule above, or the white text survives the
+   white hover fill and the label disappears. */
+.donate-amounts a.donate-go:hover {
+  color: #0a0a0b;
+}
+
 .donate-go svg {
   width: 13px;
   height: 13px;
