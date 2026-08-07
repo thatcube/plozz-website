@@ -6,7 +6,6 @@ import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
-import SubtitleLab from '../components/SubtitleLab.astro';
 import DensityLab from '../components/DensityLab.astro';
 import SpoilerLab from '../components/SpoilerLab.astro';
 
@@ -38,10 +37,18 @@ const description =
 
     <Showcase
       question="Can I make the subtitles readable?"
-      detail="Seven typefaces. Two of them were built for people who struggle to read subtitles at all."
+      detail="Seven typefaces, two of them built for people who struggle to read subtitles at all. Change any of it mid-scene, without leaving what you're watching."
       flip
     >
-      <SubtitleLab />
+      <img
+        class="shot"
+        src="/screenshots/plozz-tv-subtitles.webp"
+        alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
+        width="2000"
+        height="1125"
+        loading="lazy"
+        decoding="async"
+      />
     </Showcase>
 
     <Showcase
