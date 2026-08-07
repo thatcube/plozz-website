@@ -2,12 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
 import SubtitleLab from '../components/SubtitleLab.astro';
 import FactSection from '../components/FactSection.astro';
-import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Emby client for Apple TV, iPhone and iPad — Plozz";
 const description = "A free, open source Emby client for Apple TV, iPhone and iPad. Full playback on iPhone with no time limit and no Emby Premiere.";
@@ -107,18 +107,7 @@ const compatibility = [
       facts={compatibility}
     />
 
-    <section class="closer" aria-labelledby="page-closer">
-      <div class="container">
-        <h2 id="page-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription, no paid tier. The whole thing is GPL-3.0 on GitHub.</p>
-        <div class="closer-cta">
-          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
-            Join the TestFlight beta
-          </a>
-          <a class="btn btn-light btn-lg" href="/features">The questions people ask</a>
-        </div>
-      </div>
-    </section>
+    <Closer secondaryHref="/features" secondaryLabel="The questions people ask" />
   </main>
 
   <SiteFooter />

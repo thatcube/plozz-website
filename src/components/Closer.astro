@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+import { GITHUB_URL, TESTFLIGHT_URL } from '../data/site';
+
+export interface Props {
+  /** The second button. Defaults to the GitHub source link. */
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const { secondaryHref = GITHUB_URL, secondaryLabel = 'Read the source' } = Astro.props;
+const external = secondaryHref.startsWith('http');
+---
+
+<section class="closer" aria-labelledby="closer-heading">
+  <div class="container">
+    <h2 id="closer-heading">Free forever.<br />Open source.</h2>
+    <p>No subscription, no paid tier. The whole thing is GPL-3.0 on GitHub.</p>
+    <div class="closer-cta">
+      <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+        <Icon name="simple-icons:apple" />
+        Join the TestFlight beta
+      </a>
+      <a
+        class="btn btn-light btn-lg"
+        href={secondaryHref}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener' : undefined}
+      >
+        {external && <Icon name="simple-icons:github" />}
+        {secondaryLabel}
+      </a>
+    </div>
+  </div>
+</section>

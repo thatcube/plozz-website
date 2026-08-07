@@ -1,44 +1,49 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
-import SiteHeader from '../components/SiteHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import SiteScripts from '../components/SiteScripts.astro';
-import FormatPlate from '../components/FormatPlate.astro';
-import { PAYWALLED, DONATION_AMOUNTS } from '../data/site';
-import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from '../data/site';
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Closer from "../components/Closer.astro";
+import SiteScripts from "../components/SiteScripts.astro";
+import FormatPlate from "../components/FormatPlate.astro";
+import { PAYWALLED, DONATION_AMOUNTS } from "../data/site";
+import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from "../data/site";
 
 const heroScreenshots = [
   {
-    src: '/screenshots/plozz-tv.webp',
-    alt: 'Plozz movie details screen on Apple TV',
-    label: 'Movie details',
+    src: "/screenshots/plozz-tv.webp",
+    alt: "Plozz movie details screen on Apple TV",
+    label: "Movie details",
     width: 1088,
     height: 612,
   },
   {
-    src: '/screenshots/plozz-tv-home.webp',
-    alt: 'Plozz home screen on Apple TV',
-    label: 'Home',
+    src: "/screenshots/plozz-tv-home.webp",
+    alt: "Plozz home screen on Apple TV",
+    label: "Home",
     width: 2000,
     height: 1119,
   },
 ];
 
 const softwareLd = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Plozz',
-  applicationCategory: 'MultimediaApplication',
-  operatingSystem: 'tvOS, iOS, iPadOS',
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Plozz",
+  applicationCategory: "MultimediaApplication",
+  operatingSystem: "tvOS, iOS, iPadOS",
   description:
-    'Plozz is a free, open source media player built in Swift for Apple TV, iPhone, and iPad. Connect Plex, Jellyfin, Emby, SMB, NFS, WebDAV, SFTP, and FTP.',
+    "Plozz is a free, open source media player built in Swift for Apple TV, iPhone, and iPad. Connect Plex, Jellyfin, Emby, SMB, NFS, WebDAV, SFTP, and FTP.",
   url: SITE,
   image: `${SITE}/og-image.png`,
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  license: "https://www.gnu.org/licenses/gpl-3.0.html",
   isAccessibleForFree: true,
-  author: { '@type': 'Organization', name: 'thatcube', url: 'https://github.com/thatcube' },
+  author: {
+    "@type": "Organization",
+    name: "thatcube",
+    url: "https://github.com/thatcube",
+  },
   sameAs: [GITHUB_URL],
 };
 ---
@@ -69,11 +74,21 @@ const softwareLd = {
             <div class="hero-actions">
               <p>Free forever · Open source</p>
               <div class="hero-cta">
-                <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
+                <a
+                  class="btn btn-primary btn-lg btn-cta"
+                  href={TESTFLIGHT_URL}
+                  target="_blank"
+                  rel="noopener"
+                >
                   <Icon name="simple-icons:apple" />
                   Join the TestFlight beta
                 </a>
-                <a class="btn btn-light btn-lg" href={GITHUB_URL} target="_blank" rel="noopener">
+                <a
+                  class="btn btn-light btn-lg"
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener"
+                >
                   <Icon name="simple-icons:github" />
                   GitHub
                 </a>
@@ -83,25 +98,31 @@ const softwareLd = {
         </div>
         <div class="hero-devices" data-hero-gallery>
           <div class="tv-frame device-tv">
-            {heroScreenshots.map((screenshot, index) => (
-              <img
-                class:list={['hero-slide', { 'is-active': index === 0 }]}
-                src={screenshot.src}
-                alt={screenshot.alt}
-                width={screenshot.width}
-                height={screenshot.height}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-                fetchpriority={index === 0 ? 'high' : 'auto'}
-                data-hero-slide
-                data-slide-label={screenshot.label}
-              />
-            ))}
+            {
+              heroScreenshots.map((screenshot, index) => (
+                <img
+                  class:list={["hero-slide", { "is-active": index === 0 }]}
+                  src={screenshot.src}
+                  alt={screenshot.alt}
+                  width={screenshot.width}
+                  height={screenshot.height}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchpriority={index === 0 ? "high" : "auto"}
+                  data-hero-slide
+                  data-slide-label={screenshot.label}
+                />
+              ))
+            }
           </div>
           <div class="hero-gallery-status" aria-live="polite">
             <span data-gallery-label>{heroScreenshots[0].label}</span>
             <span class="hero-gallery-control">
-              <span><span data-gallery-index>1</span> of {heroScreenshots.length}</span>
+              <span
+                ><span data-gallery-index>1</span> of {
+                  heroScreenshots.length
+                }</span
+              >
               <button type="button" data-gallery-toggle>Pause</button>
             </span>
           </div>
@@ -113,12 +134,19 @@ const softwareLd = {
       <div class="container">
         <div class="sources-intro">
           <h2 id="sources-heading">Everything you<br />already have.</h2>
-          <p>Plozz plays from all of it. Nothing gets transcoded on the way to you.</p>
+          <p>
+            Plozz plays from all of it. Nothing gets transcoded on the way to
+            you.
+          </p>
         </div>
         <ul class="ledger">
           <li class="ledger-row">
             <a href="/jellyfin">
-              <img class="lockup-jellyfin" src="/providers/jellyfin.svg" alt="Jellyfin" />
+              <img
+                class="lockup-jellyfin"
+                src="/providers/jellyfin.svg"
+                alt="Jellyfin"
+              />
               <span class="ledger-go" aria-hidden="true"></span>
             </a>
           </li>
@@ -138,7 +166,9 @@ const softwareLd = {
             <a href="/network-shares">
               <span class="sr-only">Network shares</span>
               <span class="share-chips" aria-hidden="true">
-                <span class="chip">SMB</span><span class="chip">NFS</span><span class="chip">WebDAV</span><span class="chip">SFTP</span><span class="chip">FTP</span>
+                <span class="chip">SMB</span><span class="chip">NFS</span><span
+                  class="chip">WebDAV</span
+                ><span class="chip">SFTP</span><span class="chip">FTP</span>
               </span>
               <span class="ledger-go" aria-hidden="true"></span>
             </a>
@@ -149,33 +179,42 @@ const softwareLd = {
 
     <section class="merge" aria-labelledby="merge-heading">
       <div class="container">
-       <div class="panel merge-body">
-        <div class="merge-copy">
-          <h2 id="merge-heading">Your servers. Your friends&rsquo;. One library.</h2>
-          <p>Connect as many as you like. Your watch history follows you across every one of them.</p>
+        <div class="panel merge-body">
+          <div class="merge-copy">
+            <h2 id="merge-heading">
+              Your servers. Your friends&rsquo;. One library.
+            </h2>
+            <p>
+              Connect as many as you like. Your watch history follows you across
+              every one of them.
+            </p>
+          </div>
+          <div class="merge-diagram">
+            <ul class="merge-inputs">
+              <li>Your Plex</li>
+              <li>Your Jellyfin</li>
+              <li>A friend&rsquo;s Emby</li>
+              <li>The NAS in the closet</li>
+            </ul>
+            <p class="merge-output">One library</p>
+          </div>
         </div>
-        <div class="merge-diagram">
-          <ul class="merge-inputs">
-            <li>Your Plex</li>
-            <li>Your Jellyfin</li>
-            <li>A friend&rsquo;s Emby</li>
-            <li>The NAS in the closet</li>
-          </ul>
-          <p class="merge-output">One library</p>
-        </div>
-       </div>
       </div>
     </section>
 
     <section class="plays-everything" aria-labelledby="plays-heading">
       <div class="container">
         <div class="plays-head">
-          <h2 id="plays-heading">Dolby Vision, HDR10+ and Atmos.<br />Straight off the file.</h2>
-          <p>Your Apple TV does the decoding. Your server just hands over the file.</p>
+          <h2 id="plays-heading">
+            Dolby Vision, HDR10+ and Atmos.<br />Straight off the file.
+          </h2>
+          <p>
+            Your Apple TV does the decoding. Your server just hands over the
+            file.
+          </p>
         </div>
 
         <FormatPlate />
-
       </div>
     </section>
 
@@ -184,16 +223,21 @@ const softwareLd = {
         <div class="nopay-body">
           <div class="nopay-copy">
             <h2 id="nopay-heading">None of it costs anything.</h2>
-            <p>You’d pay for every one of these somewhere else. Plozz has no Pro version, because there’s nothing left to put in it.</p>
+            <p>
+              You’d pay for every one of these somewhere else. Plozz has no Pro
+              version, because there’s nothing left to put in it.
+            </p>
           </div>
           <ul class="nopay-list">
-            {PAYWALLED.map((item) => (
-              <li>
-                <span class="nopay-feature">{item.feature}</span>
-                <span class="nopay-who">{item.who}</span>
-                <span class="nopay-us">Free</span>
-              </li>
-            ))}
+            {
+              PAYWALLED.map((item) => (
+                <li>
+                  <span class="nopay-feature">{item.feature}</span>
+                  <span class="nopay-who">{item.who}</span>
+                  <span class="nopay-us">Free</span>
+                </li>
+              ))
+            }
           </ul>
         </div>
       </div>
@@ -201,55 +245,61 @@ const softwareLd = {
 
     <section class="icloud-sync" aria-labelledby="icloud-sync-heading">
       <div class="container">
-       <div class="panel icloud-body">
-        <div>
-          <h2 id="icloud-sync-heading">Every screen you own.</h2>
-          <p>Start on the Apple TV. Finish on your phone. Your servers and your place in everything sync over iCloud, and the devices you carry also get downloads and Picture in Picture.</p>
-        </div>
-        <div class="icloud-devices">
-          <div class="icloud-device-slot icloud-ipad-slot">
-            <div class="device device-ipad-pro device-spacegray device-landscape">
-              <div class="device-frame">
-                <img
-                  class="device-screen"
-                  src="/screenshots/plozz-ipad.webp"
-                  alt="Plozz on iPad"
-                  width="1084"
-                  height="757"
-                  loading="lazy"
-                  decoding="async"
-                />
+        <div class="panel icloud-body">
+          <div>
+            <h2 id="icloud-sync-heading">Every screen you own.</h2>
+            <p>
+              Start on the Apple TV. Finish on your phone. Your servers and your
+              place in everything sync over iCloud, and the devices you carry
+              also get downloads and Picture in Picture.
+            </p>
+          </div>
+          <div class="icloud-devices">
+            <div class="icloud-device-slot icloud-ipad-slot">
+              <div
+                class="device device-ipad-pro device-spacegray device-landscape"
+              >
+                <div class="device-frame">
+                  <img
+                    class="device-screen"
+                    src="/screenshots/plozz-ipad.webp"
+                    alt="Plozz on iPad"
+                    width="1084"
+                    height="757"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="device-btns"></div>
+                <div class="device-sensors"></div>
               </div>
-              <div class="device-btns"></div>
-              <div class="device-sensors"></div>
+            </div>
+            <div class="icloud-device-slot icloud-iphone-slot">
+              <div class="device device-iphone-14-pro device-black">
+                <div class="device-frame">
+                  <img
+                    class="device-screen"
+                    src="/screenshots/plozz-iphone.webp"
+                    alt="Plozz on iPhone"
+                    width="738"
+                    height="1603"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="device-stripe"></div>
+                <div class="device-header"></div>
+                <div class="device-sensors"></div>
+                <div class="device-btns"></div>
+                <div class="device-power"></div>
+                <div class="device-home"></div>
+              </div>
+            </div>
+            <div class="icloud-mark" aria-hidden="true">
+              <Icon name="ph:cloud-check" />
             </div>
           </div>
-          <div class="icloud-device-slot icloud-iphone-slot">
-            <div class="device device-iphone-14-pro device-black">
-              <div class="device-frame">
-                <img
-                  class="device-screen"
-                  src="/screenshots/plozz-iphone.webp"
-                  alt="Plozz on iPhone"
-                  width="738"
-                  height="1603"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div class="device-stripe"></div>
-              <div class="device-header"></div>
-              <div class="device-sensors"></div>
-              <div class="device-btns"></div>
-              <div class="device-power"></div>
-              <div class="device-home"></div>
-            </div>
-          </div>
-          <div class="icloud-mark" aria-hidden="true">
-            <Icon name="ph:cloud-check" />
-          </div>
         </div>
-       </div>
       </div>
     </section>
 
@@ -258,19 +308,34 @@ const softwareLd = {
         <div class="donate-body">
           <div class="donate-copy">
             <h2 id="donate-heading">Consider donating.</h2>
-            <p>It helps me cover the cost of ongoing development of Plozz and my other apps. They’re all free forever and open source. If you’ve got use out of one, it means a lot.</p>
+            <p>
+              It helps me cover the cost of ongoing development of Plozz and my
+              other free, open source apps. If you’ve enjoyed using Plozz, a
+              donation means a lot.
+            </p>
           </div>
           <div class="donate-action">
             <ul class="donate-amounts">
-              {DONATION_AMOUNTS.map((amount) => (
-                <li>
-                  <a href={`${DONATE_URL}?frequency=one-time&amount=${amount}`} target="_blank" rel="noopener">
-                    <span class="sr-only">Sponsor </span>${amount}
-                  </a>
-                </li>
-              ))}
+              {
+                DONATION_AMOUNTS.map((amount) => (
+                  <li>
+                    <a
+                      href={`${DONATE_URL}?frequency=one-time&amount=${amount}`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span class="sr-only">Sponsor </span>${amount}
+                    </a>
+                  </li>
+                ))
+              }
               <li>
-                <a class="donate-go" href={DONATE_URL} target="_blank" rel="noopener">
+                <a
+                  class="donate-go"
+                  href={DONATE_URL}
+                  target="_blank"
+                  rel="noopener"
+                >
                   Donate<span class="sr-only"> another amount, or monthly</span>
                   <Icon name="ph:arrow-up-right" />
                 </a>
@@ -281,23 +346,7 @@ const softwareLd = {
       </div>
     </section>
 
-    <section class="closer" aria-labelledby="closer-heading">
-      <div class="container">
-        <h2 id="closer-heading">Free forever.<br />Open source.</h2>
-        <p>No subscription, no paid tier. The whole thing is GPL-3.0 on GitHub.</p>
-        <div class="closer-cta">
-          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
-            <Icon name="simple-icons:apple" />
-            Join the TestFlight beta
-          </a>
-          <a class="btn btn-light btn-lg" href={GITHUB_URL} target="_blank" rel="noopener">
-            <Icon name="simple-icons:github" />
-            Read the source
-          </a>
-        </div>
-      </div>
-    </section>
-
+    <Closer />
   </main>
 
   <SiteFooter />
@@ -305,14 +354,16 @@ const softwareLd = {
   <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />
   <SiteScripts />
   <script>
-    const gallery = document.querySelector('[data-hero-gallery]');
+    const gallery = document.querySelector("[data-hero-gallery]");
 
     if (gallery) {
-      const slides = [...gallery.querySelectorAll('[data-hero-slide]')];
-      const label = gallery.querySelector('[data-gallery-label]');
-      const indexLabel = gallery.querySelector('[data-gallery-index]');
-      const toggle = gallery.querySelector('[data-gallery-toggle]');
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const slides = [...gallery.querySelectorAll("[data-hero-slide]")];
+      const label = gallery.querySelector("[data-gallery-label]");
+      const indexLabel = gallery.querySelector("[data-gallery-index]");
+      const toggle = gallery.querySelector("[data-gallery-toggle]");
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
       let activeIndex = 0;
       let timer;
       let paused = reducedMotion.matches;
@@ -321,7 +372,7 @@ const softwareLd = {
         activeIndex = index;
 
         slides.forEach((slide, slideIndex) => {
-          slide.classList.toggle('is-active', slideIndex === activeIndex);
+          slide.classList.toggle("is-active", slideIndex === activeIndex);
         });
 
         label.textContent = slides[activeIndex].dataset.slideLabel;
@@ -335,37 +386,40 @@ const softwareLd = {
       const start = () => {
         stop();
         if (paused || document.hidden || reducedMotion.matches) return;
-        timer = window.setInterval(() => showSlide((activeIndex + 1) % slides.length), 7000);
+        timer = window.setInterval(
+          () => showSlide((activeIndex + 1) % slides.length),
+          7000,
+        );
       };
 
-      toggle.addEventListener('click', () => {
+      toggle.addEventListener("click", () => {
         paused = !paused;
-        toggle.textContent = paused ? 'Play' : 'Pause';
+        toggle.textContent = paused ? "Play" : "Pause";
         start();
       });
 
-      gallery.addEventListener('mouseenter', () => {
+      gallery.addEventListener("mouseenter", () => {
         stop();
       });
-      gallery.addEventListener('mouseleave', () => {
+      gallery.addEventListener("mouseleave", () => {
         start();
       });
-      gallery.addEventListener('focusin', () => {
+      gallery.addEventListener("focusin", () => {
         stop();
       });
-      gallery.addEventListener('focusout', () => {
+      gallery.addEventListener("focusout", () => {
         start();
       });
-      document.addEventListener('visibilitychange', start);
-      reducedMotion.addEventListener('change', () => {
+      document.addEventListener("visibilitychange", start);
+      reducedMotion.addEventListener("change", () => {
         if (reducedMotion.matches) {
           paused = true;
-          toggle.textContent = 'Play';
+          toggle.textContent = "Play";
         }
         start();
       });
 
-      toggle.textContent = paused ? 'Play' : 'Pause';
+      toggle.textContent = paused ? "Play" : "Pause";
       start();
     }
   </script>

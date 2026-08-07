@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
@@ -9,7 +10,6 @@ import SubtitleLab from '../components/SubtitleLab.astro';
 import WarmthLab from '../components/WarmthLab.astro';
 import DensityLab from '../components/DensityLab.astro';
 import SpoilerLab from '../components/SpoilerLab.astro';
-import { TESTFLIGHT_URL } from '../data/site';
 
 const title = 'Plozz features — the media player questions people actually ask';
 const description =
@@ -118,18 +118,7 @@ const description =
       </ul>
     </Showcase>
 
-    <section class="closer" aria-labelledby="features-closer">
-      <div class="container">
-        <h2 id="features-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription, no paid tier. The whole thing is GPL-3.0 on GitHub.</p>
-        <div class="closer-cta">
-          <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
-            Join the TestFlight beta
-          </a>
-          <a class="btn btn-light btn-lg" href="/">Back to the start</a>
-        </div>
-      </div>
-    </section>
+    <Closer secondaryHref="/" secondaryLabel="Back to the start" />
   </main>
 
   <SiteFooter />
