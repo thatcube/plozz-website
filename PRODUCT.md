@@ -44,6 +44,10 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
 - Reference material belongs on its own page. A list nobody reads in a marketing
   section is a page that ranks on its own.
 - Subtext must change the answer. If a line only restates the heading, cut it.
+- One keyline. Text inside a panel sits on the same vertical line as text
+  outside one, so panels pull outward by their own inset plus their border
+  rather than sitting inside the text column. --panel-inset owns both numbers,
+  and no panel should ever set padding-inline directly.
 - Interactive things need a 44px tap target. Give it with padding and pull the
   box back with a negative margin, so the visible mark stays on the column.
 - The Plozz mark's antennas carry almost no visual weight, so its solid body
