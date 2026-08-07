@@ -1,0 +1,57 @@
+---
+// SCRATCH — comparison page for the merge illustration. Delete once chosen.
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import MergeType from '../components/MergeType.astro';
+import MergeFan from '../components/MergeFan.astro';
+import MergePanes from '../components/MergePanes.astro';
+
+const options = [
+  { n: '1', name: 'Typographic', Comp: MergeType },
+  { n: '2', name: 'Fanned cards', Comp: MergeFan },
+  { n: '3', name: 'Overlapping panes', Comp: MergePanes },
+];
+---
+
+<Layout title="Merge options — scratch">
+  <SiteHeader />
+  <main>
+    {
+      options.map(({ n, name, Comp }) => (
+        <section class="band">
+          <div class="container">
+            <div class="band-head">
+              <h2>
+                {n}. {name}
+              </h2>
+            </div>
+
+            <div class="slab merge-slab">
+              <div class="cell merge-visual">
+                <Comp />
+              </div>
+              <div class="cell">
+                <h3>Watch state travels</h3>
+                <p>
+                  Finishing something updates every server that holds it, or
+                  only the one you played it from.
+                </p>
+              </div>
+              <div class="cell">
+                <h3>A profile each</h3>
+                <p>
+                  Theme, layout, subtitles and spoilers remembered per person,
+                  with kids profiles behind a PIN.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+  </main>
+  <SiteFooter />
+  <SiteScripts />
+</Layout>

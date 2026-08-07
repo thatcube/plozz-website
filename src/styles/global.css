@@ -2856,13 +2856,7 @@ a.cell:hover .cell-arrow {
    here, so no row repeats it. */
 
 
-/* ---------- Confluence ----------
-   Four sources becoming one library. The incoming strands are dim and the
-   merged strand is luminous, because the composition should say the
-   combination is the valuable thing. The curves are SVG and the shelf is HTML,
-   so the spines reflow on their own when the figure stacks; both are placed
-   from the same viewBox coordinates, and the container's aspect-ratio matches
-   that viewBox, so a percentage means the same thing in either one. */
+/* ---------- Merge slab ---------- */
 .merge-slab {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 }
@@ -2872,139 +2866,145 @@ a.cell:hover .cell-arrow {
   justify-content: center;
 }
 
-.conf {
-  container-type: inline-size;
-  position: relative;
-  aspect-ratio: 160 / 100;
-  width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.conf-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  fill: none;
-}
-
-.conf-strand {
-  stroke: #34343a;
-  stroke-width: 0.5;
-}
-
-/* A soft dash running each strand toward the join, easing in, so the direction
-   of travel reads without an arrowhead. */
-.conf-travel {
-  stroke: rgba(255, 255, 255, 0.34);
-  stroke-width: 0.7;
-  stroke-linecap: round;
-  stroke-dasharray: 9 91;
-  animation: conf-travel 5.2s cubic-bezier(0.55, 0, 0.75, 0.35) infinite;
-  animation-delay: var(--delay, 0s);
-}
-
-@keyframes conf-travel {
-  from {
-    stroke-dashoffset: 100;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.conf-bloom {
-  stroke: url(#conf-beam);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  opacity: 0.55;
-}
-
-.conf-beam {
-  stroke: url(#conf-beam);
-  stroke-width: 0.9;
-  stroke-linecap: round;
-}
-
-.conf-sources {
-  list-style: none;
+/* ---------- Option 1: typographic ----------
+   The possessives recede and the names carry the light, so the four sources
+   read as a list at a glance without being set as one. */
+/* Outspecifies `.cell p`, which is one class plus one element and would
+   otherwise win on specificity. */
+.merge-visual p.merge-say {
+  max-width: 15em;
   margin: 0;
-  padding: 0;
+  font-size: clamp(1.35rem, 2.5vw, 2.05rem);
+  line-height: 1.34;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  text-wrap: pretty;
 }
 
-.conf-source {
-  position: absolute;
-  right: 71.25%;
-  top: var(--y);
-  transform: translateY(-50%);
-  font-size: clamp(11px, 2.3cqw, 15px);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+.merge-visual p.merge-say span {
+  color: var(--text-dim);
+}
+
+.merge-visual p.merge-land {
+  max-width: 26em;
+  margin: clamp(18px, 2.2vw, 28px) 0 0;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
   color: var(--text-muted);
-  text-align: right;
+  text-wrap: pretty;
+}
+
+/* ---------- Option 2: stepped stack ----------
+   Each card gives up a slice of the stage so the one behind keeps its top edge
+   visible, which is what keeps every label legible in a stack. */
+.fan {
+  container-type: inline-size;
+  margin: 0;
+  width: 100%;
+}
+
+.fan-stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+}
+
+.fan-card {
+  position: absolute;
+  left: calc(var(--i) * 5%);
+  top: calc(var(--i) * var(--step));
+  width: 62%;
+  height: 55%;
+  border: 1px solid var(--border-bright);
+  border-radius: clamp(9px, 1.9cqw, 14px);
+  background: #131316;
+  box-shadow: 0 clamp(5px, 1.2cqw, 11px) clamp(16px, 3.4cqw, 28px)
+    rgba(0, 0, 0, 0.6);
+}
+
+.fan-label {
+  position: absolute;
+  left: clamp(11px, 2.4cqw, 18px);
+  top: clamp(9px, 1.9cqw, 15px);
+  font-size: clamp(10px, 1.8cqw, 13px);
+  letter-spacing: -0.01em;
+  color: var(--text-dim);
   white-space: nowrap;
 }
 
-/* The spines stand on the beam, so the merged strand is literally the shelf
-   everything landed on. */
-.conf-shelf {
+/* The front card is the result, so it is the only one that is lit. */
+.fan-card.is-one {
+  border-color: rgba(0, 164, 220, 0.45);
+  background: linear-gradient(158deg, #16242c, #101014);
+  box-shadow:
+    0 clamp(9px, 2.2cqw, 18px) clamp(24px, 5.5cqw, 44px) rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(0, 164, 220, 0.1);
+}
+
+.fan-one {
   position: absolute;
-  left: var(--left);
-  right: var(--right);
-  bottom: var(--base);
-  display: flex;
-  align-items: flex-end;
-  gap: var(--gap);
-}
-
-/* The reflection is what stops the shelf floating in an empty half. It hangs
-   from the beam instead of standing on it, and dies out well before the edge.
-   The mask is authored in the element's own space and then flipped with it, so
-   the opaque end is written as the bottom to land next to the beam. */
-.conf-shelf.is-reflection {
-  bottom: auto;
-  top: var(--base);
-  transform: scaleY(-1);
-  opacity: 0.2;
-  mask-image: linear-gradient(to bottom, transparent 58%, #000);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 58%, #000);
-  pointer-events: none;
-}
-
-.conf-spine {
-  /* Lit by the beam: catching it where it arrives, settling to neutral along
-     the run. --t is the spine's eased position from 0 to 1. */
-  --c: color-mix(in oklab, #45454d calc(var(--t) * 100%), #5fa9c6);
-
-  width: var(--w);
-  height: var(--h);
-  border-radius: clamp(1px, 0.35cqw, 3px) clamp(1px, 0.35cqw, 3px) 0 0;
-  background: linear-gradient(
-    177deg,
-    color-mix(in oklab, var(--c) 80%, #ffffff),
-    var(--c)
-  );
-}
-
-.conf-result {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  transform: translateY(-50%);
-  font-size: clamp(13px, 2.9cqw, 19px);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(13px, 2.5cqw, 18px);
   font-weight: 560;
   letter-spacing: -0.02em;
   color: var(--text);
+}
+
+/* ---------- Option 3: overlapping panes ----------
+   The overlap makes the argument: the place where all four agree is the lit
+   one. `screen` keeps the stack additive, so more overlap means more light. */
+.panes {
+  container-type: inline-size;
+  margin: 0;
+  width: 100%;
+}
+
+.panes-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+}
+
+.pane {
+  position: absolute;
+  left: 27%;
+  right: 27%;
+  top: 24%;
+  bottom: 24%;
+  transform: translate(var(--x), var(--y));
+  border: 1px solid rgba(150, 205, 230, 0.22);
+  border-radius: clamp(8px, 1.8cqw, 13px);
+  background: rgba(64, 132, 165, 0.12);
+  mix-blend-mode: screen;
+}
+
+.pane-label {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + clamp(5px, 1.2cqw, 9px));
+  font-size: clamp(10px, 1.75cqw, 13px);
+  letter-spacing: -0.01em;
+  color: var(--text-dim);
   white-space: nowrap;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .conf-travel {
-    animation: none;
-    opacity: 0;
-  }
+/* The four panes only coincide in the middle, so that is the only region that
+   needs no tint of its own — it is already the brightest thing here. */
+.pane-core {
+  position: absolute;
+  left: 27%;
+  right: 27%;
+  top: 24%;
+  bottom: 24%;
+  display: grid;
+  place-items: center;
+  font-size: clamp(13px, 2.5cqw, 18px);
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  pointer-events: none;
 }
 
 /* ---------- iCloud slab ---------- */
@@ -3060,94 +3060,6 @@ a.cell:hover .cell-arrow {
 
   .showcase-slab.is-flipped .showcase-demo {
     order: 0;
-  }
-}
-
-/* Below this the fan has no room, so the sources stack and run down a single
-   thread onto the shelf. The shelf itself survives the reflow because it is
-   HTML — the spines just relax into a full-width row. */
-@media (max-width: 560px) {
-  .conf {
-    aspect-ratio: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-
-  .conf-art {
-    display: none;
-  }
-
-  .conf-sources {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 13px;
-    width: 100%;
-  }
-
-  .conf-sources::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 14px;
-    bottom: -26px;
-    width: 1px;
-    background: #34343a;
-    transform: translateX(-0.5px);
-  }
-
-  .conf-source {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    padding: 0 12px;
-    background: #0b0b0c;
-    font-size: 0.88rem;
-    text-align: center;
-  }
-
-  .conf-result {
-    position: relative;
-    left: auto;
-    top: auto;
-    order: 2;
-    margin-top: 28px;
-    transform: none;
-    font-size: 1.05rem;
-  }
-
-  .conf-shelf {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    order: 3;
-    width: 100%;
-    margin-top: 12px;
-    padding-bottom: 1px;
-    /* The beam is gone with the SVG, so the shelf carries its own line. */
-    background: linear-gradient(
-        to right,
-        #eaf8fe,
-        var(--brand) 30%,
-        rgba(0, 164, 220, 0.15)
-      )
-      bottom / 100% 1px no-repeat;
-    gap: 0.35cqw;
-  }
-
-  .conf-shelf.is-reflection {
-    display: none;
-  }
-
-  .conf-spine {
-    width: auto;
-    flex: var(--fw) 1 0;
-    height: var(--h);
   }
 }
 

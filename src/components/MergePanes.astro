@@ -1,0 +1,31 @@
+---
+/**
+ * Option 3 — overlapping panes sliding into register.
+ *
+ * Four translucent sheets, offset along one diagonal, overlapping into a
+ * single brighter form where all four coincide. The overlap is doing the
+ * argument: the place where every pane agrees is the lit one.
+ *
+ * Each pane is a plain tinted surface, so there is no content to fake — the
+ * only thing on them is a source name in the margin.
+ */
+const panes = [
+  { label: 'Your Plex', x: -21, y: -15 },
+  { label: 'Your Jellyfin', x: -7, y: -5 },
+  { label: 'A friend’s Emby', x: 7, y: 5 },
+  { label: 'The NAS in the closet', x: 21, y: 15 },
+];
+---
+
+<figure class="panes">
+  <div class="panes-stage">
+    {
+      panes.map((p, i) => (
+        <div class="pane" style={`--x: ${p.x}%; --y: ${p.y}%; --i: ${i}`}>
+          <span class="pane-label">{p.label}</span>
+        </div>
+      ))
+    }
+    <div class="pane-core"><span>One library</span></div>
+  </div>
+</figure>
