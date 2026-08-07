@@ -1,3 +1,5 @@
+@import "./device-frames.css";
+
 /* ==========================================================================
    Plozz — pixel design system
    Pixel display fonts + a reusable pixel-corner box primitive (.pxbox).
@@ -28,14 +30,14 @@
 }
 
 :root {
-  --bg: #0a0c10;
-  --bg-elev: #11151c;
-  --bg-card: #131922;
-  --border: #273345;
-  --border-bright: #3a4a63;
-  --text: #e8edf4;
-  --text-muted: #98a4b3;
-  --text-dim: #6b7889;
+  --bg: #080809;
+  --bg-elev: #0e0e10;
+  --bg-card: #141416;
+  --border: #29292d;
+  --border-bright: #424248;
+  --text: #f2f2f3;
+  --text-muted: #b0b0b5;
+  --text-dim: #7e7e85;
   --brand: #00a4dc;
   --brand-dark: #006c9c;
   --brand-darker: #004563;
@@ -43,7 +45,7 @@
   --brand-2-dark: #6d2f86;
   --brand-glow: rgba(0, 164, 220, 0.35);
   --brand-2-glow: rgba(170, 92, 195, 0.32);
-  --maxw: 1080px;
+  --maxw: 1200px;
 
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
@@ -354,53 +356,155 @@ h3 {
 }
 
 /* ---------- Header ---------- */
-/* ---------- Buttons ---------- */
-.btn {
-  --s: 3px;
-  --s2: 6px;
-  --s3: 9px;
-  --px-bw: 3px;
-  --px-bc: #000;
-  --px-bg: var(--bg-card);
-  position: relative;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 76px;
+  border-bottom: 1px solid #242426;
+  background: #0b0b0c;
+  transition:
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.site-header.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.site-header:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.site-header .container {
+  display: flex;
+  max-width: var(--maxw);
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 24px;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.site-brand img {
+  width: 30px;
+  height: 30px;
+  image-rendering: pixelated;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.site-header nav > a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: color 160ms ease;
+}
+
+.site-header nav > a:hover {
+  color: var(--text);
+}
+
+.github-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
-  font-family: var(--font-pixel);
+  color: var(--text-muted);
+}
+
+.github-link > svg {
+  width: 19px;
+  height: 19px;
+}
+
+.github-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: inherit;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.github-link:hover {
+  color: var(--text);
+}
+
+.site-header .header-cta {
+  padding: 9px 17px;
+  border: 1px solid #444448;
+  border-radius: 999px;
+  color: var(--text);
   font-weight: 600;
-  font-size: 0.98rem;
+  background: transparent;
+}
+
+.site-header .header-cta:hover {
+  border-color: #6b6b70;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.96rem;
+  letter-spacing: -0.01em;
   color: var(--text);
   cursor: pointer;
-  background: var(--px-bc);
-  clip-path: var(--px-shape);
-  transition: transform 0.12s ease, filter 0.15s ease;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.22);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .btn::before {
-  content: "";
-  position: absolute;
-  inset: var(--px-bw);
-  z-index: -1;
-  background: var(--px-shade), var(--px-bg);
-  clip-path: var(--px-shape-inner);
+  content: none;
 }
 
 .btn::after {
-  content: "";
-  position: absolute;
-  inset: calc(var(--px-bw) + var(--px-bevel)) var(--px-bw);
-  z-index: -1;
-  background: var(--px-bg);
-  clip-path: var(--px-shape-inner);
+  content: none;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .btn:active {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 
 .btn svg {
@@ -409,36 +513,30 @@ h3 {
 }
 
 .btn-primary {
-  --px-bc: #000;
-  --px-bg: var(--brand);
-  color: #00121a;
-  filter: drop-shadow(0 5px 14px var(--brand-glow));
+  border-color: #f5f5f7;
+  color: #09090a;
+  background: #f5f5f7;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
 }
 
 .btn-primary:hover {
-  --px-bg: #18b6ea;
+  border-color: #fff;
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.38);
 }
 
 .btn-ghost {
-  --px-bc: #000;
-  --px-bg: var(--bg);
   color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .btn-ghost:hover {
-  --px-bc: var(--brand);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Compact, low-key pixel button — keeps the pixel-stepped shape but at a
-   smaller scale for inline use (e.g. footer). Pairs with .btn-ghost for a
-   really subtle treatment that only picks up brand colour on hover. */
 .btn-sm {
-  --s: 2px;
-  --s2: 4px;
-  --s3: 6px;
-  --px-bw: 2px;
-  --px-bevel: 2px;
-  padding: 7px 14px;
+  padding: 8px 14px;
   font-size: 0.82rem;
   gap: 6px;
 }
@@ -449,15 +547,11 @@ h3 {
 }
 
 .btn-ghost.btn-sm {
-  --px-bc: var(--border);
   color: var(--text-muted);
-  transition: none;
 }
 
 .btn-ghost.btn-sm:hover {
-  --px-bc: var(--brand);
   color: var(--text);
-  transform: none;
 }
 
 .btn-ghost.btn-sm svg {
@@ -471,134 +565,874 @@ h3 {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 88px 0;
-  text-align: center;
+  padding: clamp(112px, 12vw, 168px) 0 0;
+  text-align: left;
   overflow: hidden;
-  background: #16181c;
-  border-bottom: 2px solid var(--border);
+  background: #0b0b0c;
 }
 
 .hero .container {
   position: relative;
   z-index: 3;
+  width: 100%;
+  max-width: var(--maxw);
+  padding-inline: 24px;
 }
 
-.hero-logo-wrap {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  margin: 0 auto 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* The TV's screen acts as ONE light source. ::before is the soft halo that
-   wraps the whole TV; ::after is the down-cast beam that spills onto the
-   content below. Both originate from the same point (the screen) and use the
-   same blue, so they read as a single light. Every layer is a radial gradient
-   that fades fully to alpha 0 *well inside* its own box, then everything is
-   blurred — so there is no hard edge on any side at any zoom level. */
-.hero-logo-wrap::before {
-  content: "";
-  position: absolute;
-  /* Anchored on the TV screen (~54% down the logo), with generous headroom on
-     every side so the gradients reach 0 long before the box edge. */
-  left: 50%;
-  top: 54%;
-  width: 460px;
-  height: 460px;
-  transform: translate(-50%, -50%);
-  z-index: -2;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(101, 206, 245, 0.38) 0%,
-    rgba(65, 198, 245, 0.26) 16%,
-    rgba(0, 164, 220, 0.15) 30%,
-    rgba(0, 164, 220, 0.07) 46%,
-    rgba(0, 164, 220, 0.025) 60%,
-    rgba(0, 164, 220, 0) 74%
-  );
-  filter: blur(26px);
-}
-
-/* Down-cast cone: a vertical stack of radial ellipses. They start about as
-   wide as the screen near the top and fan out wider + fainter going down.
-   Each ellipse fades to alpha 0 around 70% of its radius, and is positioned so
-   that 0-alpha is always reached before the box edge (top, sides, bottom). */
-.hero-logo-wrap::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1760px;
-  height: 940px;
-  /* Origin pulled UP so the cone starts right at the TV screen, then fans
-     down. Most of the box sits below for the beam to spread and fade out. */
-  transform: translate(-50%, -12%);
-  z-index: -3;
-  pointer-events: none;
-  background:
-    /* bright source right at the screen — starts wide, about TV-screen width */
-    radial-gradient(ellipse 190px 74px at 50% 13%, rgba(140, 222, 252, 0.95), rgba(101, 206, 245, 0) 72%),
-    /* beam segments fanning down + OUT like a flashlight cone, widening a lot
-       more the further down they go. Each fully fades to transparent well
-       inside the box on every side. */
-    radial-gradient(ellipse 320px 150px at 50% 25%, rgba(65, 198, 245, 0.64), rgba(65, 198, 245, 0) 73%),
-    radial-gradient(ellipse 520px 210px at 50% 41%, rgba(0, 164, 220, 0.4), rgba(0, 164, 220, 0) 74%),
-    radial-gradient(ellipse 720px 270px at 50% 58%, rgba(0, 164, 220, 0.22), rgba(0, 164, 220, 0) 75%),
-    radial-gradient(ellipse 860px 315px at 50% 77%, rgba(0, 164, 220, 0.13), rgba(0, 164, 220, 0) 76%),
-    radial-gradient(ellipse 920px 345px at 50% 94%, rgba(0, 164, 220, 0.075), rgba(0, 164, 220, 0) 77%);
-  filter: blur(36px);
-}
-
-.hero-logo {
-  /* Pixel art rendered at an exact 5× of its 32×32 source for crisp edges. */
-  width: 160px;
-  height: 160px;
-  image-rendering: pixelated;
-  /* Bias the TV's own glow slightly downward so it feels lit from the screen
-     throwing light forward/down. */
-  filter: drop-shadow(0 4px 16px rgba(0, 164, 220, 0.38))
-    drop-shadow(0 14px 30px rgba(0, 164, 220, 0.16));
+.hero-copy {
+  width: 100%;
 }
 
 .hero h1 {
-  margin: 0 0 22px;
-  line-height: 0;
+  max-width: 1040px;
+  margin: 0;
+  font-size: clamp(3.5rem, 7vw, 5.8rem);
+  font-weight: 570;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  text-wrap: balance;
 }
 
-.hero-wordmark {
-  display: block;
-  /* Exact 5× of the 56×28 source so the pixel letters stay crisp. */
-  width: 280px;
-  height: 140px;
-  margin: 0 auto;
-  image-rendering: pixelated;
-  /* Soft blue halo wrapping the wordmark — same family as the glow around the
-     TV, evenly all around (not the downward beam). */
-  filter: drop-shadow(0 0 20px rgba(0, 164, 220, 0.5))
-    drop-shadow(0 0 44px rgba(0, 164, 220, 0.28))
-    drop-shadow(0 0 70px rgba(0, 164, 220, 0.16));
+.hero-summary {
+  display: grid;
+  width: 100%;
+  max-width: none;
+  margin-top: clamp(44px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1fr) minmax(330px, auto);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: center;
+  padding: 28px 30px;
+  border: 1px solid #27272a;
+  border-radius: 28px;
 }
 
-.hero p.lead {
-  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
-  font-weight: 600;
-  color: #c4cedb;
-  max-width: 640px;
-  margin: 0 auto 36px;
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hero-facts > div {
+  min-width: 0;
+  padding: 2px clamp(18px, 2.5vw, 32px);
+  border-left: 1px solid #27272a;
+}
+
+.hero-facts > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.hero-facts dt {
+  margin-bottom: 9px;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.hero-facts dd {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.hero-actions > p {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
 }
 
 .hero-cta {
   display: flex;
+  align-items: center;
   gap: 14px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.hero-devices {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  margin: clamp(64px, 7vw, 92px) auto 0;
+  overflow: visible;
+}
+
+.tv-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.tv-frame img {
+  position: absolute;
+  inset: 1px;
+  display: block;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  object-fit: contain;
+  object-position: center;
+  border: 0;
+  border-radius: 27px;
+}
+
+.hero-slide {
+  opacity: 0;
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+}
+
+.hero-gallery-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.hero-gallery-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  padding-left: 18px;
+  border-left: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-gallery-control button {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font: inherit;
+  background: transparent;
+  transition: color 180ms ease;
+}
+
+.hero-gallery-control button:hover {
+  color: var(--text);
+}
+
+.hero-gallery-control button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.device-tv {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  transform: none;
+}
+
+.device-tv img {
+  position: absolute;
+  z-index: 1;
+  border-radius: 28px;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-copy,
+.hero-devices {
+  animation: heroRise 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-copy {
+  animation-delay: 0.05s;
+}
+
+.hero-devices {
+  animation-delay: 0.18s;
+}
+
+@media (max-width: 960px) {
+  .site-header nav {
+    gap: 22px;
+  }
+
+  .hero-summary {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .hero-actions {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .hero-devices {
+    margin-top: 56px;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    height: 68px;
+  }
+
+  .site-header .container {
+    padding-inline: 20px;
+  }
+
+  .site-header nav > a:not(.header-cta) {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 84px;
+  }
+
+  .hero .container {
+    padding-inline: 20px;
+  }
+
+  .hero-copy {
+    padding: 0;
+  }
+
+  .hero-cta {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-facts > div {
+    padding: 15px 0;
+    border-top: 1px solid #27272a;
+    border-left: 0;
+  }
+
+  .hero-facts > div:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .hero-cta .btn {
+    width: min(100%, 320px);
+  }
+
+  .hero-devices {
+    min-height: 0;
+    margin: 52px -20px 0;
+    width: calc(100% + 40px);
+  }
+
+  .tv-frame {
+    padding: 0;
+    border-radius: 20px;
+  }
+
+  .device-tv {
+    left: 0;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+  }
+
+  .device-tv img {
+    border-radius: 19px;
+  }
+
+}
+
+/* ==========================================================================
+   Below-hero sections
+   Signature device: the hairline "ledger" — a name, a rule, and what it is.
+   Color appears in exactly one place on this page: the real provider marks.
+   Rhythm: open -> dark panel -> open -> inverted panel -> closer.
+   ========================================================================== */
+
+.icloud-sync {
+  width: min(calc(100% - 40px), var(--maxw));
+  margin: 32px auto 0;
+  padding: clamp(58px, 7vw, 84px) clamp(28px, 6vw, 76px);
+  border: 1px solid #2b2b2f;
+  border-radius: 48px;
+  background: #111113;
+}
+
+.icloud-sync > .container {
+  padding-inline: 0;
+}
+
+/* Shared heading scale for every section below the hero. */
+.sources h2,
+.merge h2,
+.plays h2,
+.closer h2 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: clamp(2.1rem, 3.6vw, 3.1rem);
+  font-weight: 570;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.sources p,
+.merge-copy p,
+.plays p,
+.closer p {
+  margin: 18px 0 0;
+  max-width: 42ch;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+/* ---------- 1. Sources (open, vertical ledger) ---------- */
+.sources {
+  padding: clamp(96px, 12vw, 156px) 0 clamp(56px, 7vw, 88px);
+}
+
+.sources > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+  padding-inline: 24px;
+}
+
+.ledger {
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+
+.ledger-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 2.4vw, 30px) 2px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ledger-row dt {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.ledger-row dt img {
+  display: block;
+  width: auto;
+  height: 32px;
+  max-width: 156px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.ledger-row dt .lockup-plex {
+  height: 28px;
+}
+
+.ledger-row dt .lockup-emby {
+  height: 29px;
+}
+
+/* Protocols carry no brand, so they are set as what they are: machine strings. */
+.ledger-row-shares dt {
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.ledger-row-shares dt span {
+  padding: 6px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.ledger-row dd {
+  flex: none;
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+/* ---------- 2. One library (dark panel, typographic merge) ---------- */
+.merge {
+  width: min(calc(100% - 40px), var(--maxw));
+  margin: clamp(28px, 4vw, 48px) auto 0;
+  padding: clamp(58px, 7vw, 88px) clamp(28px, 6vw, 76px);
+  border: 1px solid #2b2b2f;
+  border-radius: 48px;
+  background: #0e0e10;
+}
+
+.merge > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+  padding-inline: 0;
+}
+
+.merge h2 {
+  max-width: 15ch;
+}
+
+/* The merge is drawn with the same hairlines the ledger uses: several inputs
+   collapse through one rule into a single output. */
+.merge-diagram {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(28px, 5vw, 64px) auto;
+  align-items: center;
+  gap: 0;
+}
+
+.merge-inputs {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 clamp(16px, 2.4vw, 28px) 0 0;
+  border-right: 1px solid var(--border-bright);
+}
+
+.merge-inputs li {
+  padding: 11px 0;
+  font-size: 0.94rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* The connector: a hairline from the midpoint of the stack to the result. */
+.merge-diagram::before {
+  content: '';
+  grid-column: 2;
+  grid-row: 1;
+  height: 1px;
+  background: var(--border-bright);
+}
+
+.merge-output {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+  padding: 14px 20px;
+  border: 1px solid var(--border-bright);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  color: var(--text);
+  background: #141416;
+}
+
+/* ---------- 3. What it plays (open, horizontal ledger) ---------- */
+.plays {
+  padding: clamp(80px, 10vw, 132px) 0 clamp(40px, 5vw, 64px);
+}
+
+.plays > .container {
+  padding-inline: 24px;
+}
+
+.plays-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: end;
+}
+
+.plays-intro h2 {
+  max-width: 18ch;
+}
+
+.plays-intro p {
+  margin: 0;
+  padding-bottom: 6px;
+}
+
+.plays-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.plays-grid > div {
+  min-width: 0;
+  padding: clamp(22px, 2.6vw, 30px) clamp(18px, 2.4vw, 28px);
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.plays-grid > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.plays-grid dt {
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.plays-grid dd {
+  margin: 8px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+/* ---------- 5. Closer (open, type-led) ---------- */
+.closer {
+  padding: clamp(88px, 11vw, 148px) 0 clamp(80px, 9vw, 120px);
+}
+
+.closer > .container {
+  padding-inline: 24px;
+}
+
+.closer h2 {
+  font-size: clamp(2.4rem, 4.6vw, 4rem);
+}
+
+.closer p {
+  max-width: 46ch;
+}
+
+.closer-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(30px, 3.5vw, 40px);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .sources > .container,
+  .merge > .container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .plays-intro {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .plays-intro p {
+    margin-top: 18px;
+  }
+
+  .merge h2,
+  .plays-intro h2 {
+    max-width: none;
+  }
+
+  .plays-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .plays-grid > div {
+    padding-inline: clamp(18px, 3vw, 28px);
+  }
+
+  .plays-grid > div:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .plays-grid > div:nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 560px) {
+  .sources {
+    padding-top: 72px;
+  }
+
+  .ledger-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .ledger-row dt img {
+    height: 28px;
+  }
+
+  .ledger-row dd {
+    width: 100%;
+    text-align: left;
+  }
+
+  .merge,
+  .icloud-sync {
+    border-radius: 30px;
+    padding-inline: 22px;
+  }
+
+  /* Stack the diagram: the connector becomes the rule under the inputs. */
+  .merge-diagram {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 20px;
+  }
+
+  .merge-inputs {
+    width: 100%;
+    padding: 0 0 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .merge-inputs li {
+    text-align: left;
+  }
+
+  .merge-diagram::before {
+    display: none;
+  }
+
+  .merge-output {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .plays-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plays-grid > div {
+    padding-inline: 0;
+    border-left: 0;
+  }
+
+  .plays-grid > div + div {
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* ---------- iCloud sync ---------- */
+.icloud-sync {
+  margin-bottom: 32px;
+  border-color: #f2f2f3;
+  background: #f2f2f3;
+  color: #0a0a0b;
+}
+
+.icloud-sync .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(48px, 10vw, 120px);
+  align-items: center;
+}
+
+.icloud-sync h2 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: clamp(2.1rem, 3.6vw, 3.1rem);
+  font-weight: 570;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.icloud-sync p {
+  max-width: 34ch;
+  margin: 18px 0 0;
+  color: #4c4c52;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.icloud-devices {
+  position: relative;
+  width: min(46vw, 540px);
+  min-height: 360px;
+}
+
+.icloud-device-slot {
+  position: absolute;
+}
+
+.icloud-ipad-slot {
+  top: 50%;
+  left: 0;
+  width: 498px;
+  height: 358px;
+  transform: translateY(-50%);
+}
+
+.icloud-ipad-slot .device {
+  transform: scale(0.64);
+  transform-origin: top left;
+}
+
+.icloud-iphone-slot {
+  right: 0;
+  bottom: -26px;
+  z-index: 3;
+  width: 150px;
+  height: 304px;
+}
+
+.icloud-iphone-slot .device {
+  transform: scale(0.35);
+  transform-origin: top left;
+}
+
+.icloud-mark {
+  position: absolute;
+  top: 18px;
+  right: 3%;
+  z-index: 4;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  color: #f5f5f7;
+  background: rgba(20, 20, 22, 0.82);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.icloud-mark svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 1100px) {
+  .icloud-sync .container {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    text-align: center;
+  }
+
+  .icloud-sync p {
+    margin-inline: auto;
+  }
+
+  .icloud-devices {
+    width: min(100%, 540px);
+    min-height: 360px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .icloud-devices {
+    width: min(100%, 390px);
+    min-height: 270px;
+  }
+
+  .icloud-ipad-slot {
+    width: 327px;
+    height: 235px;
+  }
+
+  .icloud-ipad-slot .device {
+    transform: scale(0.42);
+  }
+
+  .icloud-iphone-slot {
+    width: 103px;
+    height: 208px;
+    bottom: -16px;
+  }
+
+  .icloud-iphone-slot .device {
+    transform: scale(0.24);
+  }
+}
+
+@media (max-width: 420px) {
+  .icloud-devices {
+    min-height: 220px;
+  }
+
+  .icloud-ipad-slot {
+    width: 265px;
+    height: 190px;
+  }
+
+  .icloud-ipad-slot .device {
+    transform: scale(0.34);
+  }
+
+  .icloud-iphone-slot {
+    width: 81px;
+    height: 165px;
+    bottom: -12px;
+  }
+
+  .icloud-iphone-slot .device {
+    transform: scale(0.19);
+  }
+
+  .icloud-mark {
+    top: 8px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 560px) {
+  .merge,
+  .icloud-sync {
+    width: min(calc(100% - 24px), var(--maxw));
+    margin-top: 20px;
+    padding: 48px 20px;
+    border-radius: 30px;
+  }
+
+  .icloud-sync {
+    margin-bottom: 20px;
+  }
+
 }
 
 .hero-note {
@@ -1066,9 +1900,8 @@ section {
 /* ---------- Disabled button ---------- */
 button.btn {
   font: inherit;
-  font-family: var(--font-pixel);
+  font-family: var(--font);
   font-weight: 600;
-  border: none;
   -webkit-appearance: none;
   appearance: none;
 }
@@ -1079,14 +1912,12 @@ button.btn {
 }
 
 .btn-gray {
-  --px-bc: #000;
-  --px-bg: #3a4150;
   color: var(--text);
-  filter: none;
+  background: #36363b;
 }
 
 .btn-gray:hover {
-  --px-bg: #454d5d;
+  background: #414147;
 }
 
 .btn-disabled:hover,
@@ -1094,10 +1925,10 @@ button.btn {
   transform: none;
 }
 
-/* Larger CTA scale for the hero action row. */
 .btn-lg {
-  padding: 15px 28px;
-  font-size: 1.06rem;
+  min-height: 54px;
+  padding: 14px 26px;
+  font-size: 1.02rem;
   gap: 10px;
 }
 
@@ -1106,47 +1937,33 @@ button.btn {
   height: 20px;
 }
 
-/* Primary hero action (TestFlight): the current brand-blue button, pushed to
-   stand out with a stronger blue bloom and a subtle lift so it reads as THE
-   call to action next to the white GitHub button. */
-.btn-cta {
-  filter: drop-shadow(0 8px 22px rgba(0, 164, 220, 0.6))
-    drop-shadow(0 2px 8px rgba(0, 164, 220, 0.45));
-}
-
-.btn-cta:hover {
-  filter: drop-shadow(0 10px 28px rgba(0, 164, 220, 0.72))
-    drop-shadow(0 3px 10px rgba(0, 164, 220, 0.5));
-}
-
 /* The Apple glyph's optical center sits low (weighted body + top leaf), so it
    reads slightly below the text baseline — lift it a touch to center it. */
 .btn-cta svg {
   transform: translateY(-2px);
 }
 
-/* Near-white pixel button (GitHub): almost-white face, black border, a crisp
-   white top highlight and a soft gray drop shadow so it pops off the dark hero
-   as the light counterpart to the blue TestFlight CTA. */
 .btn-light {
-  --px-bc: #000;
-  --px-bg: #eef1f6;
-  --px-hi: rgba(255, 255, 255, 0.9);
-  --px-lo: rgba(0, 0, 0, 0.22);
-  color: #0a0c10;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.24);
 }
 
 .btn-light:hover {
-  --px-bg: #ffffff;
-  filter: drop-shadow(0 9px 20px rgba(0, 0, 0, 0.5));
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.14),
+    0 12px 34px rgba(0, 0, 0, 0.3);
 }
 
 /* ---------- Sponsor button ---------- */
 .btn-sponsor {
-  --px-bc: #1a2230;
-  --px-bg: var(--bg);
   color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .btn-sponsor svg {
@@ -1154,7 +1971,8 @@ button.btn {
 }
 
 .btn-sponsor:hover {
-  --px-bc: #db61a2;
+  border-color: rgba(219, 97, 162, 0.65);
+  background: rgba(219, 97, 162, 0.08);
 }
 
 /* ---------- Brand logos ---------- */
@@ -1184,9 +2002,8 @@ button.btn {
 }
 
 .btn:focus-visible {
-  --px-bc: var(--brand);
-  outline: none;
-  filter: drop-shadow(0 0 0 3px var(--brand-glow));
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1194,5 +2011,9 @@ button.btn {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .hero-slide:not(.is-active) {
+    display: none;
   }
 }
