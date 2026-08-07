@@ -384,6 +384,12 @@ h3 {
   transform: translateY(-100%);
 }
 
+.site-header.menu-open.is-hidden {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 .site-header:focus-within {
   opacity: 1;
   pointer-events: auto;
@@ -403,32 +409,197 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 11px;
+  /* Negative inline margin keeps the lockup on the container edge while the
+     padding gives it a 46px tap target. */
+  min-height: 46px;
+  margin-inline-start: -8px;
+  padding-inline: 8px;
+  border-radius: var(--r-sm);
   color: var(--text);
   font-size: 1.1rem;
   font-weight: 650;
   letter-spacing: -0.02em;
 }
 
+.site-brand:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+/* The mark's antennas sit in the box but carry almost no visual weight, so the
+   solid TV body reads about 2px low. Lift it to centre the body, not the box. */
 .site-brand img {
   width: 30px;
   height: 30px;
+  transform: translateY(-2px);
   image-rendering: pixelated;
 }
 
-.site-header nav {
+.site-nav {
   display: flex;
   align-items: center;
   gap: 30px;
 }
 
-.site-header nav > a {
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-links > a {
   color: var(--text-muted);
   font-size: 0.9rem;
+  white-space: nowrap;
   transition: color 160ms ease;
 }
 
-.site-header nav > a:hover {
+.nav-links > a:hover {
   color: var(--text);
+}
+
+/* Hidden until the row runs out of room. */
+.nav-toggle {
+  display: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-toggle:hover .nav-toggle-bars,
+.nav-toggle:hover .nav-toggle-bars::before,
+.nav-toggle:hover .nav-toggle-bars::after {
+  background: var(--text);
+}
+
+.nav-toggle .nav-toggle-bars,
+.nav-toggle .nav-toggle-bars::before,
+.nav-toggle .nav-toggle-bars::after {
+  background: var(--text-muted);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+/* Three bars from one element: the middle is the box, the outer two are
+   pseudo-elements, so the cross on open is a two-part rotation. */
+.nav-toggle-bars {
+  position: relative;
+}
+
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: block;
+  width: 17px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--text-muted);
+  transition: background 160ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: '';
+  position: absolute;
+}
+
+.nav-toggle-bars::before {
+  transform: translateY(-5.5px);
+}
+
+.nav-toggle-bars::after {
+  transform: translateY(5.5px);
+}
+
+.nav-toggle:hover .nav-toggle-bars,
+.nav-toggle:hover .nav-toggle-bars::before,
+.nav-toggle:hover .nav-toggle-bars::after {
+  background: var(--text);
+}
+
+/* Open: the middle bar goes, the outer two cross. The hover rule above is more
+   specific than a bare .menu-open selector, so this has to out-rank it or the
+   middle bar comes back under the cursor. */
+.menu-open .nav-toggle-bars,
+.menu-open .nav-toggle:hover .nav-toggle-bars {
+  background: transparent;
+}
+
+.menu-open .nav-toggle-bars::before,
+.menu-open .nav-toggle-bars::after {
+  background: var(--text);
+}
+
+.menu-open .nav-toggle-bars::before {
+  transform: rotate(45deg);
+}
+
+.menu-open .nav-toggle-bars::after {
+  transform: rotate(-45deg);
+}
+
+.site-menu {
+  border-top: 1px solid #242426;
+  background: #0b0b0c;
+}
+
+.site-menu .container {
+  display: grid;
+  height: auto;
+  gap: 2px;
+  padding-block: 10px 16px;
+}
+
+.site-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 2px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  transition: color 160ms ease;
+}
+
+.site-menu a:hover,
+.site-menu a[aria-current='page'] {
+  color: var(--text);
+}
+
+.site-menu a svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle-bars,
+  .nav-toggle-bars::before,
+  .nav-toggle-bars::after {
+    transition: none;
+  }
+}
+
+/* The row collides around 600px, so hand over well before that. */
+@media (max-width: 860px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-nav {
+    gap: 12px;
+  }
 }
 
 .github-link {
@@ -786,7 +957,7 @@ h3 {
 }
 
 @media (max-width: 960px) {
-  .site-header nav {
+  .nav-links {
     gap: 22px;
   }
 
@@ -812,10 +983,6 @@ h3 {
   }
 
 
-
-  .site-header nav > a:not(.header-cta) {
-    display: none;
-  }
 
   .hero {
     padding-top: 84px;
@@ -1729,6 +1896,10 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 9px;
+  min-height: 44px;
+  margin-inline-start: -8px;
+  padding-inline: 8px;
+  border-radius: var(--r-sm);
   font-size: 1rem;
   font-weight: 640;
   letter-spacing: -0.02em;
@@ -1738,6 +1909,7 @@ section {
 .footer-brand img {
   width: 24px;
   height: 24px;
+  transform: translateY(-1.5px);
   image-rendering: pixelated;
 }
 

@@ -11,25 +11,86 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       <img src="/logo.svg" alt="" width="32" height="32" />
       <span>Plozz</span>
     </a>
-    <nav aria-label="Main navigation">
-      {NAV_LINKS.map((link) => (
-        <a
-          class="nav-link"
-          href={link.href}
-          aria-current={path === link.href ? 'page' : undefined}
-        >
-          {link.label}
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <div class="nav-links">
+        {NAV_LINKS.map((link) => (
+          <a class="nav-link" href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))}
+        <a class="github-link" href={GITHUB_URL} target="_blank" rel="noopener">
+          <Icon name="simple-icons:github" />
+          <span class="sr-only">GitHub</span>
+          <span class="github-stars" data-github-stars-badge aria-label={`${GITHUB_STARS_SEED} GitHub stars`}>
+            <span data-github-stars>{GITHUB_STARS_SEED}</span>
+            <span>stars</span>
+          </span>
         </a>
-      ))}
-      <a class="github-link" href={GITHUB_URL} target="_blank" rel="noopener">
-        <Icon name="simple-icons:github" />
-        <span class="sr-only">GitHub</span>
-        <span class="github-stars" data-github-stars-badge aria-label={`${GITHUB_STARS_SEED} GitHub stars`}>
-          <span data-github-stars>{GITHUB_STARS_SEED}</span>
-          <span>stars</span>
-        </span>
-      </a>
+      </div>
+
       <a class="header-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">TestFlight</a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-nav-toggle
+      >
+        <span class="sr-only">Menu</span>
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
     </nav>
   </div>
+
+  <div class="site-menu" id="site-menu" data-nav-menu hidden>
+    <div class="container">
+      {NAV_LINKS.map((link) => (
+        <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>
+      ))}
+      <a class="site-menu-github" href={GITHUB_URL} target="_blank" rel="noopener">
+        <Icon name="simple-icons:github" />
+        GitHub
+      </a>
+    </div>
+  </div>
 </header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const menu = document.querySelector('[data-nav-menu]');
+  const header = document.querySelector('.site-header');
+
+  if (toggle && menu && header) {
+    const setOpen = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      header.classList.toggle('menu-open', open);
+    };
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!header.contains(event.target) && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+      }
+    });
+
+    // Leaving the small layout must not strand an open panel.
+    const wide = window.matchMedia('(min-width: 861px)');
+    wide.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>
