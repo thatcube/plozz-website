@@ -120,12 +120,12 @@ export const FORMAT_CAVEATS = [
  * they change it.
  */
 export const INCLUDED = [
-  { name: 'Dolby Atmos', detail: 'The bitstream reaches your receiver untouched.' },
-  { name: 'TrueHD and DTS-HD MA', detail: 'Lossless audio, decoded on the device.' },
-  { name: 'AirPlay', detail: 'Send what you are watching to another screen.' },
-  { name: 'Offline downloads', detail: 'Take a film or a whole season with you.' },
-  { name: 'Subtitle search', detail: 'Find and load one without leaving the scene.' },
-  { name: 'iCloud sync', detail: 'Servers and progress across your devices.' },
+  { name: 'Dolby Atmos', icon: 'ph:waveform', detail: 'The bitstream reaches your receiver untouched.' },
+  { name: 'TrueHD and DTS-HD MA', icon: 'ph:speaker-hifi', detail: 'Lossless audio, decoded on the device.' },
+  { name: 'AirPlay', icon: 'ph:airplay', detail: 'Send what you are watching to another screen.' },
+  { name: 'Offline downloads', icon: 'ph:download-simple', detail: 'Take a film or a whole season with you.' },
+  { name: 'Subtitle search', icon: 'ph:subtitles', detail: 'Find and load one without leaving the scene.' },
+  { name: 'iCloud sync', icon: 'ph:cloud', detail: 'Servers and progress across your devices.' },
 ];
 
 // GitHub Sponsors prefills its checkout from these, so one tap is one donation.

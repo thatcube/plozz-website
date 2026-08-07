@@ -322,6 +322,7 @@ const softwareLd = {
         <ul class="slab" style="--cols: 3">
           {INCLUDED.map((item) => (
             <li class="cell">
+              <span class="cell-icon" aria-hidden="true"><Icon name={item.icon} /></span>
               <h3>{item.name}</h3>
               <p>{item.detail}</p>
             </li>

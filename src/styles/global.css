@@ -3332,3 +3332,16 @@ a.cell:hover .cell-arrow {
   color: var(--text-dim);
   text-wrap: pretty;
 }
+
+/* Phosphor at regular weight, which matches the hairline borders the slab is
+   built from. Muted so the label stays the thing you read first. */
+.cell-icon {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--text-muted);
+}
+
+.cell-icon svg {
+  width: 22px;
+  height: 22px;
+}
