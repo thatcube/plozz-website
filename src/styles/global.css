@@ -2785,62 +2785,66 @@ button.btn {
 }
 
 /* ---------- Donate ---------- */
+/* Deliberately quiet. No cost breakdown, no justification, nothing that reads
+   as a reason the reader owes anything. */
 .donate {
-  padding: clamp(28px, 3.5vw, 44px) 0;
+  padding: clamp(20px, 2.6vw, 32px) 0;
 }
 
 .donate-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: center;
-  padding: clamp(48px, 6vw, 84px) clamp(28px, 4vw, 60px);
-  border: 1px solid #2b2b2f;
-  border-radius: var(--r-xl);
-  background: #0e0e10;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(26px, 4vw, 56px);
+  align-items: start;
+  padding: clamp(30px, 3.4vw, 44px) clamp(26px, 3.4vw, 44px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
 }
 
 .donate-copy h2 {
   margin: 0;
   font-family: var(--font);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 570;
-  letter-spacing: -0.04em;
-  line-height: 1.04;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
   color: var(--text);
-  text-wrap: balance;
 }
 
 .donate-copy p {
-  max-width: 46ch;
-  margin: 16px 0 0;
-  font-size: 0.99rem;
+  max-width: 58ch;
+  margin: 10px 0 0;
+  font-size: 0.94rem;
   line-height: 1.55;
   color: var(--text-muted);
   text-wrap: pretty;
 }
 
-/* Preset amounts, because a link to a form is a step people do not take. */
 .donate-amounts {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
   margin: 0;
   padding: 0;
+}
+
+.donate-action {
+  padding-top: 3px;
 }
 
 .donate-amounts a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 10px;
-  border: 1px solid var(--border-bright);
-  border-radius: var(--r-md);
-  font-size: 1.05rem;
+  min-width: 62px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size: 0.92rem;
   font-weight: 560;
-  letter-spacing: -0.02em;
-  color: var(--text);
+  letter-spacing: -0.01em;
+  color: var(--text-muted);
   text-decoration: none;
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
@@ -2853,41 +2857,30 @@ button.btn {
 
 .donate-custom {
   display: inline-block;
-  margin-top: 14px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--border-bright);
-  font-size: 0.92rem;
-  color: var(--text-muted);
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
   text-decoration: none;
-  transition: color 160ms ease, border-color 160ms ease;
+  transition: color 160ms ease;
 }
 
 .donate-custom:hover {
   color: var(--text);
-  border-color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.donate-aside {
-  margin: 18px 0 0;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--text-dim);
-}
-
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .donate-body {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 22px;
   }
 }
+
+
 
 @media (max-width: 560px) {
   .donate-body {
-    padding: 40px 20px;
-  }
-
-  .donate-amounts a {
-    padding: 14px 8px;
-    font-size: 1rem;
+    padding: 26px 20px;
   }
 }

@@ -50,6 +50,10 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
   those files; "the profile a UHD Blu-ray remux uses" is a lecture.
 - The donate section speaks as Brandon, in first person, because a person is
   doing the asking. Everywhere else addresses the reader as you.
+- Never justify the donation ask. Listing what the money pays for reads as an
+  invoice, so stay vague about costs, keep the ask conditional, and always say
+  the app is free either way. Brandon's own GitHub Sponsors wording is the
+  reference for tone: warm, humble, and easy to walk past.
 
 ## Competitors, verified 2026-08-07
 
