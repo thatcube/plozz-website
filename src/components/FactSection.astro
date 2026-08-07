@@ -9,37 +9,33 @@ export interface Props {
   title: string;
   lead?: string;
   facts: Fact[];
-  panel?: boolean;
+  cols?: number;
 }
 
-const { title, lead, facts, panel = false } = Astro.props;
+const { title, lead, facts, cols = 3 } = Astro.props;
 const headingId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 ---
 
-{/* The panel lives inside .container, so its outer edge lands on the same
-    column as every other section on the site. */}
-<section class="fact-section" aria-labelledby={headingId}>
+{/* Heading outside the slab, on the page keyline. */}
+<section class="band" aria-labelledby={headingId}>
   <div class="container">
-    <div class:list={['fact-body', { 'is-panel': panel }]}>
-      <div class="fact-intro">
-        <h2 id={headingId}>{title}</h2>
-        {lead && <p>{lead}</p>}
-      </div>
-      <dl class="fact-rows">
-        {facts.map((fact) => (
-          <div>
-            <dt>{fact.name}</dt>
-            <dd>
-              {fact.value && <span class="fact-value">{fact.value}</span>}
-              {fact.chips && (
-                <span class="fact-chips">
-                  {fact.chips.map((chip) => <span class="chip">{chip}</span>)}
-                </span>
-              )}
-            </dd>
-          </div>
-        ))}
-      </dl>
+    <div class="band-head">
+      <h2 id={headingId}>{title}</h2>
+      {lead && <p>{lead}</p>}
     </div>
+
+    <ul class="slab" style={`--cols: ${cols}`}>
+      {facts.map((fact) => (
+        <li class="cell">
+          <h3>{fact.name}</h3>
+          {fact.value && <p>{fact.value}</p>}
+          {fact.chips && (
+            <span class="cell-chips">
+              {fact.chips.map((chip) => <span class="chip">{chip}</span>)}
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
   </div>
 </section>

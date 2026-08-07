@@ -1,5 +1,5 @@
 import fs from 'fs';
-const list=await (await fetch('http://localhost:9347/json/list')).json();
+const list=await (await fetch('http://localhost:9350/json/list')).json();
 const page=list.find(t=>t.type==='page'); const ws=new WebSocket(page.webSocketDebuggerUrl);
 let id=0; const p=new Map(); const send=(m,q={})=>new Promise(r=>{const i=++id;p.set(i,r);ws.send(JSON.stringify({id:i,method:m,params:q}));});
 await new Promise(r=>ws.onopen=r); ws.onmessage=e=>{const m=JSON.parse(e.data); if(m.id&&p.has(m.id)){p.get(m.id)(m.result);p.delete(m.id);}};
@@ -7,7 +7,7 @@ await send('Page.enable');
 const [url,y,h,out,w]=process.argv.slice(2); const W=Number(w||1440);
 await send('Emulation.setDeviceMetricsOverride',{width:W,height:900,deviceScaleFactor:2,mobile:W<900});
 await send('Page.navigate',{url}); await new Promise(r=>setTimeout(r,2200));
-await send('Runtime.evaluate',{expression:'window.scrollTo(0,document.body.scrollHeight)'}); await new Promise(r=>setTimeout(r,1300));
-await send('Runtime.evaluate',{expression:'window.scrollTo(0,0)'}); await new Promise(r=>setTimeout(r,600));
+await send('Runtime.evaluate',{expression:'window.scrollTo(0,document.body.scrollHeight)'}); await new Promise(r=>setTimeout(r,1500));
+await send('Runtime.evaluate',{expression:'window.scrollTo(0,0)'}); await new Promise(r=>setTimeout(r,700));
 const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:{x:0,y:Number(y),width:W,height:Number(h),scale:1}});
 fs.writeFileSync(out,Buffer.from(r.data,'base64')); console.log('saved'); ws.close();

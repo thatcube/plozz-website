@@ -54,6 +54,7 @@
   --r-lg: 34px;   /* rails, media frames, inset panels */
   --r-md: 22px;   /* small blocks and grouped rows */
   --r-sm: 14px;   /* chips and compact controls */
+  --r-slab: 20px; /* subdivided containers: gentle, so corner cells sit right */
   --r-pill: 999px;
 
   /* Panels pull outward by exactly their own inset, so text inside a panel
@@ -785,7 +786,6 @@ h3 {
   grid-template-columns: minmax(0, 1fr) minmax(330px, auto);
   gap: clamp(36px, 5vw, 72px);
   align-items: center;
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
   padding: 28px var(--panel-inset);
   border: 1px solid #27272a;
   border-radius: var(--r-lg);
@@ -988,11 +988,9 @@ h3 {
   }
 
 
-
   .hero {
     padding-top: 84px;
   }
-
 
 
   .hero-copy {
@@ -1049,16 +1047,12 @@ h3 {
 /* One panel primitive. It always sits inside .container, so every panel edge
    lands on the same column as ordinary section text. */
 .panel {
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
   padding: clamp(48px, 6vw, 84px) var(--panel-inset);
   border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
   background: #0e0e10;
 }
 
-.icloud-sync {
-  padding: clamp(28px, 3.5vw, 44px) 0;
-}
 
 /* Shared heading scale for every section below the hero. */
 .sources h2,
@@ -1098,39 +1092,6 @@ h3 {
   padding-inline: 24px;
 }
 
-.ledger {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--border);
-}
-
-.ledger-row {
-  border-bottom: 1px solid var(--border);
-}
-
-.ledger-row a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: clamp(18px, 2.2vw, 26px) 2px;
-  text-decoration: none;
-  transition: opacity 160ms ease;
-}
-
-.ledger-row a:hover {
-  opacity: 0.75;
-}
-
-.ledger-row img {
-  display: block;
-  width: auto;
-  height: 32px;
-  max-width: 156px;
-  object-fit: contain;
-  object-position: left center;
-}
 
 .ledger-row .lockup-plex {
   height: 28px;
@@ -1153,30 +1114,13 @@ h3 {
 }
 
 /* A chevron drawn from a border, so it matches the hairline vocabulary. */
-.ledger-go {
-  flex: none;
-  width: 9px;
-  height: 9px;
-  border-top: 1.5px solid var(--text-dim);
-  border-right: 1.5px solid var(--text-dim);
-  transform: rotate(45deg);
-}
 
-.ledger-row a:hover .ledger-go {
-  border-color: var(--text);
-}
 
 /* ---------- 2. One library (dark panel, typographic merge) ---------- */
 .merge {
   padding: clamp(28px, 3.5vw, 44px) 0;
 }
 
-.merge-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-  gap: clamp(40px, 6vw, 80px);
-  align-items: center;
-}
 
 .merge h2 {
   max-width: 15ch;
@@ -1231,20 +1175,6 @@ h3 {
   background: #141416;
 }
 
-.text-link {
-  display: inline-block;
-  margin-top: clamp(26px, 3vw, 36px);
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--border-bright);
-  font-size: 0.96rem;
-  color: var(--text);
-  text-decoration: none;
-  transition: border-color 160ms ease, color 160ms ease;
-}
-
-.text-link:hover {
-  border-color: var(--text);
-}
 
 /* ---------- 5. Closer (open, type-led) ---------- */
 .closer {
@@ -1283,10 +1213,6 @@ h3 {
   }
 
 
-
-
-
-
 }
 
 @media (min-width: 1290px) {
@@ -1301,6 +1227,7 @@ h3 {
     --r-lg: 22px;
     --r-md: 16px;
     --r-sm: 12px;
+    --r-slab: 16px;
   }
 
   .sources {
@@ -1315,7 +1242,6 @@ h3 {
   
 
   
-
 
 
   /* Stack the diagram: the connector becomes the rule under the inputs. */
@@ -1346,10 +1272,6 @@ h3 {
   }
 
 
-
-
-
-
 }
 
 /* ---------- iCloud sync ---------- */
@@ -1359,31 +1281,6 @@ h3 {
   color: #0a0a0b;
 }
 
-.icloud-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(48px, 10vw, 120px);
-  align-items: center;
-}
-
-.icloud-sync h2 {
-  margin: 0;
-  font-family: var(--font);
-  font-size: clamp(2.1rem, 3.6vw, 3.1rem);
-  font-weight: 570;
-  letter-spacing: -0.04em;
-  line-height: 1.02;
-  text-wrap: balance;
-}
-
-.icloud-sync p {
-  max-width: 34ch;
-  margin: 18px 0 0;
-  color: #4c4c52;
-  font-size: 1.02rem;
-  line-height: 1.55;
-  text-wrap: pretty;
-}
 
 .icloud-devices {
   position: relative;
@@ -1526,12 +1423,6 @@ h3 {
 
 }
 
-.hero-note {
-  margin-top: 22px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
 
 /* ---------- Sections ---------- */
 section {
@@ -1995,14 +1886,6 @@ button.btn {
   cursor: not-allowed;
 }
 
-.btn-gray {
-  color: var(--text);
-  background: #36363b;
-}
-
-.btn-gray:hover {
-  background: #414147;
-}
 
 .btn-disabled:hover,
 .btn:disabled:hover {
@@ -2066,10 +1949,7 @@ button.btn {
 }
 
 /* Plex chevron is taller than wide — preserve its aspect ratio. */
-.blogo-plex {
-  width: auto;
-  height: 13px;
-}
+
 
 .plogo-plex {
   width: auto;
@@ -2154,89 +2034,15 @@ button.btn {
 /* ---------- Fact sections ---------- */
 /* A spec sheet, not paragraphs: a label, then either a short value or the real
    option names as chips. */
-.fact-section {
-  padding: clamp(28px, 3.5vw, 44px) 0;
-}
 
-.fact-body {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: start;
-}
 
 .fact-body.is-panel {
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
   padding: clamp(48px, 6vw, 84px) var(--panel-inset);
   border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
   background: #0e0e10;
 }
 
-.fact-intro h2 {
-  margin: 0;
-  font-family: var(--font);
-  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
-  font-weight: 570;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-  color: var(--text);
-  text-wrap: balance;
-}
-
-.fact-intro p {
-  max-width: 30ch;
-  margin: 14px 0 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--text-muted);
-  text-wrap: pretty;
-}
-
-.fact-rows {
-  margin: 0;
-  border-top: 1px solid var(--border);
-}
-
-.fact-rows > div {
-  display: grid;
-  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
-  gap: 14px clamp(18px, 2.5vw, 34px);
-  align-items: baseline;
-  padding: clamp(15px, 1.8vw, 19px) 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.fact-rows dt {
-  min-width: 0;
-  font-size: 0.97rem;
-  font-weight: 560;
-  letter-spacing: -0.015em;
-  color: var(--text);
-}
-
-.fact-rows dd {
-  min-width: 0;
-  margin: 0;
-}
-
-.fact-value {
-  display: block;
-  font-size: 0.93rem;
-  line-height: 1.45;
-  color: var(--text-muted);
-  text-wrap: pretty;
-}
-
-.fact-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.fact-value + .fact-chips {
-  margin-top: 10px;
-}
 
 /* Same chip as the settings tracks, so the vocabulary carries across pages. */
 .chip {
@@ -2248,9 +2054,6 @@ button.btn {
   color: var(--text-dim);
   white-space: nowrap;
 }
-
-
-
 
 
 .nav-link[aria-current='page'] {
@@ -2294,15 +2097,8 @@ button.btn {
   padding: clamp(28px, 3.5vw, 44px) 0;
 }
 
-.showcase-body {
-  display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(36px, 5vw, 76px);
-  align-items: center;
-}
 
 .showcase-body.is-panel {
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
   padding: clamp(48px, 6vw, 84px) var(--panel-inset);
   border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
@@ -2319,33 +2115,6 @@ button.btn {
   order: 2;
 }
 
-.showcase-copy h2 {
-  margin: 0;
-  font-family: var(--font);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 570;
-  letter-spacing: -0.04em;
-  line-height: 1.04;
-  color: var(--text);
-  text-wrap: balance;
-}
-
-.showcase-answer {
-  margin: 16px 0 0;
-  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
-  line-height: 1.45;
-  color: var(--text);
-  text-wrap: pretty;
-}
-
-.showcase-detail {
-  max-width: 42ch;
-  margin: 12px 0 0;
-  font-size: 0.94rem;
-  line-height: 1.5;
-  color: var(--text-muted);
-  text-wrap: pretty;
-}
 
 /* ---------- Shared lab controls ---------- */
 .showcase fieldset {
@@ -2683,9 +2452,6 @@ button.btn {
   }
 }
 
-.more-link {
-  padding: clamp(20px, 2.5vw, 32px) 0 clamp(28px, 3.5vw, 44px);
-}
 
 /* ==========================================================================
    Plays everything
@@ -2693,9 +2459,6 @@ button.btn {
    as a plate rather than prose: grouped, dense, and scannable at a glance.
    ========================================================================== */
 
-.plays-everything {
-  padding: clamp(28px, 3.5vw, 44px) 0;
-}
 
 .plays-head h2 {
   margin: 0;
@@ -2771,73 +2534,9 @@ button.btn {
   padding: clamp(28px, 3.5vw, 44px) 0;
 }
 
-.nopay-body {
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
-  padding: clamp(48px, 6vw, 84px) var(--panel-inset);
-  border: 1px solid #2b2b2f;
-  border-radius: var(--r-xl);
-  background: #0e0e10;
-}
-
-.nopay-copy h2 {
-  margin: 0;
-  font-family: var(--font);
-  font-size: clamp(1.9rem, 3.2vw, 2.7rem);
-  font-weight: 570;
-  letter-spacing: -0.04em;
-  line-height: 1.03;
-  color: var(--text);
-  text-wrap: balance;
-}
-
-.nopay-copy p {
-  max-width: 54ch;
-  margin: 16px 0 0;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--text-muted);
-  text-wrap: pretty;
-}
-
-.nopay-list {
-  list-style: none;
-  margin: clamp(30px, 3.5vw, 42px) 0 0;
-  padding: 0;
-  border-top: 1px solid var(--border);
-}
-
-.nopay-list li {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) auto;
-  gap: 8px clamp(16px, 2.5vw, 32px);
-  align-items: baseline;
-  padding: clamp(14px, 1.7vw, 18px) 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.nopay-feature {
-  font-size: 0.98rem;
-  font-weight: 560;
-  letter-spacing: -0.015em;
-  color: var(--text);
-}
 
 /* The competitor's tier is the quiet part; ours is the loud one. */
-.nopay-who {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-}
 
-.nopay-us {
-  justify-self: end;
-  padding: 5px 13px;
-  border-radius: var(--r-pill);
-  font-size: 0.82rem;
-  font-weight: 560;
-  color: #0a0a0b;
-  background: var(--text);
-  white-space: nowrap;
-}
 
 @media (max-width: 640px) {
   .nopay-list li {
@@ -2875,7 +2574,6 @@ button.btn {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(26px, 4vw, 56px);
   align-items: center;
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
   padding: clamp(30px, 3.4vw, 44px) var(--panel-inset);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -2969,7 +2667,6 @@ button.btn {
 }
 
 
-
 @media (max-width: 560px) {
   .donate-body {
     padding-block: 26px;
@@ -2994,7 +2691,6 @@ button.btn {
 }
 
 .fmt-body.is-panel {
-  margin-inline: calc(-1 * var(--panel-inset) - 1px);
   padding: clamp(34px, 4vw, 52px) var(--panel-inset);
   border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
@@ -3043,16 +2739,27 @@ button.btn {
 
 /* ---------- FAQ ---------- */
 .faq-section {
-  padding: clamp(40px, 5vw, 68px) 0 clamp(20px, 2.5vw, 32px);
+  padding-block: clamp(56px, 8vw, 128px);
+}
+
+.faq-section > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  gap: clamp(30px, 5vw, 90px);
+  align-items: start;
+  padding-inline: 24px;
 }
 
 .faq-section h2 {
-  margin: 0 0 clamp(22px, 2.6vw, 30px);
+  max-width: 12ch;
+  margin: 0;
   font-family: var(--font);
-  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
   font-weight: 570;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
   color: var(--text);
+  text-wrap: balance;
 }
 
 .faq-list {
@@ -3122,6 +2829,15 @@ button.btn {
     grid-template-columns: 1fr;
     gap: 18px;
   }
+
+  .faq-section > .container {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .faq-section h2 {
+    max-width: none;
+  }
 }
 
 @media (max-width: 560px) {
@@ -3132,5 +2848,394 @@ button.btn {
 
   .fmt-body.is-panel {
     padding-block: 30px;
+  }
+}
+
+/* ==========================================================================
+   Slab system
+   One bordered container per section, subdivided by hairlines. Headings live
+   outside it on the page keyline, so nothing has to bleed to stay aligned.
+   The 1px grid gap is the hairline: the container background shows through.
+   ========================================================================== */
+
+.band {
+  padding-block: clamp(56px, 8vw, 128px);
+}
+
+.band > .container {
+  padding-inline: 24px;
+}
+
+/* A ch max-width here would resolve against the body font size, not the
+   heading's, so this is absolute. */
+.band-head {
+  max-width: 620px;
+  margin-bottom: clamp(30px, 4vw, 52px);
+}
+
+.band-head h2 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  font-weight: 570;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.band-head p {
+  max-width: 52ch;
+  margin: 16px 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+.slab {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-slab);
+  overflow: hidden;
+  background: var(--border);
+}
+
+ul.slab {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(26px, 3vw, 44px);
+  background: #0b0b0c;
+  grid-column: span var(--span, 1);
+}
+
+a.cell {
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+
+a.cell:hover {
+  background: #131316;
+}
+
+.cell-visual {
+  display: flex;
+  align-items: center;
+  min-height: 84px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.cell-visual img {
+  display: block;
+  width: auto;
+  height: 32px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.cell h3 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.05rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.cell p {
+  margin: 8px 0 0;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  text-wrap: pretty;
+}
+
+/* Pins the label to the bottom so a row shares a baseline even when the
+   visuals above differ in height. */
+.cell-foot {
+  margin-top: auto;
+}
+
+.cell-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+a.cell:hover .cell-go {
+  color: var(--text);
+}
+
+.cell-arrow {
+  width: 7px;
+  height: 7px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+a.cell:hover .cell-arrow {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+.cell .share-chips {
+  align-content: center;
+}
+
+@media (max-width: 900px) {
+  .slab {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cell {
+    --span: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .slab {
+    grid-template-columns: 1fr;
+  }
+
+  .cell-visual {
+    min-height: 0;
+    margin-bottom: 20px;
+  }
+}
+
+/* ---------- Paywall rows ---------- */
+.paywall-slab li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* A claim and who charges for it. The heading already says these are free
+   here, so no row repeats it. */
+.paywall-row {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding-block: clamp(18px, 2vw, 24px);
+}
+
+.paywall-feature {
+  font-size: 1rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.paywall-who {
+  flex: none;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+/* ---------- Merge diagram ---------- */
+.merge-slab {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+}
+
+.merge-visual {
+  grid-row: span 2;
+  justify-content: center;
+}
+
+.merge-diagram {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(24px, 4vw, 56px) auto;
+  align-items: center;
+}
+
+.merge-inputs {
+  list-style: none;
+  margin: 0;
+  padding: 0 clamp(14px, 2vw, 24px) 0 0;
+  border-right: 1px solid var(--border-bright);
+}
+
+.merge-inputs li {
+  padding: 11px 0;
+  font-size: 0.94rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.merge-diagram::before {
+  content: '';
+  grid-column: 2;
+  grid-row: 1;
+  height: 1px;
+  background: var(--border-bright);
+}
+
+.merge-output {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+  padding: 13px 19px;
+  border: 1px solid var(--border-bright);
+  border-radius: var(--r-pill);
+  font-size: 0.98rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  color: var(--text);
+  background: #141416;
+}
+
+/* ---------- iCloud slab ---------- */
+.icloud-slab {
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+}
+
+.icloud-visual {
+  grid-row: span 2;
+  justify-content: center;
+  background: #f2f2f3;
+}
+
+/* ---------- Showcase slab ---------- */
+.showcase-slab {
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+}
+
+.showcase-slab.is-flipped .showcase-demo {
+  order: 2;
+}
+
+.showcase-demo,
+.showcase-note {
+  justify-content: center;
+}
+
+.showcase-note p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .merge-slab,
+  .icloud-slab,
+  .showcase-slab,
+  .showcase-slab.is-flipped {
+    grid-template-columns: 1fr;
+  }
+
+  .merge-visual,
+  .icloud-visual {
+    grid-row: auto;
+  }
+
+  .showcase-slab.is-flipped .showcase-demo {
+    order: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .merge-diagram {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 18px;
+  }
+
+  .merge-inputs {
+    width: 100%;
+    padding: 0 0 18px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .merge-inputs li {
+    text-align: left;
+  }
+
+  .merge-diagram::before {
+    display: none;
+  }
+
+  .merge-output {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* ==========================================================================
+   Marquee
+   Full bleed, two rows drifting opposite ways. The track holds two copies of
+   the set, so translating exactly -50% loops without a seam.
+   ========================================================================== */
+
+.marquee {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 22px);
+  padding-block: clamp(40px, 6vw, 88px);
+  overflow: hidden;
+}
+
+.marquee-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: clamp(14px, 1.6vw, 22px);
+  animation: marquee-drift 64s linear infinite;
+}
+
+.marquee-track.is-reverse {
+  animation-direction: reverse;
+}
+
+.marquee-track img {
+  display: block;
+  width: auto;
+  max-width: clamp(280px, 38vw, 540px);
+  height: clamp(160px, 22vw, 300px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-slab);
+  object-fit: cover;
+  object-position: top center;
+}
+
+@keyframes marquee-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Pausing on hover lets someone actually look at a screenshot. */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  .marquee-row {
+    overflow-x: auto;
   }
 }
