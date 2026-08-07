@@ -24,23 +24,23 @@ export const SERVER_LINKS = [
 export const MARQUEE_FORMATS = [
   {
     name: 'Dolby Vision',
-    claim: 'Including Profile 7',
-    detail: 'The profile a UHD Blu-ray remux uses. No Apple device can decode it, so Plozz converts it as it plays.',
+    claim: 'Profiles 5, 7, 8.1 and 8.4',
+    detail: 'Profile 7 included, which Apple hardware can’t decode on its own.',
   },
   {
     name: 'HDR10+',
-    claim: 'Per-frame metadata',
-    detail: 'The scene-by-scene tone curves survive the trip to your TV instead of being flattened to static HDR10.',
+    claim: 'Scene-by-scene metadata',
+    detail: 'Your TV gets the real tone curves, not a flattened HDR10 copy.',
   },
   {
     name: 'Dolby Atmos',
-    claim: 'Never re-encoded',
-    detail: 'E-AC-3 with JOC is copied through untouched, so your receiver lights up the Atmos indicator.',
+    claim: 'Copied, not re-encoded',
+    detail: 'Nothing touches the bitstream, so your receiver lights up like it should.',
   },
 ];
 
 export const LONG_TAIL =
-  'H.264, HEVC, AV1, VP9, VP8, MPEG-2, MPEG-4, VC-1, XVID, HLG, TrueHD, DTS-HD MA, DTS, AC-3, FLAC, ALAC, AAC, Opus, PCM, SRT, ASS, PGS, DVB, DVD, teletext, CEA-608, MKV, MP4, WebM, MPEG-TS, AVI, and DVD and Blu-ray images.';
+  'H.264, HEVC, AV1, VP9, VP8, MPEG-2, MPEG-4, VC-1, XVID, HLG, TrueHD, DTS-HD MA, DTS, AC-3, FLAC, ALAC, AAC, Opus, PCM, SRT, ASS, PGS, DVB, teletext, CEA-608, MKV, MP4, WebM, MPEG-TS, AVI, plus DVD and Blu-ray images.';
 
 /**
  * Verified against firecore.com/infuse and emby.media's Premiere feature matrix

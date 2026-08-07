@@ -43,6 +43,13 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
   and put the long tail in one quiet line.
 - Follow the natural-writing rules: no promotional verbs, no rule of three, no false
   ranges, sparing em dashes, sentence case headings.
+- Use contractions. Copy without them reads like a machine wrote it.
+- Vary sentence length. Never three of the same length in a row, and let a short
+  one land after a long one.
+- Don't explain your own homework. "Profile 7" is enough for anyone who owns
+  those files; "the profile a UHD Blu-ray remux uses" is a lecture.
+- The donate section speaks as Brandon, in first person, because a person is
+  doing the asking. Everywhere else addresses the reader as you.
 
 ## Competitors, verified 2026-08-07
 

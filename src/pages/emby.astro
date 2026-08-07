@@ -61,27 +61,27 @@ const compatibility = [
     <PageHero
       eyebrow={"Emby"}
       title={"Emby, not an afterthought."}
-      lead={"Same player, same subtitle control, same place in your merged library as everything else you connect."}
+      lead={"Same player, same subtitle control, same place in your library as everything else you connect."}
     />
 
     <Showcase
       question={"Will it wreck my server?"}
-      answer={"No. Plozz opens the file itself."}
-      detail={"Matroska is demuxed on the device, so Emby never re-encodes anything."}
+      answer={"No. Your Apple TV opens the file and plays it."}
+      detail={"Nothing upstream re-encodes a thing, so Emby sits idle while you watch."}
       panel
     >
       <ul class="proof">
-        <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
+        <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
         <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
         <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
-        <li><span>Your server</span><span>Sends the file, nothing more</span></li>
+        <li><span>Your server</span><span>Hands over the file, nothing more</span></li>
       </ul>
     </Showcase>
 
     <Showcase
       question={"Can I make the subtitles readable?"}
-      answer={"Plozz draws its own, so they look the same on every server."}
-      detail={"Seven typefaces, two of them made for people who find subtitles hard to read."}
+      answer={"Plozz draws its own, so they look the same everywhere."}
+      detail={"Seven typefaces. Two were built for people who struggle to read subtitles at all."}
       flip
     >
       <SubtitleLab />
@@ -90,7 +90,7 @@ const compatibility = [
     <Showcase
       question={"Is Emby treated like Jellyfin?"}
       answer={"They share a client, but not blindly."}
-      detail={"Both speak MediaBrowser, so one client serves both. Where they differ, Plozz detects it per server."}
+      detail={"Both speak MediaBrowser, so one client serves both. Where they differ, Plozz works it out per server."}
       panel
     >
       <ul class="proof">
@@ -110,7 +110,7 @@ const compatibility = [
     <section class="closer" aria-labelledby="page-closer">
       <div class="container">
         <h2 id="page-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
+        <p>No subscription, no paid tier. The whole thing is GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta

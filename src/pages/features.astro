@@ -23,27 +23,27 @@ const description =
     <PageHero
       eyebrow="Features"
       title="The questions people actually ask."
-      lead="Every answer below is yes. Here is what each one looks like."
+      lead="Every answer here is yes. This is what that looks like."
     />
 
     <Showcase
       question="Will it wreck my server?"
-      answer="No. Plozz opens the file itself and plays it as it is."
-      detail="Matroska is demuxed on your Apple TV, iPhone or iPad, so nothing upstream re-encodes anything."
+      answer="No. Your Apple TV opens the file and plays it."
+      detail="Nothing upstream re-encodes a thing, so your server sits idle while you watch."
       panel
     >
       <ul class="proof">
-        <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
+        <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
         <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
         <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
-        <li><span>Your server</span><span>Sends the file and goes back to sleep</span></li>
+        <li><span>Your server</span><span>Hands over the file, then goes back to sleep</span></li>
       </ul>
     </Showcase>
 
     <Showcase
       question="Can I make the subtitles readable?"
-      answer="Plozz draws its own, so they look the same on every server."
-      detail="Two of the seven typefaces exist specifically for people who find subtitles hard to read."
+      answer="Plozz draws its own, so they look the same everywhere."
+      detail="Seven typefaces. Two of them were built for people who struggle to read subtitles at all."
       flip
     >
       <SubtitleLab />
@@ -51,8 +51,8 @@ const description =
 
     <Showcase
       question="Does it skip intros?"
-      answer="Yes, and you decide how pushy it is about it."
-      detail="Uses Plex Pass markers or the Jellyfin Intro Skipper."
+      answer="Yes, and you decide how pushy it gets."
+      detail="Works off Plex Pass markers, or the Jellyfin Intro Skipper."
       panel
     >
       <ul class="proof">
@@ -65,8 +65,8 @@ const description =
 
     <Showcase
       question="Watching at 1am?"
-      answer="Warm the whole screen down, player included."
-      detail="tvOS has no Night Shift and no brightness API, so Plozz tints its own window. Most night modes give up the moment video starts."
+      answer="Warm the whole screen down. The player too."
+      detail="Apple gives tvOS no Night Shift and no brightness control, so Plozz tints its own window instead. Most night modes quit the second video starts."
       flip
     >
       <WarmthLab />
@@ -74,8 +74,8 @@ const description =
 
     <Showcase
       question="Can I fit more on screen?"
-      answer="Six steps, from a wall of posters to a low-vision layout."
-      detail="Density moves card size, spacing and column count together, and it is remembered per profile."
+      answer="Six steps, from a wall of posters down to five big ones."
+      detail="Card size, spacing and columns all move together. Every profile remembers its own."
       panel
     >
       <DensityLab />
@@ -83,8 +83,8 @@ const description =
 
     <Showcase
       question="Will it spoil the next episode?"
-      answer="Not if you would rather it did not."
-      detail="Unwatched episodes keep their artwork hidden and read as Episode 4 until you have seen them. Ratings can stay hidden too."
+      answer="Not unless you want it to."
+      detail="Artwork stays hidden and the title just reads Episode 4 until you’ve watched it. Ratings can stay hidden too."
       flip
     >
       <SpoilerLab />
@@ -92,36 +92,36 @@ const description =
 
     <Showcase
       question="Can I watch on a plane?"
-      answer="Download on your iPhone or iPad and take it with you."
-      detail="Queue a film or a whole show, on Wi-Fi only if you would rather not spend the data."
+      answer="Download to your iPhone or iPad first."
+      detail="Queue a film or a whole season. Stick to Wi-Fi if you’d rather not spend the data."
       panel
     >
       <ul class="proof">
-        <li><span>Downloads</span><span>iPhone and iPad</span></li>
+        <li><span>Downloads</span><span>On iPhone and iPad</span></li>
         <li><span>Picture in Picture</span><span>Keeps the custom controls and subtitles</span></li>
         <li><span>AirPlay</span><span>Route picker in the player</span></li>
-        <li><span>Background audio</span><span>Carries on when the screen locks</span></li>
+        <li><span>Background audio</span><span>Keeps going when the screen locks</span></li>
       </ul>
     </Showcase>
 
     <Showcase
       question="What are you doing with my data?"
-      answer="Nothing. There is no analytics code in the app."
-      detail="Crash reporting is off by default, and public builds ship with no reporting endpoint at all."
+      answer="Nothing. There’s no analytics code in the app at all."
+      detail="Crash reporting stays off until you turn it on, and public builds ship without a reporting endpoint anyway."
       flip
     >
       <ul class="proof">
         <li><span>Analytics</span><span>None, anywhere in the codebase</span></li>
-        <li><span>Crash reports</span><span>Off unless you turn them on</span></li>
-        <li><span>Accounts</span><span>Plozz has none to make</span></li>
-        <li><span>Price</span><span>Free, and GPL-3.0 on GitHub</span></li>
+        <li><span>Crash reports</span><span>Off until you turn them on</span></li>
+        <li><span>Accounts</span><span>There’s no Plozz account to make</span></li>
+        <li><span>Price</span><span>Free, and the source is on GitHub</span></li>
       </ul>
     </Showcase>
 
     <section class="closer" aria-labelledby="features-closer">
       <div class="container">
         <h2 id="features-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
+        <p>No subscription, no paid tier. The whole thing is GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
