@@ -49,6 +49,28 @@ const softwareLd = {
   },
   sameAs: [GITHUB_URL],
 };
+
+/**
+ * Names the publisher and the site as entities in their own right. Without
+ * these, the only thing on the page Google can attach the brand to is the app
+ * listing, which makes "Plozz" harder to resolve as a search term.
+ */
+const orgLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "thatcube",
+  url: SITE,
+  logo: `${SITE}/logo.svg`,
+  sameAs: [GITHUB_URL],
+};
+
+const siteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Plozz",
+  url: SITE,
+  publisher: { "@type": "Organization", name: "thatcube" },
+};
 ---
 
 <Layout>
@@ -58,7 +80,7 @@ const softwareLd = {
     <section class="hero">
       <div class="container">
         <div class="hero-copy">
-          <h1>A native media player<br />for your servers and shares.</h1>
+          <h1>A native media player <br />for your servers and shares.</h1>
           <div class="hero-summary">
             <dl class="hero-facts">
               <div>
@@ -441,6 +463,8 @@ const softwareLd = {
   <SiteFooter />
 
   <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(siteLd)} />
   <SiteScripts />
   <script>
     const gallery = document.querySelector("[data-hero-gallery]");

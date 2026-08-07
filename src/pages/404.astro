@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import { NAV_LINKS, SERVER_LINKS } from '../data/site';
+---
+
+<Layout
+  title="Page not found — Plozz"
+  description="That page doesn’t exist. Head back to the Plozz home page."
+  noindex
+>
+  <SiteHeader />
+
+  <main>
+    <section class="band">
+      <div class="container">
+        <div class="band-head">
+          <h1>That page doesn’t exist.</h1>
+        </div>
+
+        <div class="slab" style="--cols: 1">
+          <div class="cell">
+            <p>
+              The link may be out of date, or it may never have been a page.
+              Everything on the site is one of these:
+            </p>
+            <ul class="notfound-links">
+              <li><a href="/">Home</a></li>
+              {
+                NAV_LINKS.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))
+              }
+              {
+                SERVER_LINKS.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))
+              }
+              <li><a href="/privacy">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+  <SiteScripts />
+</Layout>

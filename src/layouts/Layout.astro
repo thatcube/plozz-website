@@ -4,11 +4,15 @@ import '../styles/global.css';
 export interface Props {
   title?: string;
   description?: string;
+  /** Error pages should stay out of the index even though the status code
+      already says so — a stray crawl of the URL should not add it. */
+  noindex?: boolean;
 }
 
 const {
-  title = 'Plozz — free Jellyfin, Plex and Emby app for Apple TV, iPhone and iPad',
-  description = 'Free, open source media player for Apple TV, iPhone and iPad. Dolby Vision, HDR10+, Atmos, TrueHD and DTS-HD MA with no server transcoding and no Pro tier. Plays Jellyfin, Plex, Emby, SMB, NFS, WebDAV, SFTP and FTP.',
+  title = 'Plozz — free Jellyfin, Plex and Emby app for Apple TV',
+  description = 'Free, open source media player for Apple TV, iPhone and iPad. Direct plays Jellyfin, Plex, Emby and network shares in Dolby Vision and Atmos. No Pro tier.',
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -23,7 +27,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'}
+    />
     <meta name="author" content="thatcube" />
     <meta name="theme-color" content="#0a0c10" />
 

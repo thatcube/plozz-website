@@ -2866,7 +2866,7 @@ a.cell:hover .cell-arrow {
   justify-content: center;
 }
 
-/* ---------- Option 1: typographic ----------
+/* ---------- Merge statement ----------
    The possessives recede and the names carry the light, so the four sources
    read as a list at a glance without being set as one. */
 /* Outspecifies `.cell p`, which is one class plus one element and would
@@ -2892,119 +2892,6 @@ a.cell:hover .cell-arrow {
   line-height: 1.55;
   color: var(--text-muted);
   text-wrap: pretty;
-}
-
-/* ---------- Option 2: stepped stack ----------
-   Each card gives up a slice of the stage so the one behind keeps its top edge
-   visible, which is what keeps every label legible in a stack. */
-.fan {
-  container-type: inline-size;
-  margin: 0;
-  width: 100%;
-}
-
-.fan-stack {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 5 / 3;
-}
-
-.fan-card {
-  position: absolute;
-  left: calc(var(--i) * 5%);
-  top: calc(var(--i) * var(--step));
-  width: 62%;
-  height: 55%;
-  border: 1px solid var(--border-bright);
-  border-radius: clamp(9px, 1.9cqw, 14px);
-  background: #131316;
-  box-shadow: 0 clamp(5px, 1.2cqw, 11px) clamp(16px, 3.4cqw, 28px)
-    rgba(0, 0, 0, 0.6);
-}
-
-.fan-label {
-  position: absolute;
-  left: clamp(11px, 2.4cqw, 18px);
-  top: clamp(9px, 1.9cqw, 15px);
-  font-size: clamp(10px, 1.8cqw, 13px);
-  letter-spacing: -0.01em;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-
-/* The front card is the result, so it is the only one that is lit. */
-.fan-card.is-one {
-  border-color: rgba(0, 164, 220, 0.45);
-  background: linear-gradient(158deg, #16242c, #101014);
-  box-shadow:
-    0 clamp(9px, 2.2cqw, 18px) clamp(24px, 5.5cqw, 44px) rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(0, 164, 220, 0.1);
-}
-
-.fan-one {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: clamp(13px, 2.5cqw, 18px);
-  font-weight: 560;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-/* ---------- Option 3: overlapping panes ----------
-   The overlap makes the argument: the place where all four agree is the lit
-   one. `screen` keeps the stack additive, so more overlap means more light. */
-.panes {
-  container-type: inline-size;
-  margin: 0;
-  width: 100%;
-}
-
-.panes-stage {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 5 / 3;
-}
-
-.pane {
-  position: absolute;
-  left: 27%;
-  right: 27%;
-  top: 24%;
-  bottom: 24%;
-  transform: translate(var(--x), var(--y));
-  border: 1px solid rgba(150, 205, 230, 0.22);
-  border-radius: clamp(8px, 1.8cqw, 13px);
-  background: rgba(64, 132, 165, 0.12);
-  mix-blend-mode: screen;
-}
-
-.pane-label {
-  position: absolute;
-  left: 0;
-  bottom: calc(100% + clamp(5px, 1.2cqw, 9px));
-  font-size: clamp(10px, 1.75cqw, 13px);
-  letter-spacing: -0.01em;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-
-/* The four panes only coincide in the middle, so that is the only region that
-   needs no tint of its own — it is already the brightest thing here. */
-.pane-core {
-  position: absolute;
-  left: 27%;
-  right: 27%;
-  top: 24%;
-  bottom: 24%;
-  display: grid;
-  place-items: center;
-  font-size: clamp(13px, 2.5cqw, 18px);
-  font-weight: 560;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  pointer-events: none;
 }
 
 /* ---------- iCloud slab ---------- */
@@ -3342,4 +3229,27 @@ a.cell:hover .cell-arrow {
 .cell-icon svg {
   width: 22px;
   height: 22px;
+}
+
+/* ---------- 404 ---------- */
+.notfound-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin: 22px 0 0;
+  padding: 0;
+}
+
+.notfound-links a {
+  font-size: 0.98rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-bright);
+  padding-bottom: 2px;
+  transition: border-color 160ms ease;
+}
+
+.notfound-links a:hover {
+  border-bottom-color: var(--text);
 }
