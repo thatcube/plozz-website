@@ -61,13 +61,10 @@ const compatibility = [
     <PageHero
       eyebrow={"Jellyfin"}
       title={"Stop making Jellyfin transcode."}
-      lead={"Your Apple TV opens the file and plays it. Your server hands it over, then goes back to sleep."}
     />
 
     <Showcase
       question={"Will it wreck my server?"}
-      answer={"No. Your Apple TV opens the file and plays it."}
-      detail={"Nothing upstream re-encodes a thing, so Jellyfin sits idle while you watch."}
     >
       <ul class="proof">
         <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
@@ -79,8 +76,6 @@ const compatibility = [
 
     <Showcase
       question={"Can I make the subtitles readable?"}
-      answer={"Plozz draws its own, so they look the same everywhere."}
-      detail={"Seven typefaces. Two were built for people who struggle to read subtitles at all."}
       flip
     >
       <SubtitleLab />
@@ -88,8 +83,6 @@ const compatibility = [
 
     <Showcase
       question={"Does it skip intros?"}
-      answer={"Yes, using the markers Jellyfin already has."}
-      detail={"Reads Media Segments, or the Intro Skipper plugin."}
     >
       <ul class="proof">
         <li><span>Off</span><span>Never touch it</span></li>
@@ -101,7 +94,6 @@ const compatibility = [
 
     <FactSection
       title="Compatibility"
-      lead={"What plays without your server lifting a finger."}
       facts={compatibility}
     />
 

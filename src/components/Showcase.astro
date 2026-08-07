@@ -1,12 +1,11 @@
 ---
 export interface Props {
   question: string;
-  answer: string;
   detail?: string;
   flip?: boolean;
 }
 
-const { question, answer, detail, flip = false } = Astro.props;
+const { question, detail, flip = false } = Astro.props;
 const id = question.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 ---
 
@@ -14,7 +13,6 @@ const id = question.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, 
   <div class="container">
     <div class="band-head">
       <h2 id={id}>{question}</h2>
-      <p>{answer}</p>
     </div>
 
     <div class:list={['slab showcase-slab', { 'is-flipped': flip }]}>

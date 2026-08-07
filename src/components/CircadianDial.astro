@@ -1,0 +1,17 @@
+---
+import { Icon } from 'astro-icon/components';
+
+/**
+ * A 24-hour dial: the sun rides above the horizon, the moon below. Runs the
+ * same 16s timeline as the screen tint, so the two always agree.
+ */
+---
+
+<div class="dial" aria-hidden="true">
+  <span class="dial-ring"></span>
+  <span class="dial-horizon"></span>
+  <span class="dial-orbit">
+    <span class="dial-body dial-sun"><Icon name="ph:sun-fill" /></span>
+    <span class="dial-body dial-moon"><Icon name="ph:moon-fill" /></span>
+  </span>
+</div>

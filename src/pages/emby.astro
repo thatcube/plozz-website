@@ -61,13 +61,10 @@ const compatibility = [
     <PageHero
       eyebrow={"Emby"}
       title={"Emby, not an afterthought."}
-      lead={"Same player, same subtitle control, same place in your library as everything else you connect."}
     />
 
     <Showcase
       question={"Will it wreck my server?"}
-      answer={"No. Your Apple TV opens the file and plays it."}
-      detail={"Nothing upstream re-encodes a thing, so Emby sits idle while you watch."}
     >
       <ul class="proof">
         <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
@@ -79,8 +76,6 @@ const compatibility = [
 
     <Showcase
       question={"Can I make the subtitles readable?"}
-      answer={"Plozz draws its own, so they look the same everywhere."}
-      detail={"Seven typefaces. Two were built for people who struggle to read subtitles at all."}
       flip
     >
       <SubtitleLab />
@@ -88,8 +83,6 @@ const compatibility = [
 
     <Showcase
       question={"Is Emby treated like Jellyfin?"}
-      answer={"They share a client, but not blindly."}
-      detail={"Both speak MediaBrowser, so one client serves both. Where they differ, Plozz works it out per server."}
     >
       <ul class="proof">
         <li><span>Shared protocol</span><span>MediaBrowser, for both</span></li>
@@ -101,7 +94,6 @@ const compatibility = [
 
     <FactSection
       title="Compatibility"
-      lead={"What plays without your server lifting a finger."}
       facts={compatibility}
     />
 

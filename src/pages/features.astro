@@ -7,7 +7,6 @@ import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
 import SubtitleLab from '../components/SubtitleLab.astro';
-import WarmthLab from '../components/WarmthLab.astro';
 import DensityLab from '../components/DensityLab.astro';
 import SpoilerLab from '../components/SpoilerLab.astro';
 
@@ -23,12 +22,10 @@ const description =
     <PageHero
       eyebrow="Features"
       title="The questions people actually ask."
-      lead="Every answer here is yes. This is what that looks like."
     />
 
     <Showcase
       question="Will it wreck my server?"
-      answer="No. Your Apple TV opens the file and plays it."
       detail="Nothing upstream re-encodes a thing, so your server sits idle while you watch."
     >
       <ul class="proof">
@@ -41,7 +38,6 @@ const description =
 
     <Showcase
       question="Can I make the subtitles readable?"
-      answer="Plozz draws its own, so they look the same everywhere."
       detail="Seven typefaces. Two of them were built for people who struggle to read subtitles at all."
       flip
     >
@@ -50,7 +46,6 @@ const description =
 
     <Showcase
       question="Does it skip intros?"
-      answer="Yes, and you decide how pushy it gets."
       detail="Works off Plex Pass markers, or the Jellyfin Intro Skipper."
     >
       <ul class="proof">
@@ -62,17 +57,7 @@ const description =
     </Showcase>
 
     <Showcase
-      question="Watching at 1am?"
-      answer="Warm the whole screen down. The player too."
-      detail="Apple gives tvOS no Night Shift and no brightness control, so Plozz tints its own window instead. Most night modes quit the second video starts."
-      flip
-    >
-      <WarmthLab />
-    </Showcase>
-
-    <Showcase
       question="Can I fit more on screen?"
-      answer="Six steps, from a wall of posters down to five big ones."
       detail="Card size, spacing and columns all move together. Every profile remembers its own."
     >
       <DensityLab />
@@ -80,7 +65,6 @@ const description =
 
     <Showcase
       question="Will it spoil the next episode?"
-      answer="Not unless you want it to."
       detail="Artwork stays hidden and the title just reads Episode 4 until you’ve watched it. Ratings can stay hidden too."
       flip
     >
@@ -89,7 +73,6 @@ const description =
 
     <Showcase
       question="Can I watch on a plane?"
-      answer="Download to your iPhone or iPad first."
       detail="Queue a film or a whole season. Stick to Wi-Fi if you’d rather not spend the data."
     >
       <ul class="proof">
@@ -102,7 +85,6 @@ const description =
 
     <Showcase
       question="What are you doing with my data?"
-      answer="Nothing. There’s no analytics code in the app at all."
       detail="Crash reporting stays off until you turn it on, and public builds ship without a reporting endpoint anyway."
       flip
     >

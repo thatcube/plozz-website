@@ -6,6 +6,8 @@ import SiteFooter from "../components/SiteFooter.astro";
 import Closer from "../components/Closer.astro";
 import SiteScripts from "../components/SiteScripts.astro";
 import Marquee from "../components/Marquee.astro";
+import CircadianLab from "../components/CircadianLab.astro";
+import CircadianDial from "../components/CircadianDial.astro";
 import { PAYWALLED, DONATION_AMOUNTS } from "../data/site";
 import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from "../data/site";
 
@@ -207,10 +209,6 @@ const softwareLd = {
       <div class="container">
         <div class="band-head">
           <h2 id="plays-heading">It plays what you already have.</h2>
-          <p>
-            Your Apple TV does the decoding. Your server just hands over the
-            file.
-          </p>
         </div>
 
         <div class="slab" style="--cols: 6">
@@ -261,10 +259,6 @@ const softwareLd = {
       <div class="container">
         <div class="band-head">
           <h2 id="merge-heading">Your servers. Your friends’. One library.</h2>
-          <p>
-            Connect as many as you like. Your watch history follows you across
-            every one of them.
-          </p>
         </div>
 
         <div class="slab merge-slab">
@@ -297,15 +291,32 @@ const softwareLd = {
       </div>
     </section>
 
+    <section class="band" aria-labelledby="circadian-heading">
+      <div class="container">
+        <div class="band-head">
+          <h2 id="circadian-heading">Circadian mode</h2>
+        </div>
+
+        <div class="slab sky-slab">
+          <div class="cell sky-cell">
+            <CircadianLab />
+          </div>
+          <div class="cell">
+            <CircadianDial />
+            <h3>Protect your circadian rhythm</h3>
+            <p>
+              Automatically tint and dim the screen following sunrise and sunset
+              or a custom schedule.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="band" aria-labelledby="nopay-heading">
       <div class="container">
         <div class="band-head">
           <h2 id="nopay-heading">Free where other players charge.</h2>
-          <p>
-            Every one of these sits behind a subscription or an unlock somewhere
-            else. Plozz has no Pro version, because there’s nothing left to put
-            in it.
-          </p>
         </div>
 
         <ul class="slab paywall-slab" style="--cols: 2">
@@ -324,8 +335,7 @@ const softwareLd = {
     <section class="band" aria-labelledby="icloud-heading">
       <div class="container">
         <div class="band-head">
-          <h2 id="icloud-heading">Every screen you own.</h2>
-          <p>Start on the Apple TV. Finish on your phone.</p>
+          <h2 id="icloud-heading">iCloud sync</h2>
         </div>
 
         <div class="slab icloud-slab">
@@ -374,18 +384,15 @@ const softwareLd = {
             </div>
           </div>
           <div class="cell">
-            <h3>Synced over iCloud</h3>
+            <h3>Synced to all of your devices</h3>
             <p>
-              Your servers, your place in everything, and your watchlist follow
-              you between devices.
+              Every setting saves to your iCloud, so your preferences and
+              servers follow you to all of your Apple devices.
             </p>
           </div>
           <div class="cell">
-            <h3>Downloads and Picture in Picture</h3>
-            <p>
-              On the devices you carry. Queue a season before a flight, or keep
-              watching while you do something else.
-            </p>
+            <h3>iCloud profiles</h3>
+            <p>Native support for profile switching on tvOS</p>
           </div>
         </div>
       </div>

@@ -3239,3 +3239,202 @@ a.cell:hover .cell-arrow {
     overflow-x: auto;
   }
 }
+
+/* ==========================================================================
+   Circadian mode
+   The screenshot is the subject. The sun track is a small, quiet indicator
+   above it, and every layer runs the same 16s timeline so nothing drifts.
+   ========================================================================== */
+
+.sky {
+  width: 100%;
+}
+
+/* ---------- Circadian dial ---------- */
+/* Sits beside the screen rather than above it, so the screenshot stays the
+   only thing being looked at. */
+.dial {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  margin-bottom: 22px;
+}
+
+.dial-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border-bright);
+  border-radius: 50%;
+}
+
+.dial-horizon {
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  left: -6px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* One rotating element carries both bodies, so they stay exactly opposite. */
+.dial-orbit {
+  position: absolute;
+  inset: 0;
+  animation: dial-spin 16s linear infinite;
+}
+
+.dial-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+}
+
+/* drop-shadow follows the glyph outline, so the glow hugs the sun's rays
+   instead of needing a filled disc behind it. The orbit rotates, so each icon
+   counter-rotates to stay upright. */
+.dial-body svg {
+  width: 18px;
+  height: 18px;
+  animation: dial-upright 16s linear infinite;
+}
+
+.dial-sun {
+  transform: translateY(-46px);
+  color: #ffb457;
+  filter: drop-shadow(0 0 6px rgba(255, 168, 74, 0.75));
+}
+
+.dial-moon {
+  transform: translateY(46px);
+  color: #c8c8d2;
+  filter: drop-shadow(0 0 5px rgba(200, 210, 255, 0.4));
+}
+
+@keyframes dial-upright {
+  from { transform: rotate(90deg); }
+  to { transform: rotate(-270deg); }
+}
+
+@keyframes dial-spin {
+  from { transform: rotate(-90deg); }
+  to { transform: rotate(270deg); }
+}
+
+/* ---------- Screen ---------- */
+.sky-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  line-height: 0;
+}
+
+.sky-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Plozz tints its own window because tvOS has no display API, so the demo
+   tints the same way: a multiply layer over everything. */
+.sky-tint {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  animation: sky-tint 16s linear infinite;
+}
+
+@keyframes sky-tint {
+  0%   { background: #ffd8a8; }
+  18%  { background: #ffffff; }
+  32%  { background: #ffffff; }
+  46%  { background: #ffc078; }
+  58%  { background: #ff9d4d; }
+  74%  { background: #ff7a35; }
+  88%  { background: #ff9d4d; }
+  100% { background: #ffd8a8; }
+}
+
+/* A held selection stops the cycle and pins one level. */
+.sky[data-held] 
+
+.sky[data-held] .sky-tint {
+  animation: none;
+}
+
+.sky[data-held='0'] .sky-tint { background: #ffffff; }
+.sky[data-held='1'] .sky-tint { background: #ffe9cf; }
+.sky[data-held='2'] .sky-tint { background: #ffd8a8; }
+.sky[data-held='3'] .sky-tint { background: #ffc078; }
+.sky[data-held='4'] .sky-tint { background: #ff9d4d; }
+.sky[data-held='5'] .sky-tint { background: #ff6b2c; }
+
+/* ---------- Readout ---------- */
+/* Three labels cross-fading on the same clock, so no script is needed to keep
+   the words in step with the tint. */
+
+
+
+
+
+
+
+
+
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-body,
+  .sky-tint,
+  
+
+  .sky-phase-dusk {
+    opacity: 1;
+  }
+
+  
+
+  
+
+  .sky-tint {
+    background: #ffc078;
+  }
+}
+
+.sky-slab {
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.sky-cell {
+  justify-content: center;
+}
+
+/* The screenshot fills the cell rather than sitting in it, so the demo column
+   is never shorter than the copy beside it. */
+.sky,
+.sky-screen {
+  height: 100%;
+}
+
+.sky-screen img {
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .sky-slab {
+    grid-template-columns: 1fr;
+  }
+
+  .sky-cell {
+    grid-row: auto;
+  }
+}
