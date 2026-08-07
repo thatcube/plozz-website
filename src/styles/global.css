@@ -8,25 +8,27 @@
    ========================================================================== */
 
 @font-face {
-  font-family: "Pixelify Sans";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("/fonts/pixelify-sans-latin.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Silkscreen";
+  font-family: "Atkinson Hyperlegible";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/silkscreen-400-latin.woff2") format("woff2");
+  src: url("/fonts/atkinson-400-latin.woff2") format("woff2");
 }
+
 @font-face {
-  font-family: "Silkscreen";
+  font-family: "Atkinson Hyperlegible";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/silkscreen-700-latin.woff2") format("woff2");
+  src: url("/fonts/atkinson-700-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/opendyslexic-400-latin.woff2") format("woff2");
 }
 
 :root {
@@ -56,8 +58,8 @@
 
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  --font-pixel: "Pixelify Sans", "Silkscreen", system-ui, sans-serif;
-  --font-label: "Silkscreen", "Pixelify Sans", var(--font-mono);
+  --font-sub: "Atkinson Hyperlegible", var(--font);
+  --font-dyslexic: "OpenDyslexic", var(--font);
 
   /* Pixel-corner primitive controls (overridable per component) */
   --s: 3px;          /* one pixel "step" */
@@ -888,7 +890,6 @@ h3 {
 /* Shared heading scale for every section below the hero. */
 .sources h2,
 .merge h2,
-.controls-section h2,
 .closer h2 {
   margin: 0;
   font-family: var(--font);
@@ -902,7 +903,6 @@ h3 {
 
 .sources p,
 .merge-copy p,
-.controls-intro p,
 .closer p {
   margin: 18px 0 0;
   max-width: 42ch;
@@ -1058,103 +1058,6 @@ h3 {
   background: #141416;
 }
 
-/* ---------- 3. Controls (open, segmented tracks) ---------- */
-/* The app's own settings are the product, so the section is built out of the
-   real option names rather than a description of them. */
-.controls-section {
-  padding: clamp(80px, 10vw, 132px) 0 clamp(40px, 5vw, 64px);
-}
-
-.controls-section > .container {
-  padding-inline: 24px;
-}
-
-.controls-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
-  gap: clamp(40px, 6vw, 88px);
-  align-items: end;
-}
-
-.controls-intro h2 {
-  max-width: 16ch;
-}
-
-.controls-intro p {
-  margin: 0;
-  padding-bottom: 6px;
-}
-
-.controls {
-  list-style: none;
-  margin: clamp(36px, 4.5vw, 56px) 0 0;
-  padding: clamp(48px, 6vw, 84px) clamp(28px, 4vw, 60px);
-  border: 1px solid #2b2b2f;
-  border-radius: var(--r-xl);
-  background: #0e0e10;
-}
-
-.control-row {
-  display: grid;
-  grid-template-columns: minmax(0, 210px) minmax(0, 1fr);
-  gap: clamp(20px, 3vw, 44px);
-  align-items: center;
-  padding: clamp(16px, 1.8vw, 22px) 0;
-  border-top: 1px solid var(--border);
-}
-
-.control-row:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-
-.control-row:last-child {
-  padding-bottom: 0;
-}
-
-.control-head {
-  min-width: 0;
-}
-
-.control-label {
-  display: block;
-  font-size: 1rem;
-  font-weight: 560;
-  letter-spacing: -0.015em;
-  color: var(--text);
-}
-
-.control-detail {
-  display: block;
-  margin-top: 3px;
-  font-size: 0.84rem;
-  color: var(--text-dim);
-}
-
-.control-track {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  min-width: 0;
-}
-
-.control-step {
-  padding: 7px 13px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-  font-size: 0.82rem;
-  line-height: 1.2;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-
-/* One value per row is set, the way it looks on screen. */
-.control-step.is-set {
-  border-color: transparent;
-  color: #0a0a0b;
-  background: var(--text);
-}
-
 .text-link {
   display: inline-block;
   margin-top: clamp(26px, 3vw, 36px);
@@ -1202,24 +1105,15 @@ h3 {
     gap: 40px;
   }
 
-  .merge h2,
-  .controls-intro h2 {
+  .merge h2 {
     max-width: none;
   }
 
-  .controls-intro {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
 
-  .controls-intro p {
-    margin-top: 18px;
-  }
 
-  .control-row {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+
+
+
 }
 
 @media (max-width: 560px) {
@@ -1272,18 +1166,11 @@ h3 {
     grid-row: auto;
   }
 
-  .control-track {
-    gap: 6px;
-  }
 
-  .control-step {
-    padding: 6px 11px;
-    font-size: 0.78rem;
-  }
 
-  .controls {
-    padding: 40px 20px;
-  }
+
+
+
 }
 
 /* ---------- iCloud sync ---------- */
@@ -2267,4 +2154,407 @@ button.btn {
   .page-hero {
     padding-top: 84px;
   }
+}
+
+
+/* ==========================================================================
+   Showcases
+   The settings are demonstrated, not listed. Each block asks the question a
+   person actually arrives with, answers it in a line, then shows the thing.
+   ========================================================================== */
+
+.showcase {
+  padding: clamp(28px, 3.5vw, 44px) 0;
+}
+
+.showcase-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(36px, 5vw, 76px);
+  align-items: center;
+}
+
+.showcase-body.is-panel {
+  padding: clamp(48px, 6vw, 84px) clamp(28px, 4vw, 60px);
+  border: 1px solid #2b2b2f;
+  border-radius: var(--r-xl);
+  background: #0e0e10;
+}
+
+/* Flipping the sides must flip the column widths too, or the demo lands in
+   the narrow one. */
+.showcase-body.is-flipped {
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+}
+
+.showcase-body.is-flipped .showcase-copy {
+  order: 2;
+}
+
+.showcase-copy h2 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 570;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.showcase-answer {
+  margin: 16px 0 0;
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+  line-height: 1.45;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.showcase-detail {
+  max-width: 42ch;
+  margin: 12px 0 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+/* ---------- Shared lab controls ---------- */
+.showcase fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.showcase legend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.sublab-option {
+  position: relative;
+  display: inline-flex;
+}
+
+.sublab-option input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.sublab-option span {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size: 0.84rem;
+  line-height: 1.2;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.sublab-option input:hover + span {
+  border-color: var(--border-bright);
+  color: var(--text);
+}
+
+.sublab-option input:checked + span {
+  border-color: transparent;
+  color: #0a0a0b;
+  background: var(--text);
+}
+
+.sublab-option input:focus-visible + span {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ---------- Subtitle lab ---------- */
+.sublab-frame {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 16 / 8;
+  padding: clamp(18px, 3vw, 34px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: #050506;
+}
+
+.sublab-caption {
+  font-family: var(--font-sub);
+  font-size: clamp(1rem, 2.1vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+  transition: color 160ms ease, background 160ms ease, text-shadow 160ms ease;
+}
+
+.sublab-caption[data-font='system'] {
+  font-family: var(--font);
+}
+
+.sublab-caption[data-font='dyslexic'] {
+  font-family: var(--font-dyslexic);
+  font-weight: 400;
+}
+
+/* The four presets that ship in the app. */
+.sublab-caption[data-preset='clean'] {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.sublab-caption[data-preset='boxed'] {
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.sublab-caption[data-preset='outline'] {
+  color: #fff;
+  -webkit-text-stroke: 2px #000;
+  paint-order: stroke fill;
+}
+
+.sublab-caption[data-preset='yellow'] {
+  color: #f4d23c;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+}
+
+.sublab-note {
+  margin: 14px 0 0;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+.sublab-controls {
+  display: grid;
+  gap: 20px;
+  margin-top: clamp(20px, 2.5vw, 28px);
+}
+
+.sublab-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Warmth lab ---------- */
+.warmlab-stage {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  line-height: 0;
+}
+
+.warmlab-stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Plozz tints its own window because tvOS has no display API, so the demo
+   tints the same way: a multiply layer over everything. */
+.warmlab-tint {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transition: background 400ms ease, opacity 400ms ease;
+  background: #ffffff;
+}
+
+.warmlab-tint[data-level='1'] { background: #ffe9cf; }
+.warmlab-tint[data-level='2'] { background: #ffd8a8; }
+.warmlab-tint[data-level='3'] { background: #ffc078; }
+.warmlab-tint[data-level='4'] { background: #ff9d4d; }
+.warmlab-tint[data-level='5'] { background: #ff6b2c; }
+
+.warmlab-controls {
+  margin-top: clamp(20px, 2.5vw, 28px);
+}
+
+.warmlab-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Density lab ---------- */
+.denselab-stage {
+  padding: clamp(18px, 2.4vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: #050506;
+}
+
+.denselab-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  gap: clamp(5px, 0.7vw, 9px);
+}
+
+.denselab-grid span {
+  display: block;
+  aspect-ratio: 2 / 3;
+  border-radius: 5px;
+  background: #26262b;
+  transition: background 200ms ease;
+}
+
+.denselab-grid span:nth-child(3n) { background: #303036; }
+.denselab-grid span:nth-child(5n) { background: #1e1e22; }
+
+.denselab-controls {
+  margin-top: clamp(20px, 2.5vw, 28px);
+}
+
+.denselab-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Spoiler lab ---------- */
+.spoillab-stage {
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: #050506;
+}
+
+.spoillab-card {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.spoillab-thumb {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-md);
+  line-height: 0;
+}
+
+/* Crop to the artwork band so it reads as an episode still, not a screenshot. */
+.spoillab-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: filter 260ms ease, transform 260ms ease;
+}
+
+.spoillab-card[data-hidden='true'] .spoillab-thumb img {
+  filter: blur(18px) saturate(0.7);
+  transform: scale(1.08);
+}
+
+.spoillab-title {
+  margin: 16px 0 0;
+  font-size: 1rem;
+  font-weight: 560;
+  color: var(--text);
+}
+
+.spoillab-sub {
+  margin: 5px 0 0;
+  font-size: 0.86rem;
+  color: var(--text-dim);
+}
+
+.spoillab-controls {
+  margin-top: clamp(20px, 2.5vw, 28px);
+}
+
+.spoillab-options {
+  display: flex;
+  gap: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sublab-caption,
+  .warmlab-tint,
+  .spoillab-thumb img,
+  .denselab-grid span {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .showcase-body {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .showcase-body.is-flipped {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-body.is-flipped .showcase-copy {
+    order: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .showcase-body.is-panel {
+    padding: 40px 20px;
+  }
+
+  .sublab-option span {
+    padding: 7px 12px;
+    font-size: 0.79rem;
+  }
+}
+
+/* Proof list: a claim and its evidence, for showcases where the evidence is a
+   fact rather than something to interact with. */
+.proof {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.proof li {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 10px clamp(16px, 2.5vw, 32px);
+  align-items: baseline;
+  padding: clamp(15px, 1.9vw, 20px) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.proof li > span:first-child {
+  font-size: 0.98rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.proof li > span:last-child {
+  font-size: 0.93rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+@media (max-width: 480px) {
+  .proof li {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+
+.more-link {
+  padding: clamp(20px, 2.5vw, 32px) 0 clamp(28px, 3.5vw, 44px);
 }

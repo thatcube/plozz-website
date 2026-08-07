@@ -4,13 +4,15 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Showcase from '../components/Showcase.astro';
+import SubtitleLab from '../components/SubtitleLab.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Plex client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Direct play instead of transcoding, with Dolby Vision, Atmos and deep subtitle control.";
+const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Direct play instead of transcoding, and subtitle search without a Plex Pass.";
 
-const facts0 = [
+const compatibility = [
   {
     "name": "Video",
     "chips": [
@@ -30,11 +32,7 @@ const facts0 = [
     ]
   },
   {
-    "name": "Audio",
-    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
-  },
-  {
-    "name": "Format badges",
+    "name": "Badges",
     "chips": [
       "Dolby Vision",
       "Atmos",
@@ -46,73 +44,12 @@ const facts0 = [
     ]
   },
   {
-    "name": "Skip intros and credits",
-    "chips": [
-      "Off",
-      "On",
-      "Auto (delay)",
-      "Auto (instant)"
-    ]
-  },
-  {
     "name": "Scrub thumbnails",
     "value": "Plex BIF thumbnails."
-  }
-];
-
-const facts1 = [
-  {
-    "name": "Fonts",
-    "chips": [
-      "Atkinson Hyperlegible",
-      "System",
-      "SF Rounded",
-      "Roboto",
-      "Lexend",
-      "Fredoka",
-      "OpenDyslexic"
-    ]
   },
-  {
-    "name": "Presets",
-    "chips": [
-      "Clean",
-      "Boxed",
-      "Outline",
-      "Classic Yellow"
-    ]
-  },
-  {
-    "name": "Hearing impaired",
-    "chips": [
-      "Prefer non-SDH",
-      "Prefer SDH",
-      "Only SDH",
-      "Only non-SDH"
-    ]
-  },
-  {
-    "name": "Two at once",
-    "value": "A second language above or below, at its own size and colour."
-  },
-  {
-    "name": "Bitmap subtitles",
-    "value": "PGS, DVB and DVD decoded on the device."
-  }
-];
-
-const facts2 = [
   {
     "name": "One library",
-    "value": "Plex merges with Jellyfin, Emby and network shares, or keeps its own rows."
-  },
-  {
-    "name": "Plex Home",
-    "value": "Each person in the household gets their own profile and settings."
-  },
-  {
-    "name": "Watch state",
-    "value": "Converges across every server holding the title, or stays on the origin."
+    "value": "Merges with Jellyfin, Emby and network shares, or keeps its own rows."
   }
 ];
 ---
@@ -127,23 +64,47 @@ const facts2 = [
       lead={"Files direct play instead of transcoding, and your Plex library sits in the same place as every other server you own."}
     />
 
-    <FactSection
-      title={"Playback"}
-      lead={"The less your Plex server has to do, the better everything looks."}
-      facts={facts0}
+    <Showcase
+      question={"Will it wreck my server?"}
+      answer={"No. Plozz opens the file itself."}
+      detail={"Matroska is demuxed on the device, so Plex never re-encodes anything."}
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
+        <li><span>Dolby Atmos</span><span>Passed through untouched</span></li>
+        <li><span>TrueHD and DTS</span><span>Bridged to lossless FLAC</span></li>
+        <li><span>Your server</span><span>Sends the file, nothing more</span></li>
+      </ul>
+    </Showcase>
+
+    <Showcase
+      question={"Can I make the subtitles readable?"}
+      answer={"Plozz draws its own, so they look the same on every server."}
+      detail={"Seven typefaces, two of them made for people who find subtitles hard to read."}
+      flip
+    >
+      <SubtitleLab />
+    </Showcase>
+
+    <Showcase
+      question={"Do I need a Plex Pass?"}
+      answer={"Not for the subtitles."}
+      detail={"Plozz reads the Plex subtitle catalogue directly, so searching and downloading works on a free account. Skip-intro markers are the one thing that still needs a Pass."}
+      panel
+    >
+      <ul class="proof">
+        <li><span>Subtitle search</span><span>Works on a free account</span></li>
+        <li><span>Subtitle styling</span><span>Always yours, never the server’s</span></li>
+        <li><span>Skip intros</span><span>Needs Plex Pass markers</span></li>
+        <li><span>Plex Home</span><span>Each person gets their own profile</span></li>
+      </ul>
+    </Showcase>
 
     <FactSection
-      title={"Subtitles"}
-      lead={"Plozz draws its own, which is why there is this much to change."}
-      facts={facts1}
-    />
-
-    <FactSection
-      title={"Your library"}
-      facts={facts2}
-      panel
+      title="Compatibility"
+      lead={"What plays without your server lifting a finger."}
+      facts={compatibility}
     />
 
     <section class="closer" aria-labelledby="page-closer">
@@ -154,7 +115,7 @@ const facts2 = [
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
+          <a class="btn btn-light btn-lg" href="/features">The questions people ask</a>
         </div>
       </div>
     </section>

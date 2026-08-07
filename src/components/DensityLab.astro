@@ -1,0 +1,62 @@
+---
+/** Density is a number of columns. Showing the grid change says it instantly. */
+const steps = [
+  { label: 'Micro', columns: 10 },
+  { label: 'Tiny', columns: 9 },
+  { label: 'Small', columns: 8 },
+  { label: 'Default', columns: 7 },
+  { label: 'Large', columns: 6 },
+  { label: 'Huge', columns: 5 },
+];
+
+// Rendered up front for the no-JS case; the script keeps the rows full.
+const tiles = Array.from({ length: 28 });
+---
+
+<div class="denselab" data-denselab>
+  <div class="denselab-stage">
+    <div class="denselab-grid" data-denselab-grid style="--columns: 7">
+      {tiles.map(() => <span></span>)}
+    </div>
+  </div>
+
+  <fieldset class="denselab-controls">
+    <legend>Density</legend>
+    <div class="denselab-options">
+      {steps.map((step) => (
+        <label class="sublab-option">
+          <input
+            type="radio"
+            name="denselab"
+            value={step.columns}
+            checked={step.label === 'Default'}
+            data-denselab-step
+          />
+          <span>{step.label}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+</div>
+
+<script>
+  document.querySelectorAll('[data-denselab]').forEach((lab) => {
+    const grid = lab.querySelector('[data-denselab-grid]');
+
+    const rows = 4;
+
+    const apply = () => {
+      const step = lab.querySelector('[data-denselab-step]:checked');
+      const columns = Number(step ? step.value : 7);
+      grid.style.setProperty('--columns', String(columns));
+
+      // Keep the last row full, otherwise the grid ends on a ragged edge.
+      const wanted = columns * rows;
+      while (grid.children.length > wanted) grid.lastElementChild.remove();
+      while (grid.children.length < wanted) grid.appendChild(document.createElement('span'));
+    };
+
+    lab.addEventListener('change', apply);
+    apply();
+  });
+</script>

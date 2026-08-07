@@ -4,13 +4,15 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Showcase from '../components/Showcase.astro';
+import SubtitleLab from '../components/SubtitleLab.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Emby client for Apple TV, iPhone and iPad — Plozz";
 const description = "A free, open source Emby client for Apple TV, iPhone and iPad. Emby is a first-class source alongside Plex, Jellyfin and network shares.";
 
-const facts0 = [
+const compatibility = [
   {
     "name": "Video",
     "chips": [
@@ -30,51 +32,24 @@ const facts0 = [
     ]
   },
   {
-    "name": "Audio",
-    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
-  },
-  {
-    "name": "MKV",
-    "value": "Demuxed on the device, so Emby is never asked to transcode."
-  },
-  {
-    "name": "Skip intros and credits",
+    "name": "Subtitles",
     "chips": [
-      "Off",
-      "On",
-      "Auto (delay)",
-      "Auto (instant)"
+      "SRT",
+      "ASS",
+      "SSA",
+      "VTT",
+      "PGS",
+      "DVB",
+      "DVD"
     ]
-  }
-];
-
-const facts1 = [
-  {
-    "name": "Shared client",
-    "value": "Both speak MediaBrowser, so they share one client in Plozz."
   },
-  {
-    "name": "Differences detected",
-    "value": "HDR classification and studio ID formats differ. Plozz adapts per server."
-  },
-  {
-    "name": "First class",
-    "value": "Emby is a provider in its own right, not a compatibility shim."
-  }
-];
-
-const facts2 = [
   {
     "name": "One library",
-    "value": "Emby merges with Plex, Jellyfin and network shares, or keeps its own rows."
-  },
-  {
-    "name": "Watch state",
-    "value": "Converges across every server holding the title, or stays on the origin."
+    "value": "Merges with Plex, Jellyfin and network shares, or keeps its own rows."
   },
   {
     "name": "Hide anything",
-    "value": "Any library can leave Home and Search without disconnecting the server."
+    "value": "Any library can leave Home and Search without disconnecting."
   }
 ];
 ---
@@ -85,27 +60,51 @@ const facts2 = [
   <main>
     <PageHero
       eyebrow={"Emby"}
-      title={"An Emby client, not a Jellyfin client that tolerates Emby."}
-      lead={"Emby gets the same player, the same subtitle control and the same place in your merged library as everything else."}
+      title={"Emby, not an afterthought."}
+      lead={"Same player, same subtitle control, same place in your merged library as everything else you connect."}
     />
 
-    <FactSection
-      title={"Playback"}
-      lead={"Built on AetherEngine, an open source FFmpeg engine that runs on the device."}
-      facts={facts0}
+    <Showcase
+      question={"Will it wreck my server?"}
+      answer={"No. Plozz opens the file itself."}
+      detail={"Matroska is demuxed on the device, so Emby never re-encodes anything."}
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
+        <li><span>Dolby Atmos</span><span>Passed through untouched</span></li>
+        <li><span>TrueHD and DTS</span><span>Bridged to lossless FLAC</span></li>
+        <li><span>Your server</span><span>Sends the file, nothing more</span></li>
+      </ul>
+    </Showcase>
 
-    <FactSection
-      title={"How Emby is handled"}
-      lead={"Emby and Jellyfin are close relatives, right up until they are not."}
-      facts={facts1}
-    />
+    <Showcase
+      question={"Can I make the subtitles readable?"}
+      answer={"Plozz draws its own, so they look the same on every server."}
+      detail={"Seven typefaces, two of them made for people who find subtitles hard to read."}
+      flip
+    >
+      <SubtitleLab />
+    </Showcase>
 
-    <FactSection
-      title={"Your library"}
-      facts={facts2}
+    <Showcase
+      question={"Is Emby treated like Jellyfin?"}
+      answer={"They share a client, but not blindly."}
+      detail={"Both speak MediaBrowser, so one client serves both. Where they differ, Plozz detects it per server."}
       panel
+    >
+      <ul class="proof">
+        <li><span>Shared protocol</span><span>MediaBrowser, for both</span></li>
+        <li><span>HDR reporting</span><span>Classified differently, handled per server</span></li>
+        <li><span>Studio IDs</span><span>Formatted differently, handled per server</span></li>
+        <li><span>Status</span><span>A provider in its own right</span></li>
+      </ul>
+    </Showcase>
+
+    <FactSection
+      title="Compatibility"
+      lead={"What plays without your server lifting a finger."}
+      facts={compatibility}
     />
 
     <section class="closer" aria-labelledby="page-closer">
@@ -116,7 +115,7 @@ const facts2 = [
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
+          <a class="btn btn-light btn-lg" href="/features">The questions people ask</a>
         </div>
       </div>
     </section>

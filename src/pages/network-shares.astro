@@ -4,24 +4,18 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Showcase from '../components/Showcase.astro';
+import SubtitleLab from '../components/SubtitleLab.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Play SMB, NFS, WebDAV, SFTP and FTP on Apple TV — Plozz";
 const description = "Plozz plays video straight off a network share on Apple TV, iPhone and iPad. SMB3, NFS, WebDAV, SFTP with key auth, FTP over TLS. No media server needed.";
 
-const facts0 = [
+const compatibility = [
   {
     "name": "SMB",
     "value": "SMB3 only. Plozz refuses SMB1 and SMB2 rather than quietly falling back."
-  },
-  {
-    "name": "NFS",
-    "value": "Mount an export and browse it like any other source."
-  },
-  {
-    "name": "WebDAV",
-    "value": "A URL and credentials."
   },
   {
     "name": "SFTP",
@@ -40,51 +34,14 @@ const facts0 = [
       "Implicit TLS",
       "Cert pinning"
     ]
-  }
-];
-
-const facts1 = [
-  {
-    "name": "Sidecar subtitles",
-    "chips": [
-      ".srt",
-      ".ass",
-      ".ssa",
-      ".vtt"
-    ]
   },
   {
-    "name": "Where it looks",
-    "value": "The same folder, and a Subs folder beside it."
+    "name": "NFS",
+    "value": "Mount an export and browse it."
   },
   {
-    "name": "Merged in",
-    "value": "A share sits in the same Home and Search as your servers."
-  }
-];
-
-const facts2 = [
-  {
-    "name": "No transcode",
-    "value": "There is nothing in the middle to re-encode anything."
-  },
-  {
-    "name": "Up Next lead time",
-    "chips": [
-      "15s",
-      "20s",
-      "30s",
-      "45s",
-      "60s"
-    ]
-  },
-  {
-    "name": "Why the lead time",
-    "value": "Loose files carry no credits markers, so you pick when the card appears."
-  },
-  {
-    "name": "Resume",
-    "value": "Progress is kept by Plozz and follows you across your devices."
+    "name": "WebDAV",
+    "value": "A URL and credentials."
   }
 ];
 ---
@@ -95,25 +52,51 @@ const facts2 = [
   <main>
     <PageHero
       eyebrow={"Network shares"}
-      title={"A folder of films is a perfectly good media library."}
-      lead={"No media server to install, nothing to scan, nothing in the middle re-encoding your files."}
+      title={"A folder of films is a perfectly good library."}
+      lead={"No media server to install, nothing to scan, and nothing in the middle re-encoding your files."}
     />
 
-    <FactSection
-      title={"Protocols"}
-      facts={facts0}
+    <Showcase
+      question={"Do I need a media server?"}
+      answer={"No. Point Plozz at the folder."}
+      detail={"Shares are a source like any other, so they land in the same Home and Search as your servers."}
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Nothing to install</span><span>No Plex, Jellyfin or Emby required</span></li>
+        <li><span>Nothing to scan</span><span>Browse the folder as it is</span></li>
+        <li><span>Nothing to transcode</span><span>No middleman to re-encode</span></li>
+        <li><span>Merged in</span><span>Sits beside your servers, if you have any</span></li>
+      </ul>
+    </Showcase>
 
-    <FactSection
-      title={"Reading a share"}
-      facts={facts1}
-    />
+    <Showcase
+      question={"Can I make the subtitles readable?"}
+      answer={"Plozz draws its own, so they look the same on every server."}
+      detail={"Seven typefaces, two of them made for people who find subtitles hard to read."}
+      flip
+    >
+      <SubtitleLab />
+    </Showcase>
 
-    <FactSection
-      title={"Playing from it"}
-      facts={facts2}
+    <Showcase
+      question={"What about subtitles and Up Next?"}
+      answer={"Sidecar files are found, and you set the timing."}
+      detail={"Loose files carry no credits markers, so you choose when the next-episode card appears."}
       panel
+    >
+      <ul class="proof">
+        <li><span>Sidecar subtitles</span><span>SRT, ASS, SSA and VTT</span></li>
+        <li><span>Where it looks</span><span>The same folder, and a Subs folder beside it</span></li>
+        <li><span>Up Next lead time</span><span>15, 20, 30, 45 or 60 seconds</span></li>
+        <li><span>Resume</span><span>Kept by Plozz, synced across your devices</span></li>
+      </ul>
+    </Showcase>
+
+    <FactSection
+      title="Compatibility"
+      lead={"Five ways in, with the security settings each one should have."}
+      facts={compatibility}
     />
 
     <section class="closer" aria-labelledby="page-closer">
@@ -124,7 +107,7 @@ const facts2 = [
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
+          <a class="btn btn-light btn-lg" href="/features">The questions people ask</a>
         </div>
       </div>
     </section>

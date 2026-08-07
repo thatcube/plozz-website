@@ -1,0 +1,55 @@
+---
+/** Spoiler protection is a before/after, so it gets a before/after. */
+---
+
+<div class="spoillab" data-spoillab>
+  <div class="spoillab-stage">
+    <div class="spoillab-card" data-spoillab-card data-hidden="true">
+      <div class="spoillab-thumb">
+        <img
+          src="/screenshots/plozz-tv.webp"
+          alt="An episode thumbnail, blurred while the episode is unwatched"
+          width="1088"
+          height="612"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <p class="spoillab-title" data-spoillab-title>Episode 4</p>
+      <p class="spoillab-sub" data-spoillab-sub>Hidden until you have watched it</p>
+    </div>
+  </div>
+
+  <fieldset class="spoillab-controls">
+    <legend>Spoiler protection</legend>
+    <div class="spoillab-options">
+      <label class="sublab-option">
+        <input type="radio" name="spoillab" value="true" checked data-spoillab-toggle />
+        <span>On</span>
+      </label>
+      <label class="sublab-option">
+        <input type="radio" name="spoillab" value="false" data-spoillab-toggle />
+        <span>Off</span>
+      </label>
+    </div>
+  </fieldset>
+</div>
+
+<script>
+  document.querySelectorAll('[data-spoillab]').forEach((lab) => {
+    const card = lab.querySelector('[data-spoillab-card]');
+    const title = lab.querySelector('[data-spoillab-title]');
+    const sub = lab.querySelector('[data-spoillab-sub]');
+
+    const apply = () => {
+      const choice = lab.querySelector('[data-spoillab-toggle]:checked');
+      const hidden = !choice || choice.value === 'true';
+      card.dataset.hidden = String(hidden);
+      title.textContent = hidden ? 'Episode 4' : 'The One Where They Find Out';
+      sub.textContent = hidden ? 'Hidden until you have watched it' : 'Shown once you have watched it';
+    };
+
+    lab.addEventListener('change', apply);
+    apply();
+  });
+</script>

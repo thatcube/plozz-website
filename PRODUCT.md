@@ -34,7 +34,10 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
 - Make every visible word earn its place; prefer short labels over explanatory copy.
 - Vary section treatment by importance instead of repeating the same container pattern.
 - Round every surface. The radius scale is --r-xl / --r-lg / --r-md / --r-sm / --r-pill.
-- Quote the app's real option names instead of describing them. "Toasty" beats "warmth control".
+- Demonstrate a setting, do not list it. A page of option names is raw data, not
+  design. Lead with the question a person arrives with, answer it in one line,
+  then show the thing working.
+- Real option names belong inside a demo, not in a table of their own.
 - Follow the natural-writing rules: no promotional verbs, no rule of three, no false
   ranges, sparing em dashes, sentence case headings.
 

@@ -4,360 +4,16 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
-import FactSection from '../components/FactSection.astro';
+import Showcase from '../components/Showcase.astro';
+import SubtitleLab from '../components/SubtitleLab.astro';
+import WarmthLab from '../components/WarmthLab.astro';
+import DensityLab from '../components/DensityLab.astro';
+import SpoilerLab from '../components/SpoilerLab.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
-const title = "Every setting in Plozz — free media player for Apple TV, iPhone and iPad";
-const description = "Seven subtitle fonts, four skip-intro modes, six density steps, spoiler protection, circadian warmth, offline downloads and 36 languages. Free and open source.";
-
-const facts0 = [
-  {
-    "name": "Fonts",
-    "chips": [
-      "Atkinson Hyperlegible",
-      "System",
-      "SF Rounded",
-      "Roboto",
-      "Lexend",
-      "Fredoka",
-      "OpenDyslexic"
-    ]
-  },
-  {
-    "name": "Weights",
-    "chips": [
-      "Regular",
-      "Medium",
-      "Semibold",
-      "Bold"
-    ]
-  },
-  {
-    "name": "Presets",
-    "chips": [
-      "Clean",
-      "Boxed",
-      "Outline",
-      "Classic Yellow"
-    ]
-  },
-  {
-    "name": "Style controls",
-    "chips": [
-      "Size",
-      "Vertical position",
-      "Horizontal offset",
-      "Colour",
-      "Opacity",
-      "HDR brightness",
-      "Background box",
-      "Edge",
-      "Border"
-    ]
-  },
-  {
-    "name": "Two at once",
-    "value": "A second language above or below, at its own size and colour."
-  },
-  {
-    "name": "Hearing impaired",
-    "chips": [
-      "Prefer non-SDH",
-      "Prefer SDH",
-      "Only SDH",
-      "Only non-SDH"
-    ]
-  },
-  {
-    "name": "Forced",
-    "chips": [
-      "Prefer non-forced",
-      "Prefer forced"
-    ]
-  },
-  {
-    "name": "Bitmap formats",
-    "chips": [
-      "PGS",
-      "DVB",
-      "DVD"
-    ]
-  }
-];
-
-const facts1 = [
-  {
-    "name": "Video",
-    "chips": [
-      "HEVC",
-      "H.264",
-      "VP9",
-      "AV1"
-    ]
-  },
-  {
-    "name": "HDR",
-    "chips": [
-      "Dolby Vision P5",
-      "Dolby Vision P8",
-      "HDR10",
-      "HLG"
-    ]
-  },
-  {
-    "name": "Audio",
-    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
-  },
-  {
-    "name": "Skip intros and credits",
-    "chips": [
-      "Off",
-      "On",
-      "Auto (delay)",
-      "Auto (instant)"
-    ]
-  },
-  {
-    "name": "Skip interval",
-    "chips": [
-      "1s",
-      "3s",
-      "5s",
-      "10s",
-      "15s",
-      "30s",
-      "60s"
-    ]
-  },
-  {
-    "name": "Rewind on resume",
-    "chips": [
-      "Off",
-      "1–10s",
-      "15s",
-      "20s",
-      "25s",
-      "30s",
-      "45s",
-      "60s"
-    ]
-  },
-  {
-    "name": "Up Next lead time",
-    "chips": [
-      "15s",
-      "20s",
-      "30s",
-      "45s",
-      "60s"
-    ]
-  },
-  {
-    "name": "Seek without pausing",
-    "value": "Scrub while it plays, or require a pause first."
-  },
-  {
-    "name": "Audio language",
-    "chips": [
-      "Original",
-      "Device language",
-      "Specific"
-    ]
-  },
-  {
-    "name": "Diagnostics overlay",
-    "value": "Engine, codec, bitrate and dropped frames, if you want them."
-  }
-];
-
-const facts2 = [
-  {
-    "name": "Themes",
-    "chips": [
-      "System",
-      "Light",
-      "Dark",
-      "Pure Black"
-    ]
-  },
-  {
-    "name": "Density",
-    "chips": [
-      "Micro",
-      "Tiny",
-      "Small",
-      "Default",
-      "Large",
-      "Huge"
-    ]
-  },
-  {
-    "name": "What density does",
-    "value": "Takes the poster grid from ten columns down to five. Huge is a low-vision mode."
-  },
-  {
-    "name": "Card style",
-    "chips": [
-      "Cards",
-      "Posters"
-    ]
-  },
-  {
-    "name": "Watch indicator",
-    "chips": [
-      "Watched check",
-      "Unwatched corner flag"
-    ]
-  },
-  {
-    "name": "Navigation",
-    "chips": [
-      "Sidebar",
-      "Top bar"
-    ]
-  },
-  {
-    "name": "Transparency",
-    "chips": [
-      "System",
-      "On",
-      "Off"
-    ]
-  }
-];
-
-const facts3 = [
-  {
-    "name": "Hidden thumbnails",
-    "chips": [
-      "Blur",
-      "Placeholder art"
-    ]
-  },
-  {
-    "name": "Masked titles",
-    "value": "Unwatched episodes read as Episode 4 until you have seen them."
-  },
-  {
-    "name": "Hide ratings",
-    "value": "A separate toggle, so a score cannot colour your evening first."
-  }
-];
-
-const facts4 = [
-  {
-    "name": "Warmth",
-    "chips": [
-      "None",
-      "Kinda Warm",
-      "Warm",
-      "Toasty",
-      "Roasting",
-      "On Fire"
-    ]
-  },
-  {
-    "name": "Darkness",
-    "chips": [
-      "None",
-      "Low",
-      "Sorta Dark",
-      "Dark",
-      "Squinting",
-      "Can’t See"
-    ]
-  },
-  {
-    "name": "Schedule",
-    "chips": [
-      "Sunset to sunrise",
-      "Manual times",
-      "Always on"
-    ]
-  },
-  {
-    "name": "Covers the player too",
-    "value": "Most night modes give up once video starts. This one does not."
-  }
-];
-
-const facts5 = [
-  {
-    "name": "Downloads",
-    "value": "Queue whole shows or films for offline, on Wi-Fi only if you prefer."
-  },
-  {
-    "name": "Picture in Picture",
-    "value": "Custom built, so transport and subtitles survive the shrink."
-  },
-  {
-    "name": "AirPlay",
-    "value": "Route picker in the player controls."
-  },
-  {
-    "name": "Background audio",
-    "value": "Keeps going when the screen locks."
-  }
-];
-
-const facts6 = [
-  {
-    "name": "Per profile",
-    "chips": [
-      "Theme",
-      "Density",
-      "Card style",
-      "Subtitles",
-      "Playback",
-      "Spoilers",
-      "Home layout"
-    ]
-  },
-  {
-    "name": "Kids profiles",
-    "value": "Restricted profiles behind a household parental PIN."
-  },
-  {
-    "name": "Home rows",
-    "chips": [
-      "Continue Watching",
-      "Watchlist",
-      "Recently Added",
-      "Recommended"
-    ]
-  },
-  {
-    "name": "iCloud sync",
-    "value": "Settings, watch progress and watchlist across your devices."
-  }
-];
-
-const facts7 = [
-  {
-    "name": "No analytics",
-    "value": "There is no analytics SDK in the app. Nothing counts what you watch."
-  },
-  {
-    "name": "Crash reporting",
-    "value": "Off by default, and public builds ship with no reporting endpoint at all."
-  },
-  {
-    "name": "Ratings",
-    "value": "AniList scores work out of the box. IMDb, Rotten Tomatoes and Metacritic need your own OMDb key."
-  },
-  {
-    "name": "Anime lists",
-    "chips": [
-      "AniList",
-      "MyAnimeList",
-      "Simkl"
-    ]
-  },
-  {
-    "name": "Languages",
-    "value": "36 besides English, machine translated and reviewed, with a correction link in Settings."
-  }
-];
+const title = 'Plozz features — the media player questions people actually ask';
+const description =
+  'Does it direct play? Can I skip intros? Can I fix the subtitles? Can I watch offline? The answers, shown rather than listed.';
 ---
 
 <Layout title={title} description={description}>
@@ -365,70 +21,112 @@ const facts7 = [
 
   <main>
     <PageHero
-      eyebrow={"Features"}
-      title={"The settings are the point."}
-      lead={"Most players decide for you. Plozz has an opinion and will happily be overruled."}
+      eyebrow="Features"
+      title="The questions people actually ask."
+      lead="Every answer below is yes. Here is what each one looks like."
     />
 
-    <FactSection
-      title={"Subtitles"}
-      lead={"Plozz renders its own, so none of this depends on the server."}
-      facts={facts0}
+    <Showcase
+      question="Will it wreck my server?"
+      answer="No. Plozz opens the file itself and plays it as it is."
+      detail="Matroska is demuxed on your Apple TV, iPhone or iPad, so nothing upstream re-encodes anything."
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
+        <li><span>Dolby Atmos</span><span>Passed through untouched</span></li>
+        <li><span>TrueHD and DTS</span><span>Bridged to lossless FLAC</span></li>
+        <li><span>Your server</span><span>Sends the file and goes back to sleep</span></li>
+      </ul>
+    </Showcase>
 
-    <FactSection
-      title={"Playback"}
-      lead={"AetherEngine, an open source FFmpeg engine, running on the device."}
-      facts={facts1}
-    />
+    <Showcase
+      question="Can I make the subtitles readable?"
+      answer="Plozz draws its own, so they look the same on every server."
+      detail="Two of the seven typefaces exist specifically for people who find subtitles hard to read."
+      flip
+    >
+      <SubtitleLab />
+    </Showcase>
 
-    <FactSection
-      title={"How it looks"}
-      facts={facts2}
+    <Showcase
+      question="Does it skip intros?"
+      answer="Yes, and you decide how pushy it is about it."
+      detail="Uses Plex Pass markers or the Jellyfin Intro Skipper."
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Off</span><span>Never touch it</span></li>
+        <li><span>On</span><span>Show a Skip button</span></li>
+        <li><span>Auto (delay)</span><span>Skip after five seconds, cancellable</span></li>
+        <li><span>Auto (instant)</span><span>Gone before you notice</span></li>
+      </ul>
+    </Showcase>
 
-    <FactSection
-      title={"Spoiler protection"}
-      lead={"Browse a series you are midway through without learning what happens."}
-      facts={facts3}
-    />
+    <Showcase
+      question="Watching at 1am?"
+      answer="Warm the whole screen down, player included."
+      detail="tvOS has no Night Shift and no brightness API, so Plozz tints its own window. Most night modes give up the moment video starts."
+      flip
+    >
+      <WarmthLab />
+    </Showcase>
 
-    <FactSection
-      title={"Circadian mode"}
-      lead={"tvOS has no Night Shift and no brightness API, so Plozz built one."}
-      facts={facts4}
+    <Showcase
+      question="Can I fit more on screen?"
+      answer="Six steps, from a wall of posters to a low-vision layout."
+      detail="Density moves card size, spacing and column count together, and it is remembered per profile."
       panel
-    />
+    >
+      <DensityLab />
+    </Showcase>
 
-    <FactSection
-      title={"On iPhone and iPad"}
-      lead={"Not a scaled-up phone layout. Settings split into panes on iPad."}
-      facts={facts5}
-    />
+    <Showcase
+      question="Will it spoil the next episode?"
+      answer="Not if you would rather it did not."
+      detail="Unwatched episodes keep their artwork hidden and read as Episode 4 until you have seen them. Ratings can stay hidden too."
+      flip
+    >
+      <SpoilerLab />
+    </Showcase>
 
-    <FactSection
-      title={"Household"}
-      facts={facts6}
+    <Showcase
+      question="Can I watch on a plane?"
+      answer="Download on your iPhone or iPad and take it with you."
+      detail="Queue a film or a whole show, on Wi-Fi only if you would rather not spend the data."
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Downloads</span><span>iPhone and iPad</span></li>
+        <li><span>Picture in Picture</span><span>Keeps the custom controls and subtitles</span></li>
+        <li><span>AirPlay</span><span>Route picker in the player</span></li>
+        <li><span>Background audio</span><span>Carries on when the screen locks</span></li>
+      </ul>
+    </Showcase>
 
-    <FactSection
-      title={"What it does not do"}
-      lead={"The part most sites leave out."}
-      facts={facts7}
-    />
+    <Showcase
+      question="What are you doing with my data?"
+      answer="Nothing. There is no analytics code in the app."
+      detail="Crash reporting is off by default, and public builds ship with no reporting endpoint at all."
+      flip
+    >
+      <ul class="proof">
+        <li><span>Analytics</span><span>None, anywhere in the codebase</span></li>
+        <li><span>Crash reports</span><span>Off unless you turn them on</span></li>
+        <li><span>Accounts</span><span>Plozz has none to make</span></li>
+        <li><span>Price</span><span>Free, and GPL-3.0 on GitHub</span></li>
+      </ul>
+    </Showcase>
 
-    <section class="closer" aria-labelledby="page-closer">
+    <section class="closer" aria-labelledby="features-closer">
       <div class="container">
-        <h2 id="page-closer">Free forever.<br />Open source.</h2>
+        <h2 id="features-closer">Free forever.<br />Open source.</h2>
         <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href={"/"}>Back to the start</a>
+          <a class="btn btn-light btn-lg" href="/">Back to the start</a>
         </div>
       </div>
     </section>

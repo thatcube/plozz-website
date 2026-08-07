@@ -1,0 +1,27 @@
+---
+export interface Props {
+  question: string;
+  answer: string;
+  detail?: string;
+  panel?: boolean;
+  flip?: boolean;
+}
+
+const { question, answer, detail, panel = false, flip = false } = Astro.props;
+const id = question.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+---
+
+<section class="showcase" aria-labelledby={id}>
+  <div class="container">
+    <div class:list={['showcase-body', { 'is-panel': panel, 'is-flipped': flip }]}>
+      <div class="showcase-copy">
+        <h2 id={id}>{question}</h2>
+        <p class="showcase-answer">{answer}</p>
+        {detail && <p class="showcase-detail">{detail}</p>}
+      </div>
+      <div class="showcase-demo">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

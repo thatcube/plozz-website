@@ -4,13 +4,15 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Showcase from '../components/Showcase.astro';
+import SubtitleLab from '../components/SubtitleLab.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
 const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Plays MKV without transcoding, with Dolby Vision, Atmos and deep subtitle control.";
+const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Direct plays your files instead of making Jellyfin transcode them.";
 
-const facts0 = [
+const compatibility = [
   {
     "name": "Video",
     "chips": [
@@ -30,81 +32,24 @@ const facts0 = [
     ]
   },
   {
-    "name": "Audio",
-    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
-  },
-  {
-    "name": "Skip intros and credits",
+    "name": "Subtitles",
     "chips": [
-      "Off",
-      "On",
-      "Auto (delay)",
-      "Auto (instant)"
+      "SRT",
+      "ASS",
+      "SSA",
+      "VTT",
+      "PGS",
+      "DVB",
+      "DVD"
     ]
-  },
-  {
-    "name": "Marker source",
-    "value": "Jellyfin Media Segments, or the Intro Skipper plugin."
   },
   {
     "name": "Scrub thumbnails",
     "value": "Jellyfin trickplay tiles."
-  }
-];
-
-const facts1 = [
-  {
-    "name": "Fonts",
-    "chips": [
-      "Atkinson Hyperlegible",
-      "System",
-      "SF Rounded",
-      "Roboto",
-      "Lexend",
-      "Fredoka",
-      "OpenDyslexic"
-    ]
   },
-  {
-    "name": "Presets",
-    "chips": [
-      "Clean",
-      "Boxed",
-      "Outline",
-      "Classic Yellow"
-    ]
-  },
-  {
-    "name": "Hearing impaired",
-    "chips": [
-      "Prefer non-SDH",
-      "Prefer SDH",
-      "Only SDH",
-      "Only non-SDH"
-    ]
-  },
-  {
-    "name": "Two at once",
-    "value": "A second language above or below, at its own size and colour."
-  },
-  {
-    "name": "Bitmap subtitles",
-    "value": "PGS, DVB and DVD decoded on the device."
-  }
-];
-
-const facts2 = [
   {
     "name": "One library",
-    "value": "Jellyfin merges with Plex, Emby and network shares, or keeps its own rows."
-  },
-  {
-    "name": "Watch state",
-    "value": "Converges across every server holding the title, or stays on the origin."
-  },
-  {
-    "name": "Per series memory",
-    "value": "Audio and subtitle choices stick for the whole series."
+    "value": "Merges with Plex, Emby and network shares, or keeps its own rows."
   }
 ];
 ---
@@ -115,27 +60,51 @@ const facts2 = [
   <main>
     <PageHero
       eyebrow={"Jellyfin"}
-      title={"A Jellyfin client that plays your files, not a transcode of them."}
-      lead={"Plozz demuxes Matroska on the device, so your server sends the original file and stops burning CPU on re-encodes."}
+      title={"Stop making Jellyfin transcode."}
+      lead={"Plozz opens the file on your Apple TV, iPhone or iPad and plays it as it is. Your server hands over the file and goes back to sleep."}
     />
 
-    <FactSection
-      title={"Playback"}
-      lead={"Built on AetherEngine, an open source FFmpeg engine that runs on the device."}
-      facts={facts0}
+    <Showcase
+      question={"Will it wreck my server?"}
+      answer={"No. Plozz opens the file itself."}
+      detail={"Matroska is demuxed on the device, so Jellyfin never re-encodes anything."}
       panel
-    />
+    >
+      <ul class="proof">
+        <li><span>Dolby Vision</span><span>Profiles 5 and 8</span></li>
+        <li><span>Dolby Atmos</span><span>Passed through untouched</span></li>
+        <li><span>TrueHD and DTS</span><span>Bridged to lossless FLAC</span></li>
+        <li><span>Your server</span><span>Sends the file, nothing more</span></li>
+      </ul>
+    </Showcase>
 
-    <FactSection
-      title={"Subtitles"}
-      lead={"Plozz draws its own, which is why there is this much to change."}
-      facts={facts1}
-    />
+    <Showcase
+      question={"Can I make the subtitles readable?"}
+      answer={"Plozz draws its own, so they look the same on every server."}
+      detail={"Seven typefaces, two of them made for people who find subtitles hard to read."}
+      flip
+    >
+      <SubtitleLab />
+    </Showcase>
 
-    <FactSection
-      title={"Your library"}
-      facts={facts2}
+    <Showcase
+      question={"Does it skip intros?"}
+      answer={"Yes, using the markers Jellyfin already has."}
+      detail={"Reads Media Segments, or the Intro Skipper plugin."}
       panel
+    >
+      <ul class="proof">
+        <li><span>Off</span><span>Never touch it</span></li>
+        <li><span>On</span><span>Show a Skip button</span></li>
+        <li><span>Auto (delay)</span><span>Skip after five seconds, cancellable</span></li>
+        <li><span>Auto (instant)</span><span>Gone before you notice</span></li>
+      </ul>
+    </Showcase>
+
+    <FactSection
+      title="Compatibility"
+      lead={"What plays without your server lifting a finger."}
+      facts={compatibility}
     />
 
     <section class="closer" aria-labelledby="page-closer">
@@ -146,7 +115,7 @@ const facts2 = [
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
+          <a class="btn btn-light btn-lg" href="/features">The questions people ask</a>
         </div>
       </div>
     </section>

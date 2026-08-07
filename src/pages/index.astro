@@ -4,7 +4,8 @@ import { Icon } from 'astro-icon/components';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
-import ControlRows from '../components/ControlRows.astro';
+import Showcase from '../components/Showcase.astro';
+import SubtitleLab from '../components/SubtitleLab.astro';
 import { GITHUB_URL, TESTFLIGHT_URL, SITE } from '../data/site';
 
 const heroScreenshots = [
@@ -166,14 +167,18 @@ const softwareLd = {
       </div>
     </section>
 
-    <section class="controls-section" aria-labelledby="controls-heading">
+    <Showcase
+      question="Subtitles you can actually read."
+      answer="Plozz draws its own, so they look the same on every server."
+      detail="Seven typefaces, two of them made for people who find subtitles hard to read. Then size, position, colour, background and outline, plus a separate brightness for HDR so white text stops searing in a dark room."
+      panel
+    >
+      <SubtitleLab />
+    </Showcase>
+
+    <section class="more-link">
       <div class="container">
-        <div class="controls-intro">
-          <h2 id="controls-heading">Made to be fiddled with.</h2>
-          <p>Every option here is real, named exactly as it appears in Settings. There are a few hundred more.</p>
-        </div>
-        <ControlRows />
-        <a class="text-link" href="/features">See what else you can change</a>
+        <a class="text-link" href="/features">The other questions people ask</a>
       </div>
     </section>
 
