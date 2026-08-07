@@ -2855,20 +2855,12 @@ button.btn {
   background: var(--text);
 }
 
-.donate-custom {
-  display: inline-block;
-  margin-top: 12px;
-  font-size: 0.85rem;
+/* Sits in the same row as the amounts and lands on the plain Sponsors page,
+   for monthly or any other figure. */
+.donate-other {
   color: var(--text-dim);
-  text-decoration: none;
-  transition: color 160ms ease;
 }
 
-.donate-custom:hover {
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 
 @media (max-width: 760px) {
   .donate-body {
