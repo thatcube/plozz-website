@@ -112,34 +112,46 @@ const softwareLd = {
       <div class="container">
         <div class="sources-intro">
           <h2 id="sources-heading">Everything you<br />already have.</h2>
-          <p>Plozz finds servers on your network and signs you in without typing on a remote.</p>
+          <p>Plozz plays straight from all of it, without asking a server to transcode anything first.</p>
         </div>
-        <dl class="ledger">
-          <div class="ledger-row">
-            <dt><img class="lockup-jellyfin" src="/providers/jellyfin.svg" alt="Jellyfin" /></dt>
-            <dd><a href="/jellyfin">Quick Connect</a></dd>
-          </div>
-          <div class="ledger-row">
-            <dt><img class="lockup-plex" src="/providers/plex.svg" alt="Plex" /></dt>
-            <dd><a href="/plex">Plex Link</a></dd>
-          </div>
-          <div class="ledger-row">
-            <dt><img class="lockup-emby" src="/providers/emby.png" alt="Emby" /></dt>
-            <dd><a href="/emby">Password sign-in</a></dd>
-          </div>
-          <div class="ledger-row ledger-row-shares">
-            <dt><span>SMB</span><span>NFS</span><span>WebDAV</span><span>SFTP</span><span>FTP</span></dt>
-            <dd><a href="/network-shares">Address and credentials</a></dd>
-          </div>
-        </dl>
+        <ul class="ledger">
+          <li class="ledger-row">
+            <a href="/jellyfin">
+              <img class="lockup-jellyfin" src="/providers/jellyfin.svg" alt="Jellyfin" />
+              <span class="ledger-go" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="ledger-row">
+            <a href="/plex">
+              <img class="lockup-plex" src="/providers/plex.svg" alt="Plex" />
+              <span class="ledger-go" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="ledger-row">
+            <a href="/emby">
+              <img class="lockup-emby" src="/providers/emby.png" alt="Emby" />
+              <span class="ledger-go" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="ledger-row ledger-row-shares">
+            <a href="/network-shares">
+              <span class="sr-only">Network shares</span>
+              <span class="share-chips" aria-hidden="true">
+                <span class="chip">SMB</span><span class="chip">NFS</span><span class="chip">WebDAV</span><span class="chip">SFTP</span><span class="chip">FTP</span>
+              </span>
+              <span class="ledger-go" aria-hidden="true"></span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
     <section class="merge" aria-labelledby="merge-heading">
       <div class="container">
+       <div class="panel merge-body">
         <div class="merge-copy">
           <h2 id="merge-heading">Your servers. Your friends&rsquo;. One library.</h2>
-          <p>Connect as many as you like. Plozz merges them into a single library and keeps watch history in sync across every one.</p>
+          <p>Connect as many as you like. Watch history stays in sync across all of them.</p>
         </div>
         <div class="merge-diagram">
           <ul class="merge-inputs">
@@ -150,6 +162,7 @@ const softwareLd = {
           </ul>
           <p class="merge-output">One library</p>
         </div>
+       </div>
       </div>
     </section>
 
@@ -166,9 +179,10 @@ const softwareLd = {
 
     <section class="icloud-sync" aria-labelledby="icloud-sync-heading">
       <div class="container">
+       <div class="panel icloud-body">
         <div>
           <h2 id="icloud-sync-heading">Every screen you own.</h2>
-          <p>Your servers and playback progress sync over iCloud. Start on Apple TV, finish on your phone.</p>
+          <p>Apple TV, iPhone and iPad, sharing servers and progress over iCloud. Downloads and Picture in Picture on the ones you carry.</p>
         </div>
         <div class="icloud-devices">
           <div class="icloud-device-slot icloud-ipad-slot">
@@ -213,13 +227,14 @@ const softwareLd = {
             <Icon name="ph:cloud-check" />
           </div>
         </div>
+       </div>
       </div>
     </section>
 
     <section class="closer" aria-labelledby="closer-heading">
       <div class="container">
         <h2 id="closer-heading">Free forever.<br />Open source.</h2>
-        <p>No subscription, no paid tier, no upsell. The whole app is GPL-3.0 on GitHub.</p>
+        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             <Icon name="simple-icons:apple" />

@@ -7,63 +7,113 @@ import PageHero from '../components/PageHero.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
-const title = 'Plex client for Apple TV, iPhone and iPad — Plozz';
-const description =
-  'Plozz is a free, open source Plex client for Apple TV, iPhone and iPad. Sign in with Plex Link, switch Plex Home users, and search subtitles without Plex Pass.';
+const title = "Plex client for Apple TV, iPhone and iPad — Plozz";
+const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Direct play instead of transcoding, with Dolby Vision, Atmos and deep subtitle control.";
 
-const signIn = [
+const facts0 = [
   {
-    name: 'Plex Link',
-    detail: 'Enter the code on another device and you are in. No password on the remote.',
+    "name": "Video",
+    "chips": [
+      "HEVC",
+      "H.264",
+      "VP9",
+      "AV1"
+    ]
   },
   {
-    name: 'Plex Home users',
-    detail: 'Switch between the people in your Plex Home, with PIN entry where a user has one set.',
+    "name": "HDR",
+    "chips": [
+      "Dolby Vision P5",
+      "Dolby Vision P8",
+      "HDR10",
+      "HLG"
+    ]
   },
   {
-    name: 'Not only Plex',
-    detail: 'Your Plex server sits beside Jellyfin, Emby and network shares in the same library.',
+    "name": "Audio",
+    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
   },
+  {
+    "name": "Format badges",
+    "chips": [
+      "Dolby Vision",
+      "Atmos",
+      "Digital+",
+      "DTS",
+      "4K",
+      "5.1",
+      "7.1"
+    ]
+  },
+  {
+    "name": "Skip intros and credits",
+    "chips": [
+      "Off",
+      "On",
+      "Auto (delay)",
+      "Auto (instant)"
+    ]
+  },
+  {
+    "name": "Scrub thumbnails",
+    "value": "Plex BIF thumbnails."
+  }
 ];
 
-const playback = [
+const facts1 = [
   {
-    name: 'Direct play by default',
-    detail:
-      'Matroska is demuxed on the device, so Plex sends the original file rather than spending CPU on a transcode.',
+    "name": "Fonts",
+    "chips": [
+      "Atkinson Hyperlegible",
+      "System",
+      "SF Rounded",
+      "Roboto",
+      "Lexend",
+      "Fredoka",
+      "OpenDyslexic"
+    ]
   },
   {
-    name: 'Dolby Vision and Atmos',
-    detail: 'Dolby Vision profiles 5 and 8, HDR10, HLG, and Atmos passthrough.',
+    "name": "Presets",
+    "chips": [
+      "Clean",
+      "Boxed",
+      "Outline",
+      "Classic Yellow"
+    ]
   },
   {
-    name: 'Real format badges',
-    detail:
-      'Detail pages show the Dolby Vision, Atmos, Digital+ and DTS marks, plus resolution tier and channel layout.',
+    "name": "Hearing impaired",
+    "chips": [
+      "Prefer non-SDH",
+      "Prefer SDH",
+      "Only SDH",
+      "Only non-SDH"
+    ]
   },
   {
-    name: 'Skip intros and credits',
-    detail:
-      'Uses the markers Plex generates with a Plex Pass. Four modes: off, a Skip button, skip after a five second grace period, or skip instantly.',
+    "name": "Two at once",
+    "value": "A second language above or below, at its own size and colour."
   },
+  {
+    "name": "Bitmap subtitles",
+    "value": "PGS, DVB and DVD decoded on the device."
+  }
 ];
 
-const subtitles = [
+const facts2 = [
   {
-    name: 'Subtitle search without Plex Pass',
-    detail:
-      'Plozz reads the Plex subtitle catalogue directly, so searching and downloading works on a free account.',
+    "name": "One library",
+    "value": "Plex merges with Jellyfin, Emby and network shares, or keeps its own rows."
   },
   {
-    name: 'SDH and forced preferences',
-    detail:
-      'Four levels each, sent to Plex natively as search parameters rather than filtered after the fact.',
+    "name": "Plex Home",
+    "value": "Each person in the household gets their own profile and settings."
   },
   {
-    name: 'It remembers per series',
-    detail:
-      'Change the audio track or subtitle on one episode and the choice sticks for the whole series, even across servers.',
-  },
+    "name": "Watch state",
+    "value": "Converges across every server holding the title, or stays on the origin."
+  }
 ];
 ---
 
@@ -72,39 +122,39 @@ const subtitles = [
 
   <main>
     <PageHero
-      eyebrow="Plex"
-      title="A Plex client for people who keep hitting the paywall."
-      lead="Subtitle search works without a Plex Pass. Files direct play instead of transcoding. Your Plex library sits next to every other server you own."
+      eyebrow={"Plex"}
+      title={"A Plex client that leaves your server alone."}
+      lead={"Files direct play instead of transcoding, and your Plex library sits in the same place as every other server you own."}
     />
 
     <FactSection
-      title="Getting in"
-      lead="Plex Link, then pick which of your Plex Home users you are."
-      facts={signIn}
-    />
-
-    <FactSection
-      title="Playback"
-      lead="The less your Plex server has to do, the better everything looks."
-      facts={playback}
+      title={"Playback"}
+      lead={"The less your Plex server has to do, the better everything looks."}
+      facts={facts0}
       panel
     />
 
     <FactSection
-      title="Subtitles"
-      lead="Plozz draws its own subtitles, so this is not the Plex subtitle experience."
-      facts={subtitles}
+      title={"Subtitles"}
+      lead={"Plozz draws its own, which is why there is this much to change."}
+      facts={facts1}
     />
 
-    <section class="closer" aria-labelledby="plex-closer">
+    <FactSection
+      title={"Your library"}
+      facts={facts2}
+      panel
+    />
+
+    <section class="closer" aria-labelledby="page-closer">
       <div class="container">
-        <h2 id="plex-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <h2 id="page-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href="/features">See every setting</a>
+          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
         </div>
       </div>
     </section>

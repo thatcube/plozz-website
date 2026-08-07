@@ -809,9 +809,7 @@ h3 {
     height: 68px;
   }
 
-  .site-header .container {
-    padding-inline: 20px;
-  }
+
 
   .site-header nav > a:not(.header-cta) {
     display: none;
@@ -821,9 +819,7 @@ h3 {
     padding-top: 84px;
   }
 
-  .hero .container {
-    padding-inline: 20px;
-  }
+
 
   .hero-copy {
     padding: 0;
@@ -856,8 +852,8 @@ h3 {
 
   .hero-devices {
     min-height: 0;
-    margin: 52px -20px 0;
-    width: calc(100% + 40px);
+    margin: 52px 0 0;
+    width: 100%;
   }
 
   .device-tv {
@@ -876,17 +872,17 @@ h3 {
    Rhythm: open -> dark panel -> open -> inverted panel -> closer.
    ========================================================================== */
 
-.icloud-sync {
-  width: min(calc(100% - 40px), var(--maxw));
-  margin: 32px auto 0;
-  padding: clamp(58px, 7vw, 84px) clamp(28px, 6vw, 76px);
+/* One panel primitive. It always sits inside .container, so every panel edge
+   lands on the same column as ordinary section text. */
+.panel {
+  padding: clamp(48px, 6vw, 84px) clamp(28px, 4vw, 60px);
   border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
-  background: #111113;
+  background: #0e0e10;
 }
 
-.icloud-sync > .container {
-  padding-inline: 0;
+.icloud-sync {
+  padding: clamp(28px, 3.5vw, 44px) 0;
 }
 
 /* Shared heading scale for every section below the hero. */
@@ -930,26 +926,31 @@ h3 {
 }
 
 .ledger {
+  list-style: none;
   margin: 0;
+  padding: 0;
   border-top: 1px solid var(--border);
 }
 
 .ledger-row {
+  border-bottom: 1px solid var(--border);
+}
+
+.ledger-row a {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: clamp(20px, 2.4vw, 30px) 2px;
-  border-bottom: 1px solid var(--border);
+  padding: clamp(18px, 2.2vw, 26px) 2px;
+  text-decoration: none;
+  transition: opacity 160ms ease;
 }
 
-.ledger-row dt {
-  display: flex;
-  align-items: center;
-  min-width: 0;
+.ledger-row a:hover {
+  opacity: 0.75;
 }
 
-.ledger-row dt img {
+.ledger-row img {
   display: block;
   width: auto;
   height: 32px;
@@ -958,54 +959,50 @@ h3 {
   object-position: left center;
 }
 
-.ledger-row dt .lockup-plex {
+.ledger-row .lockup-plex {
   height: 28px;
 }
 
-.ledger-row dt .lockup-emby {
+.ledger-row .lockup-emby {
   height: 29px;
 }
 
-/* Protocols carry no brand, so they are set as what they are: machine strings. */
-.ledger-row-shares dt {
+.share-chips {
+  display: flex;
   flex-wrap: wrap;
-  gap: 8px 10px;
+  gap: 8px;
 }
 
-.ledger-row-shares dt span {
-  padding: 6px 11px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-pill);
+.share-chips .chip {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--text-muted);
 }
 
-.ledger-row dd {
+/* A chevron drawn from a border, so it matches the hairline vocabulary. */
+.ledger-go {
   flex: none;
-  margin: 0;
-  font-size: 0.92rem;
-  color: var(--text-dim);
-  text-align: right;
+  width: 9px;
+  height: 9px;
+  border-top: 1.5px solid var(--text-dim);
+  border-right: 1.5px solid var(--text-dim);
+  transform: rotate(45deg);
+}
+
+.ledger-row a:hover .ledger-go {
+  border-color: var(--text);
 }
 
 /* ---------- 2. One library (dark panel, typographic merge) ---------- */
 .merge {
-  width: min(calc(100% - 40px), var(--maxw));
-  margin: clamp(28px, 4vw, 48px) auto 0;
-  padding: clamp(58px, 7vw, 88px) clamp(28px, 6vw, 76px);
-  border: 1px solid #2b2b2f;
-  border-radius: var(--r-xl);
-  background: #0e0e10;
+  padding: clamp(28px, 3.5vw, 44px) 0;
 }
 
-.merge > .container {
+.merge-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
   gap: clamp(40px, 6vw, 80px);
   align-items: center;
-  padding-inline: 0;
 }
 
 .merge h2 {
@@ -1091,10 +1088,10 @@ h3 {
 .controls {
   list-style: none;
   margin: clamp(36px, 4.5vw, 56px) 0 0;
-  padding: clamp(22px, 2.6vw, 34px);
-  border: 1px solid var(--border);
+  padding: clamp(48px, 6vw, 84px) clamp(28px, 4vw, 60px);
+  border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
-  background: #0c0c0e;
+  background: #0e0e10;
 }
 
 .control-row {
@@ -1200,7 +1197,7 @@ h3 {
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
   .sources > .container,
-  .merge > .container {
+  .merge-body {
     grid-template-columns: 1fr;
     gap: 40px;
   }
@@ -1242,19 +1239,11 @@ h3 {
     gap: 10px;
   }
 
-  .ledger-row dt img {
-    height: 28px;
-  }
+  
 
-  .ledger-row dd {
-    width: 100%;
-    text-align: left;
-  }
+  
 
-  .merge,
-  .icloud-sync {
-    padding-inline: 22px;
-  }
+
 
   /* Stack the diagram: the connector becomes the rule under the inputs. */
   .merge-diagram {
@@ -1293,19 +1282,18 @@ h3 {
   }
 
   .controls {
-    padding: 20px 16px;
+    padding: 40px 20px;
   }
 }
 
 /* ---------- iCloud sync ---------- */
-.icloud-sync {
-  margin-bottom: 32px;
+.icloud-sync .panel {
   border-color: #f2f2f3;
   background: #f2f2f3;
   color: #0a0a0b;
 }
 
-.icloud-sync .container {
+.icloud-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(48px, 10vw, 120px);
@@ -1391,7 +1379,7 @@ h3 {
 }
 
 @media (max-width: 1100px) {
-  .icloud-sync .container {
+  .icloud-body {
     grid-template-columns: 1fr;
     gap: 38px;
     text-align: center;
@@ -1466,15 +1454,8 @@ h3 {
 }
 
 @media (max-width: 560px) {
-  .merge,
-  .icloud-sync {
-    width: min(calc(100% - 24px), var(--maxw));
-    margin-top: 20px;
-    padding: 48px 20px;
-  }
-
-  .icloud-sync {
-    margin-bottom: 20px;
+  .panel {
+    padding: 40px 20px;
   }
 
 }
@@ -2158,30 +2139,24 @@ button.btn {
 }
 
 /* ---------- Fact sections ---------- */
+/* A spec sheet, not paragraphs: a label, then either a short value or the real
+   option names as chips. */
 .fact-section {
-  padding: clamp(48px, 6vw, 80px) 0;
+  padding: clamp(28px, 3.5vw, 44px) 0;
 }
 
-.fact-section > .container {
+.fact-body {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: clamp(36px, 5vw, 80px);
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(32px, 5vw, 72px);
   align-items: start;
-  padding-inline: 24px;
 }
 
-/* The panel variant carries the same rounding as the home page panels. */
-.fact-section.is-panel {
-  width: min(calc(100% - 40px), var(--maxw));
-  margin-inline: auto;
-  padding: clamp(48px, 6vw, 76px) clamp(28px, 6vw, 76px);
+.fact-body.is-panel {
+  padding: clamp(48px, 6vw, 84px) clamp(28px, 4vw, 60px);
   border: 1px solid #2b2b2f;
   border-radius: var(--r-xl);
   background: #0e0e10;
-}
-
-.fact-section.is-panel > .container {
-  padding-inline: 0;
 }
 
 .fact-intro h2 {
@@ -2196,9 +2171,9 @@ button.btn {
 }
 
 .fact-intro p {
-  max-width: 34ch;
-  margin: 16px 0 0;
-  font-size: 0.98rem;
+  max-width: 30ch;
+  margin: 14px 0 0;
+  font-size: 0.95rem;
   line-height: 1.5;
   color: var(--text-muted);
   text-wrap: pretty;
@@ -2210,46 +2185,68 @@ button.btn {
 }
 
 .fact-rows > div {
-  padding: clamp(18px, 2.2vw, 24px) 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  gap: 14px clamp(18px, 2.5vw, 34px);
+  align-items: baseline;
+  padding: clamp(15px, 1.8vw, 19px) 0;
   border-bottom: 1px solid var(--border);
 }
 
 .fact-rows dt {
-  font-size: 1.02rem;
+  min-width: 0;
+  font-size: 0.97rem;
   font-weight: 560;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   color: var(--text);
 }
 
 .fact-rows dd {
-  max-width: 58ch;
-  margin: 7px 0 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  min-width: 0;
+  margin: 0;
+}
+
+.fact-value {
+  display: block;
+  font-size: 0.93rem;
+  line-height: 1.45;
   color: var(--text-muted);
   text-wrap: pretty;
 }
 
-.ledger-row dd a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 160ms ease, border-color 160ms ease;
+.fact-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.ledger-row dd a:hover {
-  color: var(--text);
-  border-bottom-color: var(--border-bright);
+.fact-value + .fact-chips {
+  margin-top: 10px;
 }
+
+/* Same chip as the settings tracks, so the vocabulary carries across pages. */
+.chip {
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size: 0.79rem;
+  line-height: 1.25;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+
+
+
 
 .nav-link[aria-current='page'] {
   color: var(--text);
 }
 
 @media (max-width: 860px) {
-  .fact-section > .container {
+  .fact-body {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 26px;
   }
 
   .fact-intro p {
@@ -2258,9 +2255,13 @@ button.btn {
 }
 
 @media (max-width: 560px) {
-  .fact-section.is-panel {
-    width: min(calc(100% - 24px), var(--maxw));
+  .fact-body.is-panel {
     padding: 40px 20px;
+  }
+
+  .fact-rows > div {
+    grid-template-columns: 1fr;
+    gap: 9px;
   }
 
   .page-hero {

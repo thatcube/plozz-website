@@ -5,188 +5,358 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import FactSection from '../components/FactSection.astro';
-import ControlRows from '../components/ControlRows.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
-const title = 'Every setting in Plozz — free media player for Apple TV';
-const description =
-  'Subtitle styling with nine controls and seven fonts, circadian warmth, spoiler protection, six density steps, skip-intro modes and per-profile everything. All free and open source.';
+const title = "Every setting in Plozz — free media player for Apple TV, iPhone and iPad";
+const description = "Seven subtitle fonts, four skip-intro modes, six density steps, spoiler protection, circadian warmth, offline downloads and 36 languages. Free and open source.";
 
-const subtitles = [
+const facts0 = [
   {
-    name: 'Nine things to change',
-    detail:
-      'Font, weight, size, vertical position, horizontal offset, colour, opacity, background box and outline. Plozz draws subtitles itself rather than handing them to the system.',
+    "name": "Fonts",
+    "chips": [
+      "Atkinson Hyperlegible",
+      "System",
+      "SF Rounded",
+      "Roboto",
+      "Lexend",
+      "Fredoka",
+      "OpenDyslexic"
+    ]
   },
   {
-    name: 'Seven faces, two of them for reading trouble',
-    detail:
-      'Atkinson Hyperlegible, which the Braille Institute designed so similar letters stop looking alike, and OpenDyslexic. Then System, SF Rounded, Roboto, Lexend and Fredoka.',
+    "name": "Weights",
+    "chips": [
+      "Regular",
+      "Medium",
+      "Semibold",
+      "Bold"
+    ]
   },
   {
-    name: 'Dim subtitles on HDR only',
-    detail:
-      'A separate luminance scale from 0.2 to 1.0, so white text stops searing a hole in a dark HDR scene without touching SDR.',
+    "name": "Presets",
+    "chips": [
+      "Clean",
+      "Boxed",
+      "Outline",
+      "Classic Yellow"
+    ]
   },
   {
-    name: 'Four presets to start from',
-    detail: 'Clean, Boxed, Outline and Classic Yellow.',
+    "name": "Style controls",
+    "chips": [
+      "Size",
+      "Vertical position",
+      "Horizontal offset",
+      "Colour",
+      "Opacity",
+      "HDR brightness",
+      "Background box",
+      "Edge",
+      "Border"
+    ]
   },
   {
-    name: 'SDH, four ways',
-    detail:
-      'Prefer non-SDH, prefer SDH, only SDH, or only non-SDH. Forced subtitles have the same four levels.',
+    "name": "Two at once",
+    "value": "A second language above or below, at its own size and colour."
   },
   {
-    name: 'Search without an API key',
-    detail:
-      'Find and download a subtitle from inside the player, on Plex and Jellyfin, and load it into the scene you are already watching.',
+    "name": "Hearing impaired",
+    "chips": [
+      "Prefer non-SDH",
+      "Prefer SDH",
+      "Only SDH",
+      "Only non-SDH"
+    ]
   },
+  {
+    "name": "Forced",
+    "chips": [
+      "Prefer non-forced",
+      "Prefer forced"
+    ]
+  },
+  {
+    "name": "Bitmap formats",
+    "chips": [
+      "PGS",
+      "DVB",
+      "DVD"
+    ]
+  }
 ];
 
-const audio = [
+const facts1 = [
   {
-    name: 'Original or dubbed, on purpose',
-    detail:
-      'Pick the spoken language of the title, your device language, or a specific language. Anime in Japanese and everything else dubbed is a two-second setup.',
+    "name": "Video",
+    "chips": [
+      "HEVC",
+      "H.264",
+      "VP9",
+      "AV1"
+    ]
   },
   {
-    name: 'Rules per content type',
-    detail: 'Anime, movies, TV and everything else can each have their own audio and subtitle policy.',
+    "name": "HDR",
+    "chips": [
+      "Dolby Vision P5",
+      "Dolby Vision P8",
+      "HDR10",
+      "HLG"
+    ]
   },
   {
-    name: 'It remembers per series',
-    detail:
-      'Switch track once and the whole series keeps it, matched across servers by TVDB, TMDB, IMDb, AniList, MAL and AniDB IDs.',
+    "name": "Audio",
+    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
   },
+  {
+    "name": "Skip intros and credits",
+    "chips": [
+      "Off",
+      "On",
+      "Auto (delay)",
+      "Auto (instant)"
+    ]
+  },
+  {
+    "name": "Skip interval",
+    "chips": [
+      "1s",
+      "3s",
+      "5s",
+      "10s",
+      "15s",
+      "30s",
+      "60s"
+    ]
+  },
+  {
+    "name": "Rewind on resume",
+    "chips": [
+      "Off",
+      "1–10s",
+      "15s",
+      "20s",
+      "25s",
+      "30s",
+      "45s",
+      "60s"
+    ]
+  },
+  {
+    "name": "Up Next lead time",
+    "chips": [
+      "15s",
+      "20s",
+      "30s",
+      "45s",
+      "60s"
+    ]
+  },
+  {
+    "name": "Seek without pausing",
+    "value": "Scrub while it plays, or require a pause first."
+  },
+  {
+    "name": "Audio language",
+    "chips": [
+      "Original",
+      "Device language",
+      "Specific"
+    ]
+  },
+  {
+    "name": "Diagnostics overlay",
+    "value": "Engine, codec, bitrate and dropped frames, if you want them."
+  }
 ];
 
-const playback = [
+const facts2 = [
   {
-    name: 'MKV without a transcode',
-    detail:
-      'Plozz demuxes Matroska on the device using AetherEngine, so the server sends the original file. HEVC, H.264, VP9 and AV1.',
+    "name": "Themes",
+    "chips": [
+      "System",
+      "Light",
+      "Dark",
+      "Pure Black"
+    ]
   },
   {
-    name: 'Dolby Vision and Atmos',
-    detail: 'Profiles 5 and 8, plus HDR10, HLG and Atmos passthrough. Profile 7 dual-layer is not supported.',
+    "name": "Density",
+    "chips": [
+      "Micro",
+      "Tiny",
+      "Small",
+      "Default",
+      "Large",
+      "Huge"
+    ]
   },
   {
-    name: 'TrueHD and DTS survive',
-    detail: 'Bitstreams AVPlayer will not take are bridged to lossless FLAC instead of being dropped.',
+    "name": "What density does",
+    "value": "Takes the poster grid from ten columns down to five. Huge is a low-vision mode."
   },
   {
-    name: 'Skip intros and credits',
-    detail:
-      'Off, a Skip button, skip after a five second grace period you can cancel, or skip instantly. Needs markers from Plex Pass or the Jellyfin Intro Skipper.',
+    "name": "Card style",
+    "chips": [
+      "Cards",
+      "Posters"
+    ]
   },
   {
-    name: 'Rewind on resume',
-    detail:
-      'Come back to a half-watched film and start a few seconds early. Seventeen steps, tightest at the low end where it matters.',
+    "name": "Watch indicator",
+    "chips": [
+      "Watched check",
+      "Unwatched corner flag"
+    ]
   },
   {
-    name: 'Skip button intervals',
-    detail: 'Forward and backward set separately, from 1, 3, 5, 10, 15, 30 or 60 seconds.',
+    "name": "Navigation",
+    "chips": [
+      "Sidebar",
+      "Top bar"
+    ]
   },
+  {
+    "name": "Transparency",
+    "chips": [
+      "System",
+      "On",
+      "Off"
+    ]
+  }
 ];
 
-const look = [
+const facts3 = [
   {
-    name: 'Four themes',
-    detail: 'System, Light, Dark and Pure Black for OLED panels.',
+    "name": "Hidden thumbnails",
+    "chips": [
+      "Blur",
+      "Placeholder art"
+    ]
   },
   {
-    name: 'Six density steps',
-    detail: 'Micro to Huge, taking the poster grid from ten columns down to five. The largest step is a low-vision mode.',
+    "name": "Masked titles",
+    "value": "Unwatched episodes read as Episode 4 until you have seen them."
   },
   {
-    name: 'Cards or posters',
-    detail: 'Framed cards with a glass border, or borderless artwork that runs bigger.',
-  },
-  {
-    name: 'Mark watched, or mark unwatched',
-    detail: 'A check on what you have seen, or a corner flag on what you have not, the way Infuse and old Plex did it.',
-  },
-  {
-    name: 'Sidebar or tab bar',
-    detail: 'A collapsible sidebar like the system TV app, or a classic tab bar across the top.',
-  },
-  {
-    name: 'Override the glass',
-    detail: 'Force transparency on or off regardless of what tvOS Reduce Transparency is set to.',
-  },
+    "name": "Hide ratings",
+    "value": "A separate toggle, so a score cannot colour your evening first."
+  }
 ];
 
-const night = [
+const facts4 = [
   {
-    name: 'Warmth and darkness, separately',
-    detail: 'Six steps each, from None through to On Fire and Can’t See. They are honest names.',
+    "name": "Warmth",
+    "chips": [
+      "None",
+      "Kinda Warm",
+      "Warm",
+      "Toasty",
+      "Roasting",
+      "On Fire"
+    ]
   },
   {
-    name: 'Real sunrise and sunset',
-    detail:
-      'Apple TV has no location APIs, so Plozz does the NOAA solar calculation on-device from a city you pick. Nothing is sent anywhere.',
+    "name": "Darkness",
+    "chips": [
+      "None",
+      "Low",
+      "Sorta Dark",
+      "Dark",
+      "Squinting",
+      "Can’t See"
+    ]
   },
   {
-    name: 'Or just set the times',
-    detail: 'Two clock times, or leave it on permanently. The fade between states is adjustable too.',
+    "name": "Schedule",
+    "chips": [
+      "Sunset to sunrise",
+      "Manual times",
+      "Always on"
+    ]
   },
+  {
+    "name": "Covers the player too",
+    "value": "Most night modes give up once video starts. This one does not."
+  }
 ];
 
-const spoilers = [
+const facts5 = [
   {
-    name: 'Hide what you have not seen',
-    detail:
-      'Episode artwork and text stay hidden for unwatched episodes. Blur the real image, or swap in generic art so the frame is never even loaded.',
+    "name": "Downloads",
+    "value": "Queue whole shows or films for offline, on Wi-Fi only if you prefer."
   },
   {
-    name: 'Hide ratings until watched',
-    detail: 'A separate toggle, so a bad score cannot colour your evening before you start.',
+    "name": "Picture in Picture",
+    "value": "Custom built, so transport and subtitles survive the shrink."
   },
   {
-    name: 'It knows you have started',
-    detail:
-      'Once you are partway into an episode the thumbnail comes back, because you have already seen it. The title and synopsis stay hidden until you finish.',
+    "name": "AirPlay",
+    "value": "Route picker in the player controls."
   },
+  {
+    "name": "Background audio",
+    "value": "Keeps going when the screen locks."
+  }
 ];
 
-const home = [
+const facts6 = [
   {
-    name: 'Build the hero carousel',
-    detail:
-      'Choose from Continue Watching, Watchlist, random from your library, or trending. Reorder them, cap it between one and twenty items, set the rotation anywhere from four to sixty seconds.',
+    "name": "Per profile",
+    "chips": [
+      "Theme",
+      "Density",
+      "Card style",
+      "Subtitles",
+      "Playback",
+      "Spoilers",
+      "Home layout"
+    ]
   },
   {
-    name: 'Merge libraries or keep them apart',
-    detail: 'One cross-server Home feed, or separate rows per library. Any library can be hidden outright.',
+    "name": "Kids profiles",
+    "value": "Restricted profiles behind a household parental PIN."
   },
   {
-    name: 'Profiles for the household',
-    detail:
-      'Every setting on this page is per-profile, so nobody else has to live with your density, your subtitles or your bedtime.',
+    "name": "Home rows",
+    "chips": [
+      "Continue Watching",
+      "Watchlist",
+      "Recently Added",
+      "Recommended"
+    ]
   },
+  {
+    "name": "iCloud sync",
+    "value": "Settings, watch progress and watchlist across your devices."
+  }
 ];
 
-const trust = [
+const facts7 = [
   {
-    name: 'No analytics. None.',
-    detail: 'There is no analytics SDK in the app. Nothing counts what you watch or when you open it.',
+    "name": "No analytics",
+    "value": "There is no analytics SDK in the app. Nothing counts what you watch."
   },
   {
-    name: 'Crash reporting is off until you turn it on',
-    detail:
-      'If you do, identity, server addresses, URLs and network breadcrumbs are stripped before anything leaves the device.',
+    "name": "Crash reporting",
+    "value": "Off by default, and public builds ship with no reporting endpoint at all."
   },
   {
-    name: 'Ratings without an account',
-    detail:
-      'IMDb, Rotten Tomatoes and Metacritic scores appear without you pasting in an API key or signing up for anything.',
+    "name": "Ratings",
+    "value": "AniList scores work out of the box. IMDb, Rotten Tomatoes and Metacritic need your own OMDb key."
   },
   {
-    name: 'Anime tracking',
-    detail: 'Connect AniList, MyAnimeList or Simkl if you keep a list.',
+    "name": "Anime lists",
+    "chips": [
+      "AniList",
+      "MyAnimeList",
+      "Simkl"
+    ]
   },
+  {
+    "name": "Languages",
+    "value": "36 besides English, machine translated and reviewed, with a correction link in Settings."
+  }
 ];
 ---
 
@@ -195,61 +365,70 @@ const trust = [
 
   <main>
     <PageHero
-      eyebrow="Features"
-      title="The settings are the point."
-      lead="Most players decide for you. Plozz has an opinion but will happily be overruled. Here is what you can change."
+      eyebrow={"Features"}
+      title={"The settings are the point."}
+      lead={"Most players decide for you. Plozz has an opinion and will happily be overruled."}
     />
 
-    <section class="controls-section" aria-labelledby="controls-heading">
+    <FactSection
+      title={"Subtitles"}
+      lead={"Plozz renders its own, so none of this depends on the server."}
+      facts={facts0}
+      panel
+    />
+
+    <FactSection
+      title={"Playback"}
+      lead={"AetherEngine, an open source FFmpeg engine, running on the device."}
+      facts={facts1}
+    />
+
+    <FactSection
+      title={"How it looks"}
+      facts={facts2}
+      panel
+    />
+
+    <FactSection
+      title={"Spoiler protection"}
+      lead={"Browse a series you are midway through without learning what happens."}
+      facts={facts3}
+    />
+
+    <FactSection
+      title={"Circadian mode"}
+      lead={"tvOS has no Night Shift and no brightness API, so Plozz built one."}
+      facts={facts4}
+      panel
+    />
+
+    <FactSection
+      title={"On iPhone and iPad"}
+      lead={"Not a scaled-up phone layout. Settings split into panes on iPad."}
+      facts={facts5}
+    />
+
+    <FactSection
+      title={"Household"}
+      facts={facts6}
+      panel
+    />
+
+    <FactSection
+      title={"What it does not do"}
+      lead={"The part most sites leave out."}
+      facts={facts7}
+    />
+
+    <section class="closer" aria-labelledby="page-closer">
       <div class="container">
-        <div class="controls-intro">
-          <h2 id="controls-heading">Named as they are in the app</h2>
-          <p>Nothing here is marketing language. These are the actual option names.</p>
-        </div>
-        <ControlRows />
-      </div>
-    </section>
-
-    <FactSection
-      title="Subtitles"
-      lead="The deepest part of the app, and the reason a lot of people stay."
-      facts={subtitles}
-      panel
-    />
-
-    <FactSection title="Audio" facts={audio} />
-
-    <FactSection
-      title="Playback"
-      lead="Built on AetherEngine, an open source FFmpeg-based engine."
-      facts={playback}
-      panel
-    />
-
-    <FactSection title="How it looks" facts={look} />
-
-    <FactSection
-      title="Circadian mode"
-      lead="tvOS has no Night Shift and no brightness API, so Plozz built one."
-      facts={night}
-      panel
-    />
-
-    <FactSection title="Spoiler protection" facts={spoilers} />
-
-    <FactSection title="Home and profiles" facts={home} panel />
-
-    <FactSection title="What it does not do" facts={trust} />
-
-    <section class="closer" aria-labelledby="features-closer">
-      <div class="container">
-        <h2 id="features-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <h2 id="page-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href="/">Back to the start</a>
+          <a class="btn btn-light btn-lg" href={"/"}>Back to the start</a>
         </div>
       </div>
     </section>

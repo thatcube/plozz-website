@@ -7,59 +7,105 @@ import PageHero from '../components/PageHero.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
-const title = 'Jellyfin client for Apple TV, iPhone and iPad — Plozz';
-const description =
-  'Plozz is a free, open source Jellyfin client for Apple TV, iPhone and iPad. Sign in with Quick Connect, play MKV without transcoding, and search subtitles from inside the player.';
+const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
+const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Plays MKV without transcoding, with Dolby Vision, Atmos and deep subtitle control.";
 
-const signIn = [
+const facts0 = [
   {
-    name: 'Quick Connect',
-    detail: 'Approve the sign-in from your phone or browser. You never type a password on the remote.',
+    "name": "Video",
+    "chips": [
+      "HEVC",
+      "H.264",
+      "VP9",
+      "AV1"
+    ]
   },
   {
-    name: 'Auto-discovery',
-    detail: 'Plozz looks for Jellyfin on your local network over Bonjour and by checking the usual ports.',
+    "name": "HDR",
+    "chips": [
+      "Dolby Vision P5",
+      "Dolby Vision P8",
+      "HDR10",
+      "HLG"
+    ]
   },
   {
-    name: 'Several servers at once',
-    detail: 'Sign in to more than one Jellyfin, and to Plex, Emby and network shares alongside it.',
+    "name": "Audio",
+    "value": "Atmos passthrough. TrueHD and DTS bridged to lossless FLAC."
   },
+  {
+    "name": "Skip intros and credits",
+    "chips": [
+      "Off",
+      "On",
+      "Auto (delay)",
+      "Auto (instant)"
+    ]
+  },
+  {
+    "name": "Marker source",
+    "value": "Jellyfin Media Segments, or the Intro Skipper plugin."
+  },
+  {
+    "name": "Scrub thumbnails",
+    "value": "Jellyfin trickplay tiles."
+  }
 ];
 
-const playback = [
+const facts1 = [
   {
-    name: 'MKV plays as-is',
-    detail:
-      'Plozz demuxes Matroska on the device, so the server hands over the original file instead of transcoding it. HEVC, H.264, VP9 and AV1.',
+    "name": "Fonts",
+    "chips": [
+      "Atkinson Hyperlegible",
+      "System",
+      "SF Rounded",
+      "Roboto",
+      "Lexend",
+      "Fredoka",
+      "OpenDyslexic"
+    ]
   },
   {
-    name: 'Dolby Vision and Atmos',
-    detail: 'Dolby Vision profiles 5 and 8, HDR10, HLG, and Atmos passthrough.',
+    "name": "Presets",
+    "chips": [
+      "Clean",
+      "Boxed",
+      "Outline",
+      "Classic Yellow"
+    ]
   },
   {
-    name: 'Awkward audio still works',
-    detail: 'TrueHD and DTS bitstreams are bridged to lossless FLAC on the fly rather than dropped.',
+    "name": "Hearing impaired",
+    "chips": [
+      "Prefer non-SDH",
+      "Prefer SDH",
+      "Only SDH",
+      "Only non-SDH"
+    ]
   },
   {
-    name: 'Skip intros and credits',
-    detail:
-      'Reads Jellyfin Media Segments, or the Intro Skipper plugin. Four modes: off, a Skip button, skip after a five second grace period, or skip instantly.',
+    "name": "Two at once",
+    "value": "A second language above or below, at its own size and colour."
   },
+  {
+    "name": "Bitmap subtitles",
+    "value": "PGS, DVB and DVD decoded on the device."
+  }
 ];
 
-const subtitles = [
+const facts2 = [
   {
-    name: 'Search and download in the player',
-    detail: 'Find a subtitle mid-scene and load it into the running session. No API key to paste in.',
+    "name": "One library",
+    "value": "Jellyfin merges with Plex, Emby and network shares, or keeps its own rows."
   },
   {
-    name: 'SDH handled properly',
-    detail: 'Prefer non-SDH, prefer SDH, only SDH, or only non-SDH. Same four levels for forced subtitles.',
+    "name": "Watch state",
+    "value": "Converges across every server holding the title, or stays on the origin."
   },
   {
-    name: 'Different rules per content type',
-    detail: 'Anime, movies, TV and everything else can each have their own subtitle and audio-language policy.',
-  },
+    "name": "Per series memory",
+    "value": "Audio and subtitle choices stick for the whole series."
+  }
 ];
 ---
 
@@ -68,39 +114,39 @@ const subtitles = [
 
   <main>
     <PageHero
-      eyebrow="Jellyfin"
-      title="A Jellyfin client that plays your files, not a transcode of them."
-      lead="Plozz signs in with Quick Connect, finds your server by itself, and plays Matroska on the device so Jellyfin does not have to re-encode anything."
+      eyebrow={"Jellyfin"}
+      title={"A Jellyfin client that plays your files, not a transcode of them."}
+      lead={"Plozz demuxes Matroska on the device, so your server sends the original file and stops burning CPU on re-encodes."}
     />
 
     <FactSection
-      title="Getting in"
-      lead="Jellyfin sign-in on a TV is usually the worst part. It is two taps here."
-      facts={signIn}
-    />
-
-    <FactSection
-      title="Playback"
-      lead="The player is built on AetherEngine, an open source FFmpeg-based engine."
-      facts={playback}
+      title={"Playback"}
+      lead={"Built on AetherEngine, an open source FFmpeg engine that runs on the device."}
+      facts={facts0}
       panel
     />
 
     <FactSection
-      title="Subtitles"
-      lead="Plozz draws its own subtitles, which is why there is so much to change."
-      facts={subtitles}
+      title={"Subtitles"}
+      lead={"Plozz draws its own, which is why there is this much to change."}
+      facts={facts1}
     />
 
-    <section class="closer" aria-labelledby="jellyfin-closer">
+    <FactSection
+      title={"Your library"}
+      facts={facts2}
+      panel
+    />
+
+    <section class="closer" aria-labelledby="page-closer">
       <div class="container">
-        <h2 id="jellyfin-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <h2 id="page-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href="/features">See every setting</a>
+          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
         </div>
       </div>
     </section>

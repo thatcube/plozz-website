@@ -7,66 +7,85 @@ import PageHero from '../components/PageHero.astro';
 import FactSection from '../components/FactSection.astro';
 import { TESTFLIGHT_URL } from '../data/site';
 
-const title = 'Play SMB, NFS, WebDAV, SFTP and FTP on Apple TV — Plozz';
-const description =
-  'Plozz plays video straight off a network share on Apple TV, iPhone and iPad. SMB3, NFS, WebDAV, SFTP with key auth, and FTP over TLS. No media server required.';
+const title = "Play SMB, NFS, WebDAV, SFTP and FTP on Apple TV — Plozz";
+const description = "Plozz plays video straight off a network share on Apple TV, iPhone and iPad. SMB3, NFS, WebDAV, SFTP with key auth, FTP over TLS. No media server needed.";
 
-const protocols = [
+const facts0 = [
   {
-    name: 'SMB',
-    detail: 'SMB3 or nothing. Plozz refuses SMB1 and SMB2 rather than quietly falling back to them.',
+    "name": "SMB",
+    "value": "SMB3 only. Plozz refuses SMB1 and SMB2 rather than quietly falling back."
   },
   {
-    name: 'NFS',
-    detail: 'Mount an export and browse it like any other source.',
+    "name": "NFS",
+    "value": "Mount an export and browse it like any other source."
   },
   {
-    name: 'WebDAV',
-    detail: 'Point it at a WebDAV URL with your credentials.',
+    "name": "WebDAV",
+    "value": "A URL and credentials."
   },
   {
-    name: 'SFTP',
-    detail: 'Password, or an OpenSSH or PEM private key if you would rather not use one.',
+    "name": "SFTP",
+    "chips": [
+      "Password",
+      "OpenSSH key",
+      "PEM key"
+    ]
   },
   {
-    name: 'FTP',
-    detail:
-      'Anonymous or named login, with explicit or implicit TLS. Certificate pinning is there if you want to be strict about it.',
-  },
+    "name": "FTP",
+    "chips": [
+      "Anonymous",
+      "Named",
+      "Explicit TLS",
+      "Implicit TLS",
+      "Cert pinning"
+    ]
+  }
 ];
 
-const finding = [
+const facts1 = [
   {
-    name: 'It looks for shares itself',
-    detail: 'Bonjour, plus an active sweep of the ports these protocols normally sit on.',
+    "name": "Sidecar subtitles",
+    "chips": [
+      ".srt",
+      ".ass",
+      ".ssa",
+      ".vtt"
+    ]
   },
   {
-    name: 'Subtitles sitting next to the file',
-    detail:
-      'Any .srt, .ass, .ssa or .vtt in the same folder, or in a Subs folder beside it, shows up as a track.',
+    "name": "Where it looks",
+    "value": "The same folder, and a Subs folder beside it."
   },
   {
-    name: 'Shares merge with servers',
-    detail:
-      'A share is a source like any other, so a folder of films lands in the same Home and Search as your Plex and Jellyfin libraries.',
-  },
+    "name": "Merged in",
+    "value": "A share sits in the same Home and Search as your servers."
+  }
 ];
 
-const playback = [
+const facts2 = [
   {
-    name: 'No server, no transcode',
-    detail:
-      'There is nothing in the middle to re-encode anything. Plozz demuxes the file on the device and plays it.',
+    "name": "No transcode",
+    "value": "There is nothing in the middle to re-encode anything."
   },
   {
-    name: 'Up Next still works',
-    detail:
-      'Loose files have no chapter markers, so you pick how early the next-episode card appears: 15, 20, 30, 45 or 60 seconds before the end.',
+    "name": "Up Next lead time",
+    "chips": [
+      "15s",
+      "20s",
+      "30s",
+      "45s",
+      "60s"
+    ]
   },
   {
-    name: 'Progress is remembered',
-    detail: 'Resume points for share content are kept by Plozz and follow you across your devices.',
+    "name": "Why the lead time",
+    "value": "Loose files carry no credits markers, so you pick when the card appears."
   },
+  {
+    "name": "Resume",
+    "value": "Progress is kept by Plozz and follows you across your devices."
+  }
 ];
 ---
 
@@ -75,34 +94,37 @@ const playback = [
 
   <main>
     <PageHero
-      eyebrow="Network shares"
-      title="A folder of films is a perfectly good media library."
-      lead="Plozz connects straight to SMB, NFS, WebDAV, SFTP and FTP. No media server to install, no library to scan, no transcode."
+      eyebrow={"Network shares"}
+      title={"A folder of films is a perfectly good media library."}
+      lead={"No media server to install, nothing to scan, nothing in the middle re-encoding your files."}
     />
 
     <FactSection
-      title="Protocols"
-      lead="Five ways in, with the security settings you would expect on each."
-      facts={protocols}
-    />
-
-    <FactSection
-      title="Finding and reading a share"
-      facts={finding}
+      title={"Protocols"}
+      facts={facts0}
       panel
     />
 
-    <FactSection title="Playing from it" facts={playback} />
+    <FactSection
+      title={"Reading a share"}
+      facts={facts1}
+    />
 
-    <section class="closer" aria-labelledby="shares-closer">
+    <FactSection
+      title={"Playing from it"}
+      facts={facts2}
+      panel
+    />
+
+    <section class="closer" aria-labelledby="page-closer">
       <div class="container">
-        <h2 id="shares-closer">Free forever.<br />Open source.</h2>
-        <p>No subscription and no paid tier. The whole app is GPL-3.0 on GitHub.</p>
+        <h2 id="page-closer">Free forever.<br />Open source.</h2>
+        <p>No subscription and no paid tier. GPL-3.0 on GitHub.</p>
         <div class="closer-cta">
           <a class="btn btn-primary btn-lg btn-cta" href={TESTFLIGHT_URL} target="_blank" rel="noopener">
             Join the TestFlight beta
           </a>
-          <a class="btn btn-light btn-lg" href="/features">See every setting</a>
+          <a class="btn btn-light btn-lg" href={"/features"}>See every setting</a>
         </div>
       </div>
     </section>

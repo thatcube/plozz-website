@@ -1,7 +1,8 @@
 ---
 export interface Fact {
   name: string;
-  detail: string;
+  value?: string;
+  chips?: string[];
 }
 
 export interface Props {
@@ -15,19 +16,30 @@ const { title, lead, facts, panel = false } = Astro.props;
 const headingId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 ---
 
-<section class:list={['fact-section', { 'is-panel': panel }]} aria-labelledby={headingId}>
+{/* The panel lives inside .container, so its outer edge lands on the same
+    column as every other section on the site. */}
+<section class="fact-section" aria-labelledby={headingId}>
   <div class="container">
-    <div class="fact-intro">
-      <h2 id={headingId}>{title}</h2>
-      {lead && <p>{lead}</p>}
+    <div class:list={['fact-body', { 'is-panel': panel }]}>
+      <div class="fact-intro">
+        <h2 id={headingId}>{title}</h2>
+        {lead && <p>{lead}</p>}
+      </div>
+      <dl class="fact-rows">
+        {facts.map((fact) => (
+          <div>
+            <dt>{fact.name}</dt>
+            <dd>
+              {fact.value && <span class="fact-value">{fact.value}</span>}
+              {fact.chips && (
+                <span class="fact-chips">
+                  {fact.chips.map((chip) => <span class="chip">{chip}</span>)}
+                </span>
+              )}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </div>
-    <dl class="fact-rows">
-      {facts.map((fact) => (
-        <div>
-          <dt>{fact.name}</dt>
-          <dd>{fact.detail}</dd>
-        </div>
-      ))}
-    </dl>
   </div>
 </section>

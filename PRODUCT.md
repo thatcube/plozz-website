@@ -42,9 +42,20 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
 
 - Trakt. It is being removed from the app.
 - Music playback of any kind, including Last.fm scrobbling.
-- Localization. The 36-language work is on an unmerged branch.
-- Parental-control PIN, bitmap (PGS) subtitles, dual-subtitle UI, and the live
-  subtitle preview panel. Modelled in code but not shipping.
+- "Ratings with no API key." Only AniList is keyless. IMDb, Rotten Tomatoes and
+  Metacritic need the user's own OMDb key.
+- "Professionally localized." The 36 languages ship, but they are machine
+  translated and machine reviewed, and every string is tagged needs_review.
+- Sign-in flows as a selling point. Quick Connect, Plex Link and discovery are
+  real, but people set them up once and never think about them again. Lead with
+  what someone touches every session.
+
+## Verified against source
+
+Audited at thatcube/Plozz commit 8d12bbc. Targets are Plozz (tvOS 18),
+PlozziOS (iOS 18, iPhone and iPad) and PlozzTopShelf. Downloads, Picture in
+Picture and AirPlay are iOS only. Top Shelf and the sidebar/top-bar navigation
+choice are tvOS only.
 
 ## Accessibility & Inclusion
 
