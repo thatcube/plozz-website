@@ -6,6 +6,7 @@ export const GITHUB_STARS_SEED = 7;
 
 export const NAV_LINKS = [
   { href: '/features', label: 'Features' },
+  { href: '/formats', label: 'Formats' },
   { href: '/network-shares', label: 'Network shares' },
 ];
 
@@ -16,31 +17,95 @@ export const SERVER_LINKS = [
 ];
 
 /**
- * Read from AetherEngine's own format matrix, the engine Plozz plays through.
+ * Read from AetherEngine's format matrix and its documented limitations.
  * https://github.com/superuser404notfound/AetherEngine/blob/main/docs/formats.md
- * The three marquee formats carry what they mean for the viewer; the long tail
- * is one quiet line, because nobody chose a player over VC-1 support.
+ * Nothing here is claimed beyond what those docs support.
  */
-export const MARQUEE_FORMATS = [
+export const HEADLINE_BADGES = [
+  { label: 'Dolby Vision', value: 'P5 · P7 · P8.1 · P8.4' },
+  { label: 'HDR', value: 'HDR10 · HDR10+ · HLG' },
+  { label: 'Dolby Atmos', value: 'Stream-copied' },
+  { label: 'Video', value: 'HEVC · H.264 · AV1 · VP9' },
+  { label: 'Lossless audio', value: 'TrueHD · DTS-HD MA' },
+  { label: 'Discs', value: 'DVD · Blu-ray ISO' },
+];
+
+export const FORMAT_TABLE = [
   {
-    name: 'Dolby Vision',
-    claim: 'Profiles 5, 7, 8.1 and 8.4',
-    detail: 'Profile 7 included, which Apple hardware can’t decode on its own.',
+    group: 'Video',
+    rows: [
+      { name: 'HEVC / H.265', note: 'Main and Main10, hardware decoded' },
+      { name: 'H.264 / AVC', note: 'Including interlaced and High 4:2:2, 4:4:4 and 10-bit' },
+      { name: 'AV1', note: 'Hardware where the chip has it, software everywhere else' },
+      { name: 'VP9 and VP8', note: '' },
+      { name: 'MPEG-2', note: 'DVD rips and broadcast recordings' },
+      { name: 'MPEG-4 Part 2', note: 'XVID and DIVX' },
+      { name: 'VC-1', note: '' },
+    ],
   },
   {
-    name: 'HDR10+',
-    claim: 'Scene-by-scene metadata',
-    detail: 'Your TV gets the real tone curves, not a flattened HDR10 copy.',
+    group: 'High dynamic range',
+    rows: [
+      { name: 'Dolby Vision Profile 5', note: '' },
+      { name: 'Dolby Vision Profile 7', note: 'Converted to Profile 8.1 during playback, which Apple hardware cannot do alone' },
+      { name: 'Dolby Vision Profile 8.1 and 8.4', note: '' },
+      { name: 'Dolby Vision on AV1', note: 'Profiles 10.1 and 10.4' },
+      { name: 'HDR10', note: '' },
+      { name: 'HDR10+', note: 'Per-frame ST 2094-40 metadata passed through' },
+      { name: 'HLG', note: '' },
+    ],
   },
   {
-    name: 'Dolby Atmos',
-    claim: 'Copied, not re-encoded',
-    detail: 'Nothing touches the bitstream, so your receiver lights up like it should.',
+    group: 'Audio',
+    rows: [
+      { name: 'Dolby Atmos', note: 'E-AC-3 with JOC, copied without re-encoding' },
+      { name: 'Dolby TrueHD and MLP', note: 'Decoded on device to surround or lossless FLAC' },
+      { name: 'DTS, DTS-HD MA', note: 'Decoded on device to surround or lossless FLAC' },
+      { name: 'E-AC-3 and AC-3', note: 'Copied without re-encoding' },
+      { name: 'FLAC and ALAC', note: 'Copied without re-encoding' },
+      { name: 'AAC, HE-AAC, HE-AACv2', note: '' },
+      { name: 'MP3, MP2, Opus, Vorbis, PCM', note: '' },
+      { name: '5.1 and 7.1', note: 'Channel layout preserved' },
+    ],
+  },
+  {
+    group: 'Subtitles',
+    rows: [
+      { name: 'SRT, ASS, SSA, WebVTT', note: 'Styling and positioning honoured' },
+      { name: 'PGS', note: 'Blu-ray image subtitles, rendered on device' },
+      { name: 'DVB and DVD', note: 'Image subtitles' },
+      { name: 'CEA-608', note: 'Broadcast closed captions, including captions buried in the video stream' },
+      { name: 'DVB teletext', note: 'Broadcaster colours preserved' },
+      { name: 'Sidecar files', note: 'Picked up from the same folder or a Subs folder beside it' },
+    ],
+  },
+  {
+    group: 'Containers and sources',
+    rows: [
+      { name: 'MKV', note: '' },
+      { name: 'MP4 and MOV', note: '' },
+      { name: 'WebM, AVI, OGG, FLV', note: '' },
+      { name: 'MPEG-TS', note: 'Including live broadcast' },
+      { name: 'DVD and Blu-ray images', note: 'Decrypted ISO, with titles and chapters' },
+    ],
   },
 ];
 
-export const LONG_TAIL =
-  'H.264, HEVC, AV1, VP9, VP8, MPEG-2, MPEG-4, VC-1, XVID, HLG, TrueHD, DTS-HD MA, DTS, AC-3, FLAC, ALAC, AAC, Opus, PCM, SRT, ASS, PGS, DVB, teletext, CEA-608, MKV, MP4, WebM, MPEG-TS, AVI, plus DVD and Blu-ray images.';
+/** Stated plainly, because a support list nobody can trust is worth nothing. */
+export const FORMAT_CAVEATS = [
+  {
+    name: 'TrueHD Atmos loses its object metadata',
+    note: 'The surround bed and channel layout survive. Atmos objects only pass through untouched from E-AC-3 sources.',
+  },
+  {
+    name: 'AV1 is software decoded on Apple TV',
+    note: 'No Apple TV chip has AV1 in hardware yet. It plays, but it works the processor harder than HEVC does.',
+  },
+  {
+    name: 'Dolby Vision Profile 7 becomes Profile 8.1',
+    note: 'The enhancement layer is dropped, which no Apple device could decode anyway. You get Dolby Vision instead of the HDR10 fallback.',
+  },
+];
 
 /**
  * Verified against firecore.com/infuse and emby.media's Premiere feature matrix

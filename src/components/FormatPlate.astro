@@ -1,19 +1,13 @@
 ---
-import { MARQUEE_FORMATS, LONG_TAIL } from '../data/site';
+import { HEADLINE_BADGES } from '../data/site';
 ---
 
-<div class="formats">
-  <ul class="format-marquee">
-    {MARQUEE_FORMATS.map((format) => (
-      <li>
-        <h3>{format.name}</h3>
-        <p class="format-claim">{format.claim}</p>
-        <p class="format-detail">{format.detail}</p>
-      </li>
-    ))}
-  </ul>
-
-  <p class="format-tail">
-    <span>And the rest of it.</span> {LONG_TAIL}
-  </p>
-</div>
+{/* Two-tone badges, the same shape as the ones in the Plozz repo README. */}
+<ul class="badges">
+  {HEADLINE_BADGES.map((badge) => (
+    <li class="badge">
+      <span class="badge-label">{badge.label}</span>
+      <span class="badge-value">{badge.value}</span>
+    </li>
+  ))}
+</ul>

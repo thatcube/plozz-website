@@ -38,9 +38,12 @@ Gradient-heavy SaaS pages, dense marketing-section stacks, excessive accent colo
   design. Lead with the question a person arrives with, answer it in one line,
   then show the thing working.
 - Real option names belong inside a demo, not in a table of their own.
-- A grid of identical chips is a data dump wearing rounded corners. Pick the two
-  or three items people actually recognise, say what each one means for them,
-  and put the long tail in one quiet line.
+- A grid of identical chips is a data dump wearing rounded corners. On the home
+  page, show a short row of two-tone badges (the shape used in the Plozz README)
+  and send anyone who wants the full list to /formats.
+- Reference material belongs on its own page. A list nobody reads in a marketing
+  section is a page that ranks on its own.
+- Subtext must change the answer. If a line only restates the heading, cut it.
 - Follow the natural-writing rules: no promotional verbs, no rule of three, no false
   ranges, sparing em dashes, sentence case headings.
 - Use contractions. Copy without them reads like a machine wrote it.
