@@ -745,7 +745,11 @@ h3 {
 .hero h1 {
   max-width: 1040px;
   margin: 0;
-  font-size: clamp(2.7rem, 6.2vw, 5.2rem);
+  /* The small-screen floor is 2.4rem rather than something larger because the
+     headline's long words ("practically", "everything.") set the wrap: at
+     2.55rem it takes four lines on a 393px phone, at 2.4rem it takes three and
+     the screenshot clears the fold. Desktop is capped at 5.2rem either way. */
+  font-size: clamp(2.4rem, 6.2vw, 5.2rem);
   font-weight: 570;
   letter-spacing: -0.055em;
   line-height: 0.94;
@@ -759,6 +763,16 @@ h3 {
    The sources are shown as logos rather than spelled out: three brand marks
    read faster than three labelled columns of names, and the protocol list they
    used to carry (SMB, NFS, WebDAV, SFTP, FTP) is detail for /network-shares. */
+/* The break is only there to put the longer sentence on the bottom line. Below
+   ~700px the type is at its floor and the second sentence cannot fit on one
+   line anyway, so forcing the break just orphans "source." onto its own line
+   and costs a fourth line. Let it wrap on its own down there. */
+@media (max-width: 700px) {
+  .h1-break {
+    display: none;
+  }
+}
+
 .hero-summary {
   display: grid;
   width: 100%;
