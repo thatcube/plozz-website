@@ -30,6 +30,19 @@ const SOURCES = [
    by both layouts and by the CSS, so rows and wire ends always agree. */
 const ROW_PCT = [11.9, 37.3, 62.7, 88.1];
 
+/* When each wire launches, in seconds within the shared 4.1s cycle. The four
+   arrivals are spaced 0.75s, 1.3s, 0.95s and 1.1s apart, which sums to the
+   period and reads as a rhythm rather than a metronome.
+
+   Every gap is shorter than the 1.5s a pulse takes to cross, so beams overlap
+   freely and the count in the air varies on its own; nothing here caps it.
+
+   Listed by row but fired out of order -- top, bottom, second, third -- so
+   consecutive arrivals come from opposite ends and the set never reads as a
+   sweep down the column. Each value is its arrival time minus the 1.2s of
+   travel that precedes it, wrapped into the cycle. */
+const DELAY_S = [2.9, 0.85, 1.8, 3.65];
+
 /* The hub is a lockup whose width depends on its own type, so it is anchored by
    its left edge -- the side the wires actually touch. Anchoring by centre would
    move the convergence point every time the label's width changed. */
@@ -91,7 +104,12 @@ const LAYOUTS = [
           {wires(L).map((d, i) => (
             <g>
               <path class="wire" d={d} />
-              <path class="wire-pulse" d={d} style={`--i:${i}`} />
+              <path
+                class="wire-pulse"
+                d={d}
+                pathLength="100"
+                style={`--d:${DELAY_S[i]}s`}
+              />
             </g>
           ))}
         </svg>
@@ -116,6 +134,14 @@ const LAYOUTS = [
     </ul>
 
     <div class="confluence-hub">
+      {
+        /* One wash per wire rather than one shared element, so overlapping
+           arrivals each get their own, instead of the second waiting its
+           turn. Each takes its wire's launch offset. */
+        DELAY_S.map((d) => (
+          <span class="hub-absorb" style={`--d:${d}s`} aria-hidden="true" />
+        ))
+      }
       <img class="hub-mark" src="/logo.svg" alt="" width="32" height="32" />
       <span class="hub-name">Plozz</span>
     </div>
