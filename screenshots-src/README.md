@@ -98,44 +98,61 @@ skipped, so an unreferenced screenshot never reaches the deploy.
 
 ## Source resolutions
 
-Because the ladders are sized per context, "is this master big enough?" depends
-entirely on where the shot is used, not on its pixel count alone. A 1084px iPad
-capture is more than enough for a mockup that paints at 463 CSS px, and nowhere
-near enough for the hero.
+Every Apple TV master is a full **3840x2160** capture straight from the device,
+and the iPad and iPhone masters are their native device resolutions. Because the
+ladders are sized per context, that is comfortably more than any of them needs:
+the hero paints at 1148 CSS px and tops out at a 2296px rung for a true 2x.
 
-Only the hero is currently short. It paints at 1148 CSS px, so a crisp 2x wants
-2296px and these masters cannot get there by re-encoding — they need a fresh
-capture:
-
-| File | Source | Shortfall at 2x |
+| Master group | Native | Widest rung shipped |
 | --- | --- | --- |
-| `plozz-tv-lastofus.png` | 1812x1019 | 0.79x |
-| `plozz-tv-mario.png` | 1318x741 | 0.57x |
-| `plozz-tv-office.png` | 1202x676 | 0.52x |
-| `plozz-tv-oppenheimer.png` | 1125x633 | 0.49x |
-| `plozz-tv-lotr.png` | 1099x618 | 0.48x |
+| `plozz-tv-*` | 3840x2160 | 2296 (hero) / 1600 (figure) / 1080 (marquee) |
+| `plozz-ipad` | 2388x1668 | 1400 |
+| `plozz-iphone` | 1320x2868 | 420 |
+| `plozz-ipad-*`, `plozz-iphone-detail`, `plozz-iphone-library` | 2000x1397 / 921x2000 | 1080 / 921 / 420 |
 
-They land near 1:1 at 1x — crisp on a standard display, soft on retina. They are
-mostly photographic artwork, which upscales far more gracefully than fine UI
-text, so they are acceptable but not ideal. `plozz-tv-featured.png` and
-`plozz-tv-cast.png` are both a full 2000x1125 and are the two sharpest frames in
-the hero, which is why the featured shot leads and is the one that gets
-preloaded.
+The only case that does not reach a full 1:1 match is a 3x display at a viewport
+wide enough to put the hero in its desktop layout — a large phone in landscape,
+which wants 2712px and gets 2296. That is still 2.5x effective density, so it is
+left alone deliberately: the extra rung would cost ~400 KB for something nobody
+can see.
 
-Everything else clears its contexts at 2x today, including `plozz-tv.png`
-(1088px, marquee and spoiler card) and `plozz-ipad.png` (1084px, marquee and the
-iPad mockup). Re-shooting them would only help if they were moved somewhere
-larger.
+### Do not re-import these through anything that resizes
 
-Several of the Apple TV captures are **16-bit HDR** PNGs (`mario`, `office`,
-`oppenheimer`, `lotr`, `lastofus`). That makes them 4-5 MB despite the low pixel
-count, so file size is a useless proxy for resolution here — check
-`sips -g pixelWidth -g bitsPerSample <file>` instead. None carries an embedded
-ICC profile, so the 16-to-8-bit conversion needs no color management. If these
-are ever re-shot, plain 8-bit PNG at full resolution is strictly better for the
-web.
+The masters were briefly committed as downscaled copies — `plozz-tv-lotr` was
+1099x618 instead of 3840x2160 — because they had been round-tripped through a
+tool that quietly resizes images. Nothing about the file looks wrong afterwards,
+and the resulting screenshots were soft on every retina display.
 
-Seven of the Apple TV shots (`episodes`, `library`, `player`, `profile-edit`,
-`profiles`, `ratings`, `settings`, `show`) arrived as JPEG, so they were already
-lossy before we touched them. Re-shoot them as PNG if you ever want a clean
-master.
+Copy captures straight from disk. To check one before committing it:
+
+```sh
+magick identify -format '%wx%h %[bit-depth]-bit\n' screenshots-src/plozz-tv-lotr.png
+# 3840x2160 8-bit
+```
+
+Anything arriving at an odd width like 1099, 1125 or 1202 has been resized and
+should be replaced with the original capture.
+
+Several of the Apple TV captures arrive from the device as **16-bit HDR** PNGs,
+which makes them 25-40 MB each. They are stored here converted to 8-bit sRGB at
+their full 3840x2160 instead, which costs nothing: every rung is encoded from
+8-bit sRGB anyway, so the shipped files are byte-for-byte equivalent (measured:
+PSNR 45.7 dB between a rung built from the 16-bit master and the same rung built
+from the 8-bit one, with output sizes within 0.06%). It takes the folder from
+293 MB to 109 MB. Convert on import:
+
+```sh
+magick <capture>.png -colorspace sRGB -depth 8 -define png:compression-level=9 \
+  screenshots-src/<name>.png
+```
+
+Resolution is what matters here, not bit depth — keep the full 3840x2160.
+
+The 16-to-8-bit conversion is measured, not assumed: the shipped 2296px AVIF of
+`plozz-tv-lotr` scores DSSIM 0.0051 / PSNR 42.9 dB against the master, against
+0.0229 / 30.7 dB for the downscaled master it replaced.
+
+Note that the captures carry a fully opaque alpha channel that `avifenc` drops.
+That is correct and saves bytes, but it means a naive `compare` between a master
+and its encode reads as a huge difference purely from the channel-count
+mismatch. Flatten both before measuring.

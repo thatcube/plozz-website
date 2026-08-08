@@ -61,7 +61,8 @@ const WEBP = { quality: 94 };
  * browser (src/data/imageSizes.ts records the painted width at each viewport)
  * and doubled for retina.
  *
- *   hero             paints up to 1148 CSS px, so 2x wants 2296; masters cap at 2000
+ *   hero             paints up to 1148 CSS px, so 2x wants 2296, which the
+ *                    3840px masters now actually cover
  *   figure           peaks at 796 CSS px at the 900px breakpoint, so 1600 at 2x
  *   frame            the iPad mockup paints 463 CSS px, the iPhone one 136
  *   marquee          landscape tiles peak at 532 CSS px, so ~1080 at 2x
@@ -78,12 +79,12 @@ const WEBP = { quality: 94 };
  * no browser would ever request.
  */
 const LADDERS = {
-  hero: [768, 1152, 1600, 2000],
+  hero: [768, 1152, 1660, 2296],
   figure: [480, 700, 1000, 1300, 1600],
-  frame: [280, 440, 700, 940],
+  frame: [280, 440, 700, 940, 1400],
   marquee: [360, 560, 800, 1080],
   marqueePortrait: [140, 220, 300, 420],
-  thumb: [280, 440, 620, 840],
+  thumb: [280, 440, 620, 840, 1240],
 };
 
 /**

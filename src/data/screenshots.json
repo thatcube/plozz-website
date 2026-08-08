@@ -78,48 +78,53 @@
     ]
   },
   "plozz-ipad": {
-    "width": 1080,
-    "height": 754,
+    "width": 1400,
+    "height": 978,
     "rungs": [
       {
         "w": 280,
-        "avif": "plozz-ipad-280.6782abbd.avif",
-        "webp": "plozz-ipad-280.648233ec.webp"
+        "avif": "plozz-ipad-280.97168679.avif",
+        "webp": "plozz-ipad-280.a5e70535.webp"
       },
       {
         "w": 360,
-        "avif": "plozz-ipad-360.a3c08a2c.avif",
-        "webp": "plozz-ipad-360.b2b70c52.webp"
+        "avif": "plozz-ipad-360.5b0a2e32.avif",
+        "webp": "plozz-ipad-360.89de909b.webp"
       },
       {
         "w": 440,
-        "avif": "plozz-ipad-440.4d248fe3.avif",
-        "webp": "plozz-ipad-440.489e82fd.webp"
+        "avif": "plozz-ipad-440.06648e3a.avif",
+        "webp": "plozz-ipad-440.98af541c.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-ipad-560.750782ee.avif",
-        "webp": "plozz-ipad-560.6804ee1a.webp"
+        "avif": "plozz-ipad-560.dab2e6d2.avif",
+        "webp": "plozz-ipad-560.37ccbc6f.webp"
       },
       {
         "w": 700,
-        "avif": "plozz-ipad-700.b9d6ebfe.avif",
-        "webp": "plozz-ipad-700.b0bebd86.webp"
+        "avif": "plozz-ipad-700.1055edc0.avif",
+        "webp": "plozz-ipad-700.ae6846f0.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-ipad-800.8904ff11.avif",
-        "webp": "plozz-ipad-800.187f17b5.webp"
+        "avif": "plozz-ipad-800.7083e935.avif",
+        "webp": "plozz-ipad-800.981c96c7.webp"
       },
       {
         "w": 940,
-        "avif": "plozz-ipad-940.8b86eff2.avif",
-        "webp": "plozz-ipad-940.6d953137.webp"
+        "avif": "plozz-ipad-940.e30ee8f4.avif",
+        "webp": "plozz-ipad-940.72a90fe7.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-ipad-1080.1dae6116.avif",
-        "webp": "plozz-ipad-1080.c56679fd.webp"
+        "avif": "plozz-ipad-1080.87ac7ca0.avif",
+        "webp": "plozz-ipad-1080.a61a8500.webp"
+      },
+      {
+        "w": 1400,
+        "avif": "plozz-ipad-1400.25201fcb.avif",
+        "webp": "plozz-ipad-1400.3ea9da42.webp"
       }
     ]
   },
@@ -177,53 +182,53 @@
   },
   "plozz-iphone": {
     "width": 420,
-    "height": 912,
+    "height": 913,
     "rungs": [
       {
         "w": 140,
-        "avif": "plozz-iphone-140.dec94a9b.avif",
-        "webp": "plozz-iphone-140.21cb518c.webp"
+        "avif": "plozz-iphone-140.f130eba6.avif",
+        "webp": "plozz-iphone-140.f973ad1f.webp"
       },
       {
         "w": 220,
-        "avif": "plozz-iphone-220.a33af5bd.avif",
-        "webp": "plozz-iphone-220.f03898eb.webp"
+        "avif": "plozz-iphone-220.e5918f31.avif",
+        "webp": "plozz-iphone-220.d4b31d66.webp"
       },
       {
         "w": 300,
-        "avif": "plozz-iphone-300.674b03d4.avif",
-        "webp": "plozz-iphone-300.68513294.webp"
+        "avif": "plozz-iphone-300.3a3db53a.avif",
+        "webp": "plozz-iphone-300.453dcc83.webp"
       },
       {
         "w": 420,
-        "avif": "plozz-iphone-420.f26efdab.avif",
-        "webp": "plozz-iphone-420.ac9e9dbc.webp"
+        "avif": "plozz-iphone-420.3f64bf5a.avif",
+        "webp": "plozz-iphone-420.fa8791a1.webp"
       }
     ]
   },
   "plozz-tv-cast": {
-    "width": 2000,
-    "height": 1125,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-cast-768.27d2d06b.avif",
-        "webp": "plozz-tv-cast-768.3317d66d.webp"
+        "avif": "plozz-tv-cast-768.7552b78c.avif",
+        "webp": "plozz-tv-cast-768.9c291d6e.webp"
       },
       {
         "w": 1152,
-        "avif": "plozz-tv-cast-1152.fed3dbd9.avif",
-        "webp": "plozz-tv-cast-1152.bd6c94dd.webp"
+        "avif": "plozz-tv-cast-1152.8e371a5a.avif",
+        "webp": "plozz-tv-cast-1152.c284cba2.webp"
       },
       {
-        "w": 1600,
-        "avif": "plozz-tv-cast-1600.4e4390d2.avif",
-        "webp": "plozz-tv-cast-1600.f11f17dc.webp"
+        "w": 1660,
+        "avif": "plozz-tv-cast-1660.2dbb922d.avif",
+        "webp": "plozz-tv-cast-1660.3bbb01d1.webp"
       },
       {
-        "w": 2000,
-        "avif": "plozz-tv-cast-2000.1aeea1c8.avif",
-        "webp": "plozz-tv-cast-2000.bd63fb9f.webp"
+        "w": 2296,
+        "avif": "plozz-tv-cast-2296.3f1e73d5.avif",
+        "webp": "plozz-tv-cast-2296.19d48c85.webp"
       }
     ]
   },
@@ -233,49 +238,49 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-episodes-360.fa453a90.avif",
-        "webp": "plozz-tv-episodes-360.2a961e7d.webp"
+        "avif": "plozz-tv-episodes-360.4af18f54.avif",
+        "webp": "plozz-tv-episodes-360.1d201897.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-episodes-560.a8e303f1.avif",
-        "webp": "plozz-tv-episodes-560.c8fc4706.webp"
+        "avif": "plozz-tv-episodes-560.ef3791d2.avif",
+        "webp": "plozz-tv-episodes-560.c2e44fb1.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-episodes-800.86aa3b85.avif",
-        "webp": "plozz-tv-episodes-800.5c6616a7.webp"
+        "avif": "plozz-tv-episodes-800.af2ed39b.avif",
+        "webp": "plozz-tv-episodes-800.583f3868.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-episodes-1080.3640b29c.avif",
-        "webp": "plozz-tv-episodes-1080.609083da.webp"
+        "avif": "plozz-tv-episodes-1080.eb05fb5a.avif",
+        "webp": "plozz-tv-episodes-1080.f72025b2.webp"
       }
     ]
   },
   "plozz-tv-featured": {
-    "width": 2000,
-    "height": 1125,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-featured-768.b7e91e22.avif",
-        "webp": "plozz-tv-featured-768.77bdb538.webp"
+        "avif": "plozz-tv-featured-768.9fc035e0.avif",
+        "webp": "plozz-tv-featured-768.8fde7142.webp"
       },
       {
         "w": 1152,
-        "avif": "plozz-tv-featured-1152.be0a9fef.avif",
-        "webp": "plozz-tv-featured-1152.b9f93ac8.webp"
+        "avif": "plozz-tv-featured-1152.e122725c.avif",
+        "webp": "plozz-tv-featured-1152.3dc79d79.webp"
       },
       {
-        "w": 1600,
-        "avif": "plozz-tv-featured-1600.819587aa.avif",
-        "webp": "plozz-tv-featured-1600.d4f0e22c.webp"
+        "w": 1660,
+        "avif": "plozz-tv-featured-1660.679e5389.avif",
+        "webp": "plozz-tv-featured-1660.b06ba87a.webp"
       },
       {
-        "w": 2000,
-        "avif": "plozz-tv-featured-2000.50a2eb98.avif",
-        "webp": "plozz-tv-featured-2000.1cc4176b.webp"
+        "w": 2296,
+        "avif": "plozz-tv-featured-2296.08b02ff6.avif",
+        "webp": "plozz-tv-featured-2296.c33e65e2.webp"
       }
     ]
   },
@@ -285,49 +290,49 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-home-360.1c5a3fec.avif",
-        "webp": "plozz-tv-home-360.9ec00dff.webp"
+        "avif": "plozz-tv-home-360.3bc8b21d.avif",
+        "webp": "plozz-tv-home-360.67df2817.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-home-560.1475004e.avif",
-        "webp": "plozz-tv-home-560.80daa8dd.webp"
+        "avif": "plozz-tv-home-560.b7dfdd35.avif",
+        "webp": "plozz-tv-home-560.3720e17e.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-home-800.283c5014.avif",
-        "webp": "plozz-tv-home-800.0aef4b20.webp"
+        "avif": "plozz-tv-home-800.5b3a5c75.avif",
+        "webp": "plozz-tv-home-800.92116355.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-home-1080.a8d59874.avif",
-        "webp": "plozz-tv-home-1080.757e9d5b.webp"
+        "avif": "plozz-tv-home-1080.1c21adb7.avif",
+        "webp": "plozz-tv-home-1080.cfa6cee7.webp"
       }
     ]
   },
   "plozz-tv-lastofus": {
-    "width": 1812,
-    "height": 1019,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-lastofus-768.d0d8fbb4.avif",
-        "webp": "plozz-tv-lastofus-768.c8f8151a.webp"
+        "avif": "plozz-tv-lastofus-768.04909438.avif",
+        "webp": "plozz-tv-lastofus-768.5d49d452.webp"
       },
       {
         "w": 1152,
-        "avif": "plozz-tv-lastofus-1152.b003538b.avif",
-        "webp": "plozz-tv-lastofus-1152.d601b870.webp"
+        "avif": "plozz-tv-lastofus-1152.e1e232db.avif",
+        "webp": "plozz-tv-lastofus-1152.e5c24a29.webp"
       },
       {
-        "w": 1600,
-        "avif": "plozz-tv-lastofus-1600.7ba602cb.avif",
-        "webp": "plozz-tv-lastofus-1600.ac90a429.webp"
+        "w": 1660,
+        "avif": "plozz-tv-lastofus-1660.802ed6b5.avif",
+        "webp": "plozz-tv-lastofus-1660.90ffca1b.webp"
       },
       {
-        "w": 1812,
-        "avif": "plozz-tv-lastofus-1812.50d19f24.avif",
-        "webp": "plozz-tv-lastofus-1812.40be2e45.webp"
+        "w": 2296,
+        "avif": "plozz-tv-lastofus-2296.950d7187.avif",
+        "webp": "plozz-tv-lastofus-2296.f751955b.webp"
       }
     ]
   },
@@ -337,92 +342,127 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-library-360.eddeea2a.avif",
-        "webp": "plozz-tv-library-360.cc1df418.webp"
+        "avif": "plozz-tv-library-360.6e7f414e.avif",
+        "webp": "plozz-tv-library-360.3e755eac.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-library-560.29bf3cb3.avif",
-        "webp": "plozz-tv-library-560.dcf2e1f6.webp"
+        "avif": "plozz-tv-library-560.a9ba638f.avif",
+        "webp": "plozz-tv-library-560.dec6cc3c.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-library-800.f5f5f2ce.avif",
-        "webp": "plozz-tv-library-800.1b67ad9d.webp"
+        "avif": "plozz-tv-library-800.b7ad9a89.avif",
+        "webp": "plozz-tv-library-800.c4f817a9.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-library-1080.75e75bea.avif",
-        "webp": "plozz-tv-library-1080.0a6d930b.webp"
+        "avif": "plozz-tv-library-1080.733444e7.avif",
+        "webp": "plozz-tv-library-1080.069a4407.webp"
       }
     ]
   },
   "plozz-tv-lotr": {
-    "width": 1099,
-    "height": 618,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-lotr-768.9e584ae3.avif",
-        "webp": "plozz-tv-lotr-768.d83897cf.webp"
+        "avif": "plozz-tv-lotr-768.c2a54d8e.avif",
+        "webp": "plozz-tv-lotr-768.18698eeb.webp"
       },
       {
-        "w": 1099,
-        "avif": "plozz-tv-lotr-1099.33432875.avif",
-        "webp": "plozz-tv-lotr-1099.7c3f26e7.webp"
+        "w": 1152,
+        "avif": "plozz-tv-lotr-1152.707b544e.avif",
+        "webp": "plozz-tv-lotr-1152.5c516ad6.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-lotr-1660.36a57c3c.avif",
+        "webp": "plozz-tv-lotr-1660.36de2985.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-lotr-2296.8537a08f.avif",
+        "webp": "plozz-tv-lotr-2296.0edddc71.webp"
       }
     ]
   },
   "plozz-tv-mario": {
-    "width": 1318,
-    "height": 741,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-mario-768.8aab90b3.avif",
-        "webp": "plozz-tv-mario-768.5682e8f7.webp"
+        "avif": "plozz-tv-mario-768.0fc3c227.avif",
+        "webp": "plozz-tv-mario-768.edd46c87.webp"
       },
       {
         "w": 1152,
-        "avif": "plozz-tv-mario-1152.b16af1fa.avif",
-        "webp": "plozz-tv-mario-1152.29bf9b89.webp"
+        "avif": "plozz-tv-mario-1152.7a08da24.avif",
+        "webp": "plozz-tv-mario-1152.f84af610.webp"
       },
       {
-        "w": 1318,
-        "avif": "plozz-tv-mario-1318.bb3d9991.avif",
-        "webp": "plozz-tv-mario-1318.1da585cb.webp"
+        "w": 1660,
+        "avif": "plozz-tv-mario-1660.d92f505e.avif",
+        "webp": "plozz-tv-mario-1660.d9ddc445.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-mario-2296.f0aa35c4.avif",
+        "webp": "plozz-tv-mario-2296.902a9cc6.webp"
       }
     ]
   },
   "plozz-tv-office": {
-    "width": 1202,
-    "height": 676,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-office-768.acf37688.avif",
-        "webp": "plozz-tv-office-768.9c4f6f12.webp"
+        "avif": "plozz-tv-office-768.3213302d.avif",
+        "webp": "plozz-tv-office-768.37f7e535.webp"
       },
       {
-        "w": 1202,
-        "avif": "plozz-tv-office-1202.ceaade59.avif",
-        "webp": "plozz-tv-office-1202.67343055.webp"
+        "w": 1152,
+        "avif": "plozz-tv-office-1152.4b919023.avif",
+        "webp": "plozz-tv-office-1152.ed7728f5.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-office-1660.8146f325.avif",
+        "webp": "plozz-tv-office-1660.358f2d65.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-office-2296.ed78e963.avif",
+        "webp": "plozz-tv-office-2296.314f2133.webp"
       }
     ]
   },
   "plozz-tv-oppenheimer": {
-    "width": 1125,
-    "height": 633,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 768,
-        "avif": "plozz-tv-oppenheimer-768.963a80bd.avif",
-        "webp": "plozz-tv-oppenheimer-768.6a3f17b3.webp"
+        "avif": "plozz-tv-oppenheimer-768.a60c5e7e.avif",
+        "webp": "plozz-tv-oppenheimer-768.c814e9f8.webp"
       },
       {
-        "w": 1125,
-        "avif": "plozz-tv-oppenheimer-1125.16cfda13.avif",
-        "webp": "plozz-tv-oppenheimer-1125.8ee073a1.webp"
+        "w": 1152,
+        "avif": "plozz-tv-oppenheimer-1152.bf03b478.avif",
+        "webp": "plozz-tv-oppenheimer-1152.d7baaec9.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-oppenheimer-1660.ffe184e5.avif",
+        "webp": "plozz-tv-oppenheimer-1660.25d75b1a.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-oppenheimer-2296.ee0d44eb.avif",
+        "webp": "plozz-tv-oppenheimer-2296.974bf886.webp"
       }
     ]
   },
@@ -432,43 +472,43 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-player-360.0dfd039a.avif",
-        "webp": "plozz-tv-player-360.452c399c.webp"
+        "avif": "plozz-tv-player-360.581cc0af.avif",
+        "webp": "plozz-tv-player-360.f32fa3b9.webp"
       },
       {
         "w": 480,
-        "avif": "plozz-tv-player-480.9c026706.avif",
-        "webp": "plozz-tv-player-480.507e4646.webp"
+        "avif": "plozz-tv-player-480.9737c563.avif",
+        "webp": "plozz-tv-player-480.6c6ada9e.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-player-560.eff27e18.avif",
-        "webp": "plozz-tv-player-560.6f57a32a.webp"
+        "avif": "plozz-tv-player-560.fa81fc19.avif",
+        "webp": "plozz-tv-player-560.d2f220ee.webp"
       },
       {
         "w": 700,
-        "avif": "plozz-tv-player-700.2b358e9d.avif",
-        "webp": "plozz-tv-player-700.af66ceb0.webp"
+        "avif": "plozz-tv-player-700.b1f26b71.avif",
+        "webp": "plozz-tv-player-700.bc61f752.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-player-800.f0f951f3.avif",
-        "webp": "plozz-tv-player-800.202f6ee5.webp"
+        "avif": "plozz-tv-player-800.053c6f58.avif",
+        "webp": "plozz-tv-player-800.c7d4ef28.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-player-1080.971fd3a5.avif",
-        "webp": "plozz-tv-player-1080.ce8a7aef.webp"
+        "avif": "plozz-tv-player-1080.3baa3206.avif",
+        "webp": "plozz-tv-player-1080.e0435fbd.webp"
       },
       {
         "w": 1300,
-        "avif": "plozz-tv-player-1300.f53f6110.avif",
-        "webp": "plozz-tv-player-1300.3a1d41ec.webp"
+        "avif": "plozz-tv-player-1300.fbafaa71.avif",
+        "webp": "plozz-tv-player-1300.c63ae056.webp"
       },
       {
         "w": 1600,
-        "avif": "plozz-tv-player-1600.ca5f854f.avif",
-        "webp": "plozz-tv-player-1600.f343dee1.webp"
+        "avif": "plozz-tv-player-1600.c44d03aa.avif",
+        "webp": "plozz-tv-player-1600.09bc3359.webp"
       }
     ]
   },
@@ -478,23 +518,23 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-profile-edit-360.9128ee24.avif",
-        "webp": "plozz-tv-profile-edit-360.40a99c38.webp"
+        "avif": "plozz-tv-profile-edit-360.a757127f.avif",
+        "webp": "plozz-tv-profile-edit-360.dadda80c.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-profile-edit-560.1e8b9795.avif",
-        "webp": "plozz-tv-profile-edit-560.57647b6f.webp"
+        "avif": "plozz-tv-profile-edit-560.c1b7d62c.avif",
+        "webp": "plozz-tv-profile-edit-560.30aed04f.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-profile-edit-800.931fc7a4.avif",
-        "webp": "plozz-tv-profile-edit-800.20e45f58.webp"
+        "avif": "plozz-tv-profile-edit-800.fcec5b86.avif",
+        "webp": "plozz-tv-profile-edit-800.b5488baf.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-profile-edit-1080.b2f6be07.avif",
-        "webp": "plozz-tv-profile-edit-1080.6913b98c.webp"
+        "avif": "plozz-tv-profile-edit-1080.37579b2e.avif",
+        "webp": "plozz-tv-profile-edit-1080.b2f47a94.webp"
       }
     ]
   },
@@ -504,23 +544,23 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-profiles-360.85295d8f.avif",
-        "webp": "plozz-tv-profiles-360.8f99e13c.webp"
+        "avif": "plozz-tv-profiles-360.a9a435f6.avif",
+        "webp": "plozz-tv-profiles-360.1fda5b99.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-profiles-560.785aa2c8.avif",
-        "webp": "plozz-tv-profiles-560.47788e23.webp"
+        "avif": "plozz-tv-profiles-560.79742ca6.avif",
+        "webp": "plozz-tv-profiles-560.5096a138.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-profiles-800.45132709.avif",
-        "webp": "plozz-tv-profiles-800.0f7f5ea8.webp"
+        "avif": "plozz-tv-profiles-800.1dabf78b.avif",
+        "webp": "plozz-tv-profiles-800.db8f7db1.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-profiles-1080.22f6e8db.avif",
-        "webp": "plozz-tv-profiles-1080.74ef97de.webp"
+        "avif": "plozz-tv-profiles-1080.d7b72158.avif",
+        "webp": "plozz-tv-profiles-1080.7c139755.webp"
       }
     ]
   },
@@ -530,23 +570,23 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-ratings-360.77b6d913.avif",
-        "webp": "plozz-tv-ratings-360.7460e1ca.webp"
+        "avif": "plozz-tv-ratings-360.ec99ab6e.avif",
+        "webp": "plozz-tv-ratings-360.aba68e6d.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-ratings-560.3bc0eb6a.avif",
-        "webp": "plozz-tv-ratings-560.1d685839.webp"
+        "avif": "plozz-tv-ratings-560.c95e0d97.avif",
+        "webp": "plozz-tv-ratings-560.8e4d23aa.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-ratings-800.0276c37e.avif",
-        "webp": "plozz-tv-ratings-800.c7156a17.webp"
+        "avif": "plozz-tv-ratings-800.154791e4.avif",
+        "webp": "plozz-tv-ratings-800.bb4b386e.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-ratings-1080.80354533.avif",
-        "webp": "plozz-tv-ratings-1080.e368849e.webp"
+        "avif": "plozz-tv-ratings-1080.a33c7a52.avif",
+        "webp": "plozz-tv-ratings-1080.1f0242bb.webp"
       }
     ]
   },
@@ -556,23 +596,23 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-settings-360.93013295.avif",
-        "webp": "plozz-tv-settings-360.7b474134.webp"
+        "avif": "plozz-tv-settings-360.eb1bf3a0.avif",
+        "webp": "plozz-tv-settings-360.5b99fcbf.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-settings-560.7ffe9958.avif",
-        "webp": "plozz-tv-settings-560.5e27ce1d.webp"
+        "avif": "plozz-tv-settings-560.c72037bd.avif",
+        "webp": "plozz-tv-settings-560.f07a038f.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-settings-800.7adb854e.avif",
-        "webp": "plozz-tv-settings-800.86cf8071.webp"
+        "avif": "plozz-tv-settings-800.f79a4fc2.avif",
+        "webp": "plozz-tv-settings-800.6342ceca.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-settings-1080.d40533fc.avif",
-        "webp": "plozz-tv-settings-1080.0f0149aa.webp"
+        "avif": "plozz-tv-settings-1080.6505f875.avif",
+        "webp": "plozz-tv-settings-1080.6852c370.webp"
       }
     ]
   },
@@ -582,23 +622,23 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-show-360.f3b44bb0.avif",
-        "webp": "plozz-tv-show-360.87dbc1b6.webp"
+        "avif": "plozz-tv-show-360.e91c80af.avif",
+        "webp": "plozz-tv-show-360.1c7a890d.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-show-560.a2737127.avif",
-        "webp": "plozz-tv-show-560.10f77485.webp"
+        "avif": "plozz-tv-show-560.c35f52a3.avif",
+        "webp": "plozz-tv-show-560.87bb10d0.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-show-800.fdbda254.avif",
-        "webp": "plozz-tv-show-800.29dea0f1.webp"
+        "avif": "plozz-tv-show-800.37202edd.avif",
+        "webp": "plozz-tv-show-800.0fcedec5.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-show-1080.9b7a3809.avif",
-        "webp": "plozz-tv-show-1080.95fc05f2.webp"
+        "avif": "plozz-tv-show-1080.a9faedfe.avif",
+        "webp": "plozz-tv-show-1080.f00a5733.webp"
       }
     ]
   },
@@ -608,79 +648,84 @@
     "rungs": [
       {
         "w": 360,
-        "avif": "plozz-tv-subtitles-360.e76728a8.avif",
-        "webp": "plozz-tv-subtitles-360.8fdf9ee7.webp"
+        "avif": "plozz-tv-subtitles-360.255f4326.avif",
+        "webp": "plozz-tv-subtitles-360.dc0613ea.webp"
       },
       {
         "w": 480,
-        "avif": "plozz-tv-subtitles-480.3d740439.avif",
-        "webp": "plozz-tv-subtitles-480.9f630793.webp"
+        "avif": "plozz-tv-subtitles-480.5cf2f55f.avif",
+        "webp": "plozz-tv-subtitles-480.d6283226.webp"
       },
       {
         "w": 560,
-        "avif": "plozz-tv-subtitles-560.301a1e08.avif",
-        "webp": "plozz-tv-subtitles-560.cbeeb56b.webp"
+        "avif": "plozz-tv-subtitles-560.858bdd6b.avif",
+        "webp": "plozz-tv-subtitles-560.aa7e162c.webp"
       },
       {
         "w": 700,
-        "avif": "plozz-tv-subtitles-700.dddb050b.avif",
-        "webp": "plozz-tv-subtitles-700.af1697b0.webp"
+        "avif": "plozz-tv-subtitles-700.ae0808e1.avif",
+        "webp": "plozz-tv-subtitles-700.e66199ef.webp"
       },
       {
         "w": 800,
-        "avif": "plozz-tv-subtitles-800.ee9d3b01.avif",
-        "webp": "plozz-tv-subtitles-800.6b02026a.webp"
+        "avif": "plozz-tv-subtitles-800.f294ffc0.avif",
+        "webp": "plozz-tv-subtitles-800.9a50f97e.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-subtitles-1080.78795350.avif",
-        "webp": "plozz-tv-subtitles-1080.b3392cbd.webp"
+        "avif": "plozz-tv-subtitles-1080.f604fc1b.avif",
+        "webp": "plozz-tv-subtitles-1080.bdfe93f9.webp"
       },
       {
         "w": 1300,
-        "avif": "plozz-tv-subtitles-1300.75c09025.avif",
-        "webp": "plozz-tv-subtitles-1300.23d69867.webp"
+        "avif": "plozz-tv-subtitles-1300.baa03ff6.avif",
+        "webp": "plozz-tv-subtitles-1300.c960037d.webp"
       },
       {
         "w": 1600,
-        "avif": "plozz-tv-subtitles-1600.5d14e144.avif",
-        "webp": "plozz-tv-subtitles-1600.ff7b6dd0.webp"
+        "avif": "plozz-tv-subtitles-1600.ddbe05b6.avif",
+        "webp": "plozz-tv-subtitles-1600.e7a00295.webp"
       }
     ]
   },
   "plozz-tv": {
-    "width": 1080,
-    "height": 608,
+    "width": 1240,
+    "height": 698,
     "rungs": [
       {
         "w": 280,
-        "avif": "plozz-tv-280.29ac21c8.avif",
-        "webp": "plozz-tv-280.30ca9e59.webp"
+        "avif": "plozz-tv-280.f59db36a.avif",
+        "webp": "plozz-tv-280.3b57846b.webp"
       },
       {
         "w": 360,
-        "avif": "plozz-tv-360.8bcd1474.avif",
-        "webp": "plozz-tv-360.4bfef8d2.webp"
+        "avif": "plozz-tv-360.d7abc0cd.avif",
+        "webp": "plozz-tv-360.1001316c.webp"
       },
       {
         "w": 440,
-        "avif": "plozz-tv-440.d5f52660.avif",
-        "webp": "plozz-tv-440.5f26a5bc.webp"
+        "avif": "plozz-tv-440.21626e3d.avif",
+        "webp": "plozz-tv-440.06310fac.webp"
       },
       {
         "w": 620,
-        "avif": "plozz-tv-620.c2183e92.avif",
-        "webp": "plozz-tv-620.2f4955fa.webp"
+        "avif": "plozz-tv-620.c1f00556.avif",
+        "webp": "plozz-tv-620.21b8b23f.webp"
       },
       {
         "w": 840,
-        "avif": "plozz-tv-840.4eba3df5.avif",
-        "webp": "plozz-tv-840.0041678a.webp"
+        "avif": "plozz-tv-840.cb85c4ae.avif",
+        "webp": "plozz-tv-840.e0fe2bc4.webp"
       },
       {
         "w": 1080,
-        "avif": "plozz-tv-1080.6f682555.avif",
-        "webp": "plozz-tv-1080.72dc2e3a.webp"
+        "avif": "plozz-tv-1080.8817f627.avif",
+        "webp": "plozz-tv-1080.1f0069c1.webp"
+      },
+      {
+        "w": 1240,
+        "avif": "plozz-tv-1240.a875bd7e.avif",
+        "webp": "plozz-tv-1240.89e3b2a9.webp"
       }
     ]
   }
