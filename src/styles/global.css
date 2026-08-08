@@ -820,20 +820,34 @@ h3 {
   height: 23px;
 }
 
-/* Network shares are a category, not a product, so there is no logo to show. */
-.hero-share {
+/* Network shares are a category, not a product, so there is no logo to show.
+   Icon plus the name, set to the same weight and size as the three brand marks
+   it sits beside. Shared by the hero panel and the sources cell so the two read
+   as the same object; only --share-h changes between them. */
+.share-lockup {
+  --share-h: 20px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(var(--share-h) * 0.4);
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: calc(var(--share-h) * 0.95);
   font-weight: 620;
   letter-spacing: -0.015em;
+  line-height: 1;
 }
 
-.hero-share svg {
-  width: 20px;
-  height: 20px;
+.share-lockup svg {
+  width: var(--share-h);
+  height: var(--share-h);
+  flex: none;
+}
+
+/* A quarter of the slab is about 210px of usable width at 1280, so the lockup
+   is sized to clear "Network shares" on one line there; at 30px it wrapped and
+   stood 57px tall against the logos' 32px. */
+.cell-visual .share-lockup {
+  --share-h: 24px;
+  white-space: nowrap;
 }
 
 /* A rule rather than whitespace between the two halves, so the panel reads as
@@ -1118,18 +1132,6 @@ h3 {
 
 .ledger-row .lockup-emby {
   height: 29px;
-}
-
-.share-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.share-chips .chip {
-  font-family: var(--font-mono);
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
 }
 
 /* A chevron drawn from a border, so it matches the hairline vocabulary. */
@@ -2845,6 +2847,15 @@ a.cell:hover {
   margin-top: auto;
 }
 
+/* In these cells the logo is the title, so there is no heading and this line is
+   the primary text. Scoped past `.cell p`, which is the same specificity and
+   would otherwise win or lose on source order alone. */
+.cell .cell-foot p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
 .cell-go {
   display: inline-flex;
   align-items: center;
@@ -2869,10 +2880,6 @@ a.cell:hover .cell-go {
 
 a.cell:hover .cell-arrow {
   transform: rotate(45deg) translate(2px, -2px);
-}
-
-.cell .share-chips {
-  align-content: center;
 }
 
 @media (max-width: 900px) {

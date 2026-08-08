@@ -117,7 +117,7 @@ const siteLd = {
                 <li><img src="/providers/jellyfin.svg" alt="Jellyfin" /></li>
                 <li><img src="/providers/emby.png" alt="Emby" /></li>
                 <li>
-                  <span class="hero-share">
+                  <span class="share-lockup">
                     <Icon name="ph:folders" />
                     Network shares
                   </span>
@@ -183,73 +183,68 @@ const siteLd = {
       </div>
     </section>
 
-    <section class="band" id="sources" aria-labelledby="sources-heading">
+    <section class="band" aria-labelledby="icloud-heading">
       <div class="container">
         <div class="band-head">
-          <h2 id="sources-heading">Plozz supports (almost) everything</h2>
+          <h2 id="icloud-heading">iCloud sync</h2>
         </div>
 
-        <div class="slab" style="--cols: 4">
-          <a class="cell" href="/jellyfin">
-            <div class="cell-visual">
-              <img
-                class="lockup-jellyfin"
-                src="/providers/jellyfin.svg"
-                alt="Jellyfin"
-              />
+        <div class="slab icloud-slab">
+          <div class="cell icloud-visual">
+            <div class="icloud-devices">
+              <div class="icloud-device-slot icloud-ipad-slot">
+                <div
+                  class="device device-ipad-pro device-spacegray device-landscape"
+                >
+                  <div class="device-frame">
+                    <img
+                      class="device-screen"
+                      src="/screenshots/plozz-ipad.webp"
+                      alt="Plozz on iPad"
+                      width="1084"
+                      height="757"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="device-btns"></div>
+                  <div class="device-sensors"></div>
+                </div>
+              </div>
+              <div class="icloud-device-slot icloud-iphone-slot">
+                <div class="device device-iphone-14-pro device-black">
+                  <div class="device-frame">
+                    <img
+                      class="device-screen"
+                      src="/screenshots/plozz-iphone-detail.webp"
+                      alt="A film detail screen in Plozz on iPhone"
+                      width="921"
+                      height="2000"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="device-stripe"></div>
+                  <div class="device-header"></div>
+                  <div class="device-sensors"></div>
+                  <div class="device-btns"></div>
+                  <div class="device-power"></div>
+                  <div class="device-home"></div>
+                </div>
+              </div>
             </div>
-            <div class="cell-foot">
-              <h3>Jellyfin</h3>
-              <p>Free and open source, like Plozz.</p>
-              <span class="cell-go"
-                >See how it works<span class="cell-arrow" aria-hidden="true"
-                ></span></span
-              >
-            </div>
-          </a>
-          <a class="cell" href="/plex">
-            <div class="cell-visual">
-              <img class="lockup-plex" src="/providers/plex.svg" alt="Plex" />
-            </div>
-            <div class="cell-foot">
-              <h3>Plex</h3>
-              <p>Subtitle search and styling in the player.</p>
-              <span class="cell-go"
-                >See how it works<span class="cell-arrow" aria-hidden="true"
-                ></span></span
-              >
-            </div>
-          </a>
-          <a class="cell" href="/emby">
-            <div class="cell-visual">
-              <img class="lockup-emby" src="/providers/emby.png" alt="Emby" />
-            </div>
-            <div class="cell-foot">
-              <h3>Emby</h3>
-              <p>Full playback on iPhone, no time limit.</p>
-              <span class="cell-go"
-                >See how it works<span class="cell-arrow" aria-hidden="true"
-                ></span></span
-              >
-            </div>
-          </a>
-          <a class="cell" href="/network-shares">
-            <div class="cell-visual">
-              <span class="share-chips" aria-hidden="true">
-                <span class="chip">SMB</span><span class="chip">NFS</span><span
-                  class="chip">WebDAV</span
-                ><span class="chip">SFTP</span><span class="chip">FTP</span>
-              </span>
-            </div>
-            <div class="cell-foot">
-              <h3>Network shares</h3>
-              <p>No media server needed at all.</p>
-              <span class="cell-go"
-                >See how it works<span class="cell-arrow" aria-hidden="true"
-                ></span></span
-              >
-            </div>
-          </a>
+          </div>
+          <div class="cell">
+            <h3>Synced to all of your devices</h3>
+            <p>
+              Every setting saves to your iCloud, so your preferences and
+              servers follow you to all of your Apple devices.
+            </p>
+          </div>
+          <div class="cell">
+            <h3>iCloud profiles</h3>
+            <p>Native support for profile switching on tvOS</p>
+          </div>
         </div>
       </div>
     </section>
@@ -386,68 +381,68 @@ const siteLd = {
       </div>
     </section>
 
-    <section class="band" aria-labelledby="icloud-heading">
+    <section class="band" id="sources" aria-labelledby="sources-heading">
       <div class="container">
         <div class="band-head">
-          <h2 id="icloud-heading">iCloud sync</h2>
+          <h2 id="sources-heading">Better on whatever you already run</h2>
         </div>
 
-        <div class="slab icloud-slab">
-          <div class="cell icloud-visual">
-            <div class="icloud-devices">
-              <div class="icloud-device-slot icloud-ipad-slot">
-                <div
-                  class="device device-ipad-pro device-spacegray device-landscape"
-                >
-                  <div class="device-frame">
-                    <img
-                      class="device-screen"
-                      src="/screenshots/plozz-ipad.webp"
-                      alt="Plozz on iPad"
-                      width="1084"
-                      height="757"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div class="device-btns"></div>
-                  <div class="device-sensors"></div>
-                </div>
-              </div>
-              <div class="icloud-device-slot icloud-iphone-slot">
-                <div class="device device-iphone-14-pro device-black">
-                  <div class="device-frame">
-                    <img
-                      class="device-screen"
-                      src="/screenshots/plozz-iphone-detail.webp"
-                      alt="A film detail screen in Plozz on iPhone"
-                      width="921"
-                      height="2000"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div class="device-stripe"></div>
-                  <div class="device-header"></div>
-                  <div class="device-sensors"></div>
-                  <div class="device-btns"></div>
-                  <div class="device-power"></div>
-                  <div class="device-home"></div>
-                </div>
-              </div>
+        <div class="slab" style="--cols: 4">
+          <a class="cell" href="/jellyfin">
+            <div class="cell-visual">
+              <img
+                class="lockup-jellyfin"
+                src="/providers/jellyfin.svg"
+                alt="Jellyfin"
+              />
             </div>
-          </div>
-          <div class="cell">
-            <h3>Synced to all of your devices</h3>
-            <p>
-              Every setting saves to your iCloud, so your preferences and
-              servers follow you to all of your Apple devices.
-            </p>
-          </div>
-          <div class="cell">
-            <h3>iCloud profiles</h3>
-            <p>Native support for profile switching on tvOS</p>
-          </div>
+            <div class="cell-foot">
+              <p>Free and open source, like Plozz.</p>
+              <span class="cell-go"
+                >See how it works<span class="cell-arrow" aria-hidden="true"
+                ></span></span
+              >
+            </div>
+          </a>
+          <a class="cell" href="/plex">
+            <div class="cell-visual">
+              <img class="lockup-plex" src="/providers/plex.svg" alt="Plex" />
+            </div>
+            <div class="cell-foot">
+              <p>Subtitle search and styling in the player.</p>
+              <span class="cell-go"
+                >See how it works<span class="cell-arrow" aria-hidden="true"
+                ></span></span
+              >
+            </div>
+          </a>
+          <a class="cell" href="/emby">
+            <div class="cell-visual">
+              <img class="lockup-emby" src="/providers/emby.png" alt="Emby" />
+            </div>
+            <div class="cell-foot">
+              <p>Full playback on iPhone, no time limit.</p>
+              <span class="cell-go"
+                >See how it works<span class="cell-arrow" aria-hidden="true"
+                ></span></span
+              >
+            </div>
+          </a>
+          <a class="cell" href="/network-shares">
+            <div class="cell-visual">
+              <span class="share-lockup">
+                <Icon name="ph:folders" />
+                Network shares
+              </span>
+            </div>
+            <div class="cell-foot">
+              <p>No media server needed at all.</p>
+              <span class="cell-go"
+                >See how it works<span class="cell-arrow" aria-hidden="true"
+                ></span></span
+              >
+            </div>
+          </a>
         </div>
       </div>
     </section>
