@@ -2989,8 +2989,8 @@ a.cell:hover .cell-arrow {
 .marquee-track img {
   display: block;
   width: auto;
-  max-width: clamp(280px, 38vw, 540px);
-  height: clamp(160px, 22vw, 300px);
+  max-width: clamp(360px, 38vw, 540px);
+  height: clamp(200px, 22vw, 300px);
   border: 1px solid var(--border);
   border-radius: var(--r-slab);
   object-fit: cover;
