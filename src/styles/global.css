@@ -2975,7 +2975,13 @@ a.cell:hover .cell-arrow {
    is eaten by the panel edge, which is the absorption itself. */
 .confluence-wires .wire-pulse {
   stroke: var(--brand);
-  stroke-width: 1.75;
+  stroke-width: 2.6;
+  /* Container units, so the glow keeps its proportion to the wire at every
+     size; a fixed px radius reads far heavier on a phone. Both stops are wide
+     and faint rather than one tight and bright: a small high-alpha shadow just
+     thickens the stroke into a hard edge instead of reading as light. */
+  filter: drop-shadow(0 0 0.75cqw rgba(96, 202, 255, 0.4))
+    drop-shadow(0 0 1.9cqw rgba(0, 164, 220, 0.28));
   fill: none;
   stroke-linecap: round;
   stroke-dasharray: 25 100;
@@ -3080,7 +3086,7 @@ a.cell:hover .cell-arrow {
     calc(var(--hub-pad) - var(--logo-h) * 0.059)
     calc(var(--hub-pad-x) - var(--hub-icon) * 0.094);
   overflow: hidden;
-  border-radius: calc((var(--hub-icon) + var(--hub-pad) * 2) * 0.36);
+  border-radius: calc((var(--hub-icon) + var(--hub-pad) * 2) * 0.3);
   background: #17171a;
   box-shadow: inset 0 0 0 1px var(--border);
 }
@@ -3092,8 +3098,8 @@ a.cell:hover .cell-arrow {
    falls off. Clipped by the container, so it stays inside the surface.
 
    One layer per wire, each carrying its own wire's delay. Arrivals land about a
-   second apart and a sweep takes over 3s to cross, so several overlap at any
-   moment; a single shared element could only ever show one. */
+   second apart and a sweep takes about 1.6s to cross, so they still overlap; a
+   single shared element could only ever show one. */
 .hub-absorb {
   position: absolute;
   /* Overruns the panel on both axes: the body of light is wider than the
@@ -3105,11 +3111,17 @@ a.cell:hover .cell-arrow {
   left: 0;
   width: 116%;
   transform-origin: center center;
+  /* closest-side, so the gradient always resolves to zero exactly at the
+     layer's own edge. A fixed radius wider than the layer's half-width gets cut
+     off by that edge instead, which drew a hard vertical seam across the panel.
+     The layer is wider than it is tall, so the light spreads along the
+     direction of travel. Blue rather than the cyan-leaning --brand: 210deg
+     against its 196deg, and faint, since several overlap and compound. */
   background: radial-gradient(
-    ellipse 52% 68% at 50% 50%,
-    rgba(158, 228, 255, 0.5),
-    rgba(0, 164, 220, 0.17) 52%,
-    rgba(0, 164, 220, 0) 100%
+    closest-side,
+    rgba(125, 187, 255, 0.34),
+    rgba(45, 125, 255, 0.12) 50%,
+    rgba(45, 125, 255, 0) 100%
   );
   opacity: 0;
   pointer-events: none;
@@ -3117,19 +3129,40 @@ a.cell:hover .cell-arrow {
      the period the pulse takes to reach the hub (1.2s of 4.1s), so the two
      cannot drift. Peaks on its first frame, so the flash is the impact rather than a
      fade-in after it. */
-  animation: hub-absorb 4.1s cubic-bezier(0.17, 0.62, 0.32, 1)
-    calc(var(--d) + 1.2s) infinite;
+  animation: hub-absorb 4.1s linear calc(var(--d) + 1.2s) infinite;
 }
 
 /* Offsets are a share of the layer's own width, and the layer is 116% of the
    panel, so -55% starts its centre on the panel's left edge and 62% carries it
-   just past the right one. */
+   just past the right one.
+
+   The crossing takes 39% of the period, about 1.6s, so the light moves through
+   the panel rather than drifting across it.
+
+   Timed linear with the shape carried by the stops rather than an easing curve.
+   An ease-out ran the opacity down to 0.46 within 600ms, so the light peaked
+   while it was still small and off to the left and had all but gone by the time
+   it reached the panel. Holding it up through the first half of the crossing
+   lets it survive the trip; the x and scale stops still decelerate, so the
+   movement keeps its ease. */
 @keyframes hub-absorb {
   0% {
     opacity: 1;
-    transform: translateX(-55%) scale(0.5);
+    transform: translateX(-55%) scale(0.55);
   }
-  78% {
+  6% {
+    opacity: 0.92;
+    transform: translateX(-20%) scale(0.9);
+  }
+  16% {
+    opacity: 0.72;
+    transform: translateX(10%) scale(1.18);
+  }
+  28% {
+    opacity: 0.4;
+    transform: translateX(36%) scale(1.45);
+  }
+  39% {
     opacity: 0;
     transform: translateX(62%) scale(1.75);
   }

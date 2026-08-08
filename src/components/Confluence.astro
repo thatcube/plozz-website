@@ -64,7 +64,10 @@ const VB_W = 480;
 function wires(L: Layout) {
   const hubY = L.h / 2;
   const startX = (L.lockRight / 100) * VB_W + 16;
-  const endX = (L.hubLeft / 100) * VB_W - 2;
+  /* Ends just inside the hub rather than short of it: the panel is opaque and
+     painted after the wires, so the last couple of units are hidden and the
+     line reads as meeting the edge with no gap. */
+  const endX = (L.hubLeft / 100) * VB_W + 2;
   const run = endX - startX;
 
   return ROW_PCT.map((p) => {
@@ -101,16 +104,20 @@ const LAYOUTS = [
           aria-hidden="true"
           preserveAspectRatio="xMidYMid meet"
         >
+          {/* All four static wires first, then all four pulses. Pairing each
+              wire with its own pulse in a group meant a later wire painted
+              over an earlier pulse, and since the wires converge, every pulse
+              was clipped by its neighbours just before it landed. */}
+          {wires(L).map((d) => (
+            <path class="wire" d={d} />
+          ))}
           {wires(L).map((d, i) => (
-            <g>
-              <path class="wire" d={d} />
-              <path
-                class="wire-pulse"
-                d={d}
-                pathLength="100"
-                style={`--d:${DELAY_S[i]}s`}
-              />
-            </g>
+            <path
+              class="wire-pulse"
+              d={d}
+              pathLength="100"
+              style={`--d:${DELAY_S[i]}s`}
+            />
           ))}
         </svg>
       ))
