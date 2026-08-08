@@ -14,18 +14,53 @@ import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from "../data/site";
 
 const heroScreenshots = [
   {
-    src: "/screenshots/plozz-tv.webp",
-    alt: "Plozz movie details screen on Apple TV",
-    label: "Movie details",
-    width: 1088,
-    height: 612,
-  },
-  {
-    src: "/screenshots/plozz-tv-home.webp",
-    alt: "Plozz home screen on Apple TV",
+    src: "/screenshots/plozz-tv-featured.webp",
+    alt: "Plozz home screen on Apple TV with a featured title and a Continue Watching row",
     label: "Home",
     width: 2000,
-    height: 1119,
+    height: 1125,
+  },
+  {
+    src: "/screenshots/plozz-tv-oppenheimer.webp",
+    alt: "Plozz movie details screen on Apple TV showing ratings, 4K and HDR10 badges, and a resume button",
+    label: "Movie details",
+    width: 1125,
+    height: 633,
+  },
+  {
+    src: "/screenshots/plozz-tv-lastofus.webp",
+    alt: "Plozz show details screen on Apple TV with a season picker and a rail of episode thumbnails",
+    label: "Seasons & episodes",
+    width: 1812,
+    height: 1019,
+  },
+  {
+    src: "/screenshots/plozz-tv-office.webp",
+    alt: "Plozz show details screen on Apple TV with a resume episode button and an episode rail below",
+    label: "Show details",
+    width: 1202,
+    height: 676,
+  },
+  {
+    src: "/screenshots/plozz-tv-mario.webp",
+    alt: "Plozz movie details screen on Apple TV showing critic and audience scores alongside 4K, Dolby Vision and HDR10 badges",
+    label: "Ratings & formats",
+    width: 1318,
+    height: 741,
+  },
+  {
+    src: "/screenshots/plozz-tv-cast.webp",
+    alt: "Plozz cast member screen on Apple TV with an actor biography and rails of the movies and shows they appear in",
+    label: "Cast & crew",
+    width: 2000,
+    height: 1125,
+  },
+  {
+    src: "/screenshots/plozz-tv-lotr.webp",
+    alt: "Plozz movie details screen on Apple TV with a partially watched progress bar on the play button and Dolby Vision and Dolby Atmos badges",
+    label: "Continue watching",
+    width: 1099,
+    height: 618,
   },
 ];
 
@@ -501,7 +536,7 @@ const siteLd = {
         if (paused || document.hidden || reducedMotion.matches) return;
         timer = window.setInterval(
           () => showSlide((activeIndex + 1) % slides.length),
-          7000,
+          5000,
         );
       };
 

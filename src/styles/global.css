@@ -866,6 +866,12 @@ h3 {
   font-size: 0.8rem;
 }
 
+.hero-gallery-status > [data-gallery-label] {
+  min-width: 17ch;
+  text-align: right;
+  white-space: nowrap;
+}
+
 .hero-gallery-control {
   display: inline-flex;
   align-items: center;
