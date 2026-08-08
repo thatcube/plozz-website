@@ -319,15 +319,23 @@ const siteLd = {
           <div class="cell">
             <h3>Everything in sync</h3>
             <p>
-              Your servers fold into a single library, and finishing something
-              updates every server that holds it.
+              Your servers fold into a single library, and watch status stays
+              in sync between all of them.
+            </p>
+          </div>
+
+          <div class="cell">
+            <h3>The closest copy wins</h3>
+            <p>
+              A server on your own network is picked over one across the
+              internet, so a local 1080p beats a 4K that stalls on a relay.
             </p>
           </div>
           <div class="cell">
             <h3>Play from any copy</h3>
             <p>
-              When more than one server has the same title, you choose which
-              one it streams from.
+              When more than one server has the same title, you choose which one
+              it streams from.
             </p>
           </div>
         </div>
@@ -363,16 +371,23 @@ const siteLd = {
         </div>
 
         <ul class="slab" style="--cols: 3">
-          {INCLUDED.map((item) => (
-            <li class="cell">
-              <span class="cell-icon" aria-hidden="true"><Icon name={item.icon} /></span>
-              <h3>{item.name}</h3>
-              <p>{item.detail}</p>
-            </li>
-          ))}
+          {
+            INCLUDED.map((item) => (
+              <li class="cell">
+                <span class="cell-icon" aria-hidden="true">
+                  <Icon name={item.icon} />
+                </span>
+                <h3>{item.name}</h3>
+                <p>{item.detail}</p>
+              </li>
+            ))
+          }
         </ul>
 
-        <p class="band-note">No subscription, no unlock, no Pro version. There is only one version of Plozz and you already have all of it.</p>
+        <p class="band-note">
+          No subscription, no unlock, no Pro version. There is only one version
+          of Plozz and you already have all of it.
+        </p>
       </div>
     </section>
 

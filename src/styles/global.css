@@ -2867,8 +2867,12 @@ a.cell:hover .cell-arrow {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 }
 
+/* Spans the three text cells beside it. Must be a span count, not `1 / -1`:
+   the rows here are implicit, so -1 resolves to the end of the *explicit* grid
+   -- row 1 -- and the illustration collapsed to a single row, which pushed two
+   of the cells side by side underneath it. */
 .merge-visual {
-  grid-row: span 2;
+  grid-row: span 3;
   justify-content: center;
 }
 
