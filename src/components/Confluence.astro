@@ -1,0 +1,76 @@
+---
+/**
+ * Four sources, one library.
+ *
+ * Four hairlines leave four source marks on the left and converge on a single
+ * point on the right, where the Plozz mark sits. The curves share an identical
+ * easing and land on the same coordinate, so the "meet in one place" reading is
+ * literal rather than implied.
+ *
+ * Geometry is authored in a 480x380 viewBox and scaled by the container, so the
+ * convergence stays exact at every width instead of drifting with layout.
+ */
+import { Icon } from "astro-icon/components";
+
+const NODES = [
+  { y: 46, name: "Plex", icon: "simple-icons:plex", wide: true },
+  { y: 142, name: "Jellyfin", icon: "simple-icons:jellyfin", wide: false },
+  { y: 238, name: "Emby", icon: "simple-icons:emby", wide: false },
+  { y: 334, name: "a NAS", icon: "ph:hard-drives", wide: false },
+];
+
+/* Where every line ends: the left edge of the Plozz mark. */
+const HUB_X = 424;
+const HUB_Y = 190;
+/* Where every line starts: just right of a source mark. */
+const START_X = 118;
+
+/* Both handles are horizontal, so lines leave and arrive flat and do all their
+   bending in the middle. The outgoing handle scales with vertical distance, so
+   the outer curves hold their line longer and the four arrive as a fan rather
+   than a braid. */
+const path = (y: number) => {
+  const lead = 110 + Math.abs(y - HUB_Y) * 0.5;
+  return `M${START_X} ${y} C${START_X + lead} ${y} ${HUB_X - 150} ${HUB_Y} ${HUB_X - 42} ${HUB_Y}`;
+};
+---
+
+<div class="confluence">
+  <svg
+    class="confluence-wires"
+    viewBox="0 0 480 380"
+    fill="none"
+    aria-hidden="true"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    {
+      NODES.map((n, i) => (
+        <g>
+          <path class="wire" d={path(n.y)} />
+          <path class="wire-pulse" d={path(n.y)} style={`--i:${i}`} />
+        </g>
+      ))
+    }
+    <circle class="hub-halo" cx={HUB_X} cy={HUB_Y} r="46" />
+  </svg>
+
+  <ul class="confluence-sources">
+    {
+      NODES.map((n) => (
+        <li class="source-node">
+          <span class="source-mark" class:list={{ "is-wide": n.wide }}>
+            <Icon name={n.icon} />
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="confluence-hub">
+    <img src="/logo.svg" alt="" width="32" height="32" />
+  </div>
+
+  <span class="sr-only">
+    Plozz brings Plex, Jellyfin, Emby and a NAS into one library.
+  </span>
+</div>
