@@ -724,7 +724,7 @@ h3 {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  padding: clamp(112px, 12vw, 168px) 0 0;
+  padding: clamp(76px, 9vw, 132px) 0 0;
   text-align: left;
   overflow: hidden;
   background: #0b0b0c;
@@ -745,67 +745,90 @@ h3 {
 .hero h1 {
   max-width: 1040px;
   margin: 0;
-  font-size: clamp(3.5rem, 7vw, 5.8rem);
+  font-size: clamp(2.7rem, 6.2vw, 5.2rem);
   font-weight: 570;
   letter-spacing: -0.055em;
   line-height: 0.94;
   text-wrap: balance;
 }
 
+/* One panel under the headline, so the hero has a single structural object
+   instead of a loose stack. It holds what Plozz connects to on the left and how
+   to get it on the right.
+
+   The sources are shown as logos rather than spelled out: three brand marks
+   read faster than three labelled columns of names, and the protocol list they
+   used to carry (SMB, NFS, WebDAV, SFTP, FTP) is detail for /network-shares. */
 .hero-summary {
   display: grid;
   width: 100%;
-  max-width: none;
-  margin-top: clamp(44px, 5vw, 64px);
+  margin-top: clamp(32px, 3.6vw, 48px);
   grid-template-columns: minmax(0, 1fr) minmax(330px, auto);
-  gap: clamp(36px, 5vw, 72px);
+  gap: 0;
   align-items: center;
-  padding: 28px var(--panel-inset);
+  padding: 26px var(--panel-inset);
   border: 1px solid #27272a;
   border-radius: var(--r-lg);
 }
 
-.hero-facts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.hero-works {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px clamp(18px, 2.2vw, 26px);
+  padding-right: clamp(24px, 3.2vw, 44px);
 }
 
-.hero-facts > div {
-  min-width: 0;
-  padding: 2px clamp(18px, 2.5vw, 32px);
-  border-left: 1px solid #27272a;
+.hero-logos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px clamp(20px, 2.6vw, 30px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.hero-facts > div:first-child {
-  padding-left: 0;
-  border-left: 0;
+/* Sized on drawn height rather than box height: the marks have very different
+   aspect ratios, so matching them on width would leave Plex at twice the
+   optical weight of Jellyfin. */
+.hero-logos img {
+  display: block;
+  width: auto;
+  height: 22px;
 }
 
-.hero-facts dt {
-  margin-bottom: 9px;
+.hero-logos img[alt="Jellyfin"] {
+  height: 24px;
+}
+
+.hero-logos img[alt="Emby"] {
+  height: 23px;
+}
+
+/* Network shares are a category, not a product, so there is no logo to show. */
+.hero-share {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text);
-  font-size: 0.86rem;
-  font-weight: 650;
-  letter-spacing: -0.01em;
+  font-size: 0.95rem;
+  font-weight: 620;
+  letter-spacing: -0.015em;
 }
 
-.hero-facts dd {
-  color: var(--text-muted);
-  font-size: 0.86rem;
-  line-height: 1.5;
+.hero-share svg {
+  width: 20px;
+  height: 20px;
 }
 
+/* A rule rather than whitespace between the two halves, so the panel reads as
+   one object with two parts: what it connects to, and how to get it. */
 .hero-actions {
   display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  gap: 13px;
-}
-
-.hero-actions > p {
-  color: var(--text-dim);
-  font-size: 0.8rem;
-  letter-spacing: 0.01em;
+  align-items: center;
+  padding-left: clamp(24px, 3.2vw, 44px);
+  border-left: 1px solid #27272a;
 }
 
 .hero-cta {
@@ -820,7 +843,7 @@ h3 {
   position: relative;
   width: 100%;
   min-height: 0;
-  margin: clamp(64px, 7vw, 92px) auto 0;
+  margin: clamp(40px, 4.5vw, 66px) auto 0;
   overflow: visible;
 }
 
@@ -948,17 +971,21 @@ h3 {
 
   .hero-summary {
     grid-template-columns: 1fr;
-    gap: 24px;
     align-items: start;
   }
 
+  /* Stacked, so the divider turns to run across the panel instead of down it. */
   .hero-actions {
     width: 100%;
     align-items: flex-start;
+    padding: 22px 0 0;
+    border-top: 1px solid #27272a;
+    border-left: 0;
+    margin-top: 22px;
   }
 
   .hero-devices {
-    margin-top: 56px;
+    margin-top: 44px;
   }
 }
 
@@ -969,7 +996,20 @@ h3 {
 
 
   .hero {
-    padding-top: 84px;
+    padding-top: 56px;
+  }
+
+  /* Short viewports (a 667px iPhone SE) are the case where the screenshot fell
+     entirely below the fold, so the gaps between hero blocks tighten here to
+     buy it back. */
+  .hero-summary {
+    margin-top: 24px;
+    padding: 20px var(--panel-inset);
+    gap: 20px;
+  }
+
+  .hero-devices {
+    margin-top: 32px;
   }
 
 
@@ -981,21 +1021,6 @@ h3 {
     width: 100%;
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .hero-facts {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-facts > div {
-    padding: 15px 0;
-    border-top: 1px solid #27272a;
-    border-left: 0;
-  }
-
-  .hero-facts > div:first-child {
-    padding-top: 0;
-    border-top: 0;
   }
 
   .hero-cta .btn {
