@@ -1,0 +1,87 @@
+---
+/**
+ * One screenshot, delivered at a sensible size for the device asking for it.
+ *
+ * Emits AVIF first and WebP second, so the ~95% of browsers that speak AVIF get
+ * the encode that measured both smaller and sharper than what the site used to
+ * ship, and everyone else falls back to WebP at the old quality. The rungs come
+ * from src/data/screenshots.json, which tools/build-images.mjs writes from the
+ * pristine masters -- so a srcset can never drift out of sync with the files
+ * that actually exist on disk.
+ *
+ * `sizes` is the part that does the real work. Without it the browser assumes
+ * an image is the full width of the viewport and over-fetches badly, which is
+ * exactly the failure mode this component exists to fix. Every call site passes
+ * a `sizes` that matches its CSS.
+ */
+import { shot, shotFallback, shotSrcset } from '../data/shots';
+
+export interface Props {
+  /** File stem, e.g. "plozz-tv-home" — no directory, no extension. */
+  name: string;
+  alt: string;
+  /** Must mirror the CSS box. See the presets in src/data/imageSizes.ts. */
+  sizes: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  /** Decorative duplicates in the marquee are hidden from assistive tech. */
+  ariaHidden?: boolean;
+  /**
+   * Park the URLs in data-* attributes instead of src/srcset, leaving the
+   * element inert until script promotes them.
+   *
+   * This exists for the hero gallery, where the slides are stacked on top of
+   * each other inside the frame. They are all technically in the viewport, so
+   * loading="lazy" does not defer them at all and every slide downloads on
+   * arrival. Deferring by hand is the only way to stop that.
+   */
+  defer?: boolean;
+  /** Extra data-* attributes for the hero gallery and the labs. */
+  rest?: Record<string, string | boolean | undefined>;
+}
+
+const {
+  name,
+  alt,
+  sizes,
+  class: className,
+  loading = 'lazy',
+  fetchpriority,
+  ariaHidden = false,
+  defer = false,
+  rest = {},
+} = Astro.props;
+
+const entry = shot(name);
+const srcset = (extension: 'avif' | 'webp') => shotSrcset(name, extension);
+const fallback = shotFallback(name);
+---
+
+<picture data-deferred={defer ? 'true' : undefined}>
+  <source
+    type="image/avif"
+    srcset={defer ? undefined : srcset('avif')}
+    data-srcset={defer ? srcset('avif') : undefined}
+    sizes={sizes}
+  />
+  <source
+    type="image/webp"
+    srcset={defer ? undefined : srcset('webp')}
+    data-srcset={defer ? srcset('webp') : undefined}
+    sizes={sizes}
+  />
+  <img
+    src={defer ? undefined : fallback}
+    data-src={defer ? fallback : undefined}
+    alt={alt}
+    width={entry.width}
+    height={entry.height}
+    class={className}
+    loading={loading}
+    decoding="async"
+    fetchpriority={fetchpriority}
+    aria-hidden={ariaHidden ? 'true' : undefined}
+    {...rest}
+  />
+</picture>

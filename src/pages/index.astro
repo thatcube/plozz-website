@@ -9,60 +9,48 @@ import Marquee from "../components/Marquee.astro";
 import MergeType from "../components/MergeType.astro";
 import CircadianLab from "../components/CircadianLab.astro";
 import CircadianDial from "../components/CircadianDial.astro";
+import Shot from "../components/Shot.astro";
+import { HERO, DEVICE_IPAD, DEVICE_IPHONE } from "../data/imageSizes";
+import { shotSrcset } from "../data/shots";
 import { INCLUDED, DONATION_AMOUNTS } from "../data/site";
 import { GITHUB_URL, DONATE_URL, TESTFLIGHT_URL, SITE } from "../data/site";
 
 const heroScreenshots = [
   {
-    src: "/screenshots/plozz-tv-featured.webp",
+    name: "plozz-tv-featured",
     alt: "Plozz home screen on Apple TV with a featured title and a Continue Watching row",
     label: "Home",
-    width: 2000,
-    height: 1125,
   },
   {
-    src: "/screenshots/plozz-tv-oppenheimer.webp",
+    name: "plozz-tv-oppenheimer",
     alt: "Plozz movie details screen on Apple TV showing ratings, 4K and HDR10 badges, and a resume button",
     label: "Movie details",
-    width: 1125,
-    height: 633,
   },
   {
-    src: "/screenshots/plozz-tv-lastofus.webp",
+    name: "plozz-tv-lastofus",
     alt: "Plozz show details screen on Apple TV with a season picker and a rail of episode thumbnails",
     label: "Seasons & episodes",
-    width: 1812,
-    height: 1019,
   },
   {
-    src: "/screenshots/plozz-tv-office.webp",
+    name: "plozz-tv-office",
     alt: "Plozz show details screen on Apple TV with a resume episode button and an episode rail below",
     label: "Show details",
-    width: 1202,
-    height: 676,
   },
   {
-    src: "/screenshots/plozz-tv-mario.webp",
+    name: "plozz-tv-mario",
     alt: "Plozz movie details screen on Apple TV showing critic and audience scores alongside 4K, Dolby Vision and HDR10 badges",
     label: "Ratings & formats",
-    width: 1318,
-    height: 741,
   },
   {
-    src: "/screenshots/plozz-tv-cast.webp",
+    name: "plozz-tv-cast",
     alt: "Plozz cast member screen on Apple TV with an actor biography and rails of the movies and shows they appear in",
     label: "Cast & crew",
-    width: 2000,
-    height: 1125,
   },
   {
-    src: "/screenshots/plozz-tv-lotr.webp",
+    name: "plozz-tv-lotr",
     alt: "Plozz movie details screen on Apple TV with a partially watched progress bar on the play button and Dolby Vision and Dolby Atmos badges",
     label: "Continue watching",
-    width: 1099,
-    height: 618,
-  },
-];
+  },];
 
 const softwareLd = {
   "@context": "https://schema.org",
@@ -109,6 +97,19 @@ const siteLd = {
 ---
 
 <Layout>
+  {/* The first hero slide is the LCP element. Preloading the AVIF candidate
+      starts it before the parser reaches the markup near the bottom of the
+      hero. Browsers without AVIF ignore a preload carrying a type they cannot
+      decode, so they are not sent down a wasted fetch. */}
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/avif"
+    imagesrcset={shotSrcset(heroScreenshots[0].name, "avif")}
+    imagesizes={HERO}
+    fetchpriority="high"
+  />
   <SiteHeader />
 
   <main>
@@ -160,17 +161,18 @@ const siteLd = {
           <div class="tv-frame device-tv">
             {
               heroScreenshots.map((screenshot, index) => (
-                <img
-                  class:list={["hero-slide", { "is-active": index === 0 }]}
-                  src={screenshot.src}
+                <Shot
+                  name={screenshot.name}
                   alt={screenshot.alt}
-                  width={screenshot.width}
-                  height={screenshot.height}
+                  sizes={HERO}
+                  class:list={["hero-slide", { "is-active": index === 0 }]}
                   loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  fetchpriority={index === 0 ? "high" : "auto"}
-                  data-hero-slide
-                  data-slide-label={screenshot.label}
+                  fetchpriority={index === 0 ? "high" : undefined}
+                  defer={index !== 0}
+                  rest={{
+                    "data-hero-slide": true,
+                    "data-slide-label": screenshot.label,
+                  }}
                 />
               ))
             }
@@ -397,14 +399,11 @@ const siteLd = {
                   class="device device-ipad-pro device-spacegray device-landscape"
                 >
                   <div class="device-frame">
-                    <img
-                      class="device-screen"
-                      src="/screenshots/plozz-ipad.webp"
+                    <Shot
+                      name="plozz-ipad"
                       alt="Plozz on iPad"
-                      width="1084"
-                      height="757"
-                      loading="lazy"
-                      decoding="async"
+                      sizes={DEVICE_IPAD}
+                      class="device-screen"
                     />
                   </div>
                   <div class="device-btns"></div>
@@ -414,14 +413,11 @@ const siteLd = {
               <div class="icloud-device-slot icloud-iphone-slot">
                 <div class="device device-iphone-14-pro device-black">
                   <div class="device-frame">
-                    <img
-                      class="device-screen"
-                      src="/screenshots/plozz-iphone-detail.webp"
+                    <Shot
+                      name="plozz-iphone-detail"
                       alt="A film detail screen in Plozz on iPhone"
-                      width="921"
-                      height="2000"
-                      loading="lazy"
-                      decoding="async"
+                      sizes={DEVICE_IPHONE}
+                      class="device-screen"
                     />
                   </div>
                   <div class="device-stripe"></div>
@@ -516,8 +512,41 @@ const siteLd = {
       let timer;
       let paused = reducedMotion.matches;
 
+      /**
+       * Every slide sits stacked inside the frame, so they are all in the
+       * viewport and loading="lazy" would not hold any of them back. The markup
+       * ships slides 2..n with their URLs parked in data-srcset/data-src, and
+       * this promotes them when they are actually wanted — which keeps roughly
+       * 1.4 MB off the initial load.
+       *
+       * The <source> elements have to be filled before the <img>, or the
+       * browser will have already settled on the WebP fallback by the time the
+       * AVIF candidate appears.
+       */
+      const hydrate = (slide) => {
+        const picture = slide.closest("picture[data-deferred]");
+        if (!picture) return;
+
+        picture.querySelectorAll("source[data-srcset]").forEach((source) => {
+          source.srcset = source.dataset.srcset;
+          delete source.dataset.srcset;
+        });
+
+        if (slide.dataset.src) {
+          slide.src = slide.dataset.src;
+          delete slide.dataset.src;
+        }
+
+        delete picture.dataset.deferred;
+      };
+
       const showSlide = (index) => {
         activeIndex = index;
+
+        // Whatever is about to be shown must have pixels, and the one after it
+        // is the next thing the timer will reach for.
+        hydrate(slides[activeIndex]);
+        hydrate(slides[(activeIndex + 1) % slides.length]);
 
         slides.forEach((slide, slideIndex) => {
           slide.classList.toggle("is-active", slideIndex === activeIndex);
@@ -543,6 +572,12 @@ const siteLd = {
       toggle.addEventListener("click", () => {
         paused = !paused;
         toggle.textContent = paused ? "Play" : "Pause";
+
+        // Starting from a pause means the next slide may still be inert — on
+        // the saveData path nothing was ever warmed. Fetch it now rather than
+        // letting the timer cross-fade to an image that has not arrived.
+        if (!paused) hydrate(slides[(activeIndex + 1) % slides.length]);
+
         start();
       });
 
@@ -569,6 +604,44 @@ const siteLd = {
 
       toggle.textContent = paused ? "Play" : "Pause";
       start();
+
+      /**
+       * Pull in the slide that comes next once the browser is otherwise idle,
+       * so the first cross-fade has something to fade to. Without this the
+       * timer would fire against an image that has not started downloading yet
+       * and the transition would land on an empty frame.
+       *
+       * The rest stay deferred and arrive one step ahead of the rotation, so a
+       * visitor who never looks at the hero never pays for them at all.
+       *
+       * On a metered or genuinely slow connection none of that is worth the
+       * bytes: the gallery holds on the first slide, which is a complete
+       * picture of the app on its own.
+       */
+      const connection = navigator.connection;
+      const frugal = Boolean(
+        connection &&
+          (connection.saveData ||
+            /^(slow-)?2g$/.test(connection.effectiveType || "")),
+      );
+
+      if (frugal) {
+        paused = true;
+        toggle.textContent = "Play";
+        stop();
+      }
+
+      // Nothing rotates while it is paused — whether that is this visitor's
+      // motion preference or the connection check above — so there is no next
+      // slide to warm. Pressing Play hydrates on demand.
+      if (!paused) {
+        const warmNext = () => hydrate(slides[1 % slides.length]);
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(warmNext, { timeout: 2500 });
+        } else {
+          window.setTimeout(warmNext, 1200);
+        }
+      }
     }
   </script>
 </Layout>

@@ -1,18 +1,17 @@
 ---
 /** Spoiler protection is a before/after, so it gets a before/after. */
+import Shot from './Shot.astro';
+import { THUMB } from '../data/imageSizes';
 ---
 
 <div class="spoillab" data-spoillab>
   <div class="spoillab-stage">
     <div class="spoillab-card" data-spoillab-card data-hidden="true">
       <div class="spoillab-thumb">
-        <img
-          src="/screenshots/plozz-tv.webp"
+        <Shot
+          name="plozz-tv"
           alt="An episode thumbnail, blurred while the episode is unwatched"
-          width="1088"
-          height="612"
-          loading="lazy"
-          decoding="async"
+          sizes={THUMB}
         />
       </div>
       <p class="spoillab-title" data-spoillab-title>Episode 4</p>

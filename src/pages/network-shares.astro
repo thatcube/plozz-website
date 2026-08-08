@@ -7,6 +7,8 @@ import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
 import FactSection from '../components/FactSection.astro';
+import Shot from "../components/Shot.astro";
+import { FIGURE } from "../data/imageSizes";
 
 const title = "Play SMB, NFS, WebDAV, SFTP and FTP on Apple TV — Plozz";
 const description = "Plozz plays video straight off a network share on Apple TV, iPhone and iPad. SMB3, NFS, WebDAV, SFTP with key auth, FTP over TLS. No media server needed.";
@@ -69,14 +71,11 @@ const compatibility = [
       question={"Can I make the subtitles readable?"}
       flip
     >
-      <img
-        class="shot"
-        src="/screenshots/plozz-tv-subtitles.webp"
+      <Shot
+        name="plozz-tv-subtitles"
         alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
-        width="2000"
-        height="1125"
-        loading="lazy"
-        decoding="async"
+        sizes={FIGURE}
+        class="shot"
       />
     </Showcase>
 

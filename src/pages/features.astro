@@ -8,6 +8,8 @@ import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
 import DensityLab from '../components/DensityLab.astro';
 import SpoilerLab from '../components/SpoilerLab.astro';
+import Shot from "../components/Shot.astro";
+import { FIGURE } from "../data/imageSizes";
 
 const title = 'Plozz features — the questions people actually ask';
 const description =
@@ -40,14 +42,11 @@ const description =
       detail="Seven typefaces, two of them built for people who struggle to read subtitles at all. Change any of it mid-scene, without leaving what you're watching."
       flip
     >
-      <img
-        class="shot"
-        src="/screenshots/plozz-tv-subtitles.webp"
+      <Shot
+        name="plozz-tv-subtitles"
         alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
-        width="2000"
-        height="1125"
-        loading="lazy"
-        decoding="async"
+        sizes={FIGURE}
+        class="shot"
       />
     </Showcase>
 

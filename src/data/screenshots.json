@@ -1,0 +1,687 @@
+{
+  "plozz-ipad-cast": {
+    "width": 1080,
+    "height": 754,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-ipad-cast-360.b32b28de.avif",
+        "webp": "plozz-ipad-cast-360.ca9e74f4.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-ipad-cast-560.0d4fff27.avif",
+        "webp": "plozz-ipad-cast-560.659df852.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-ipad-cast-800.2cb5472f.avif",
+        "webp": "plozz-ipad-cast-800.bc913f03.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-ipad-cast-1080.2b4caac8.avif",
+        "webp": "plozz-ipad-cast-1080.64d149b3.webp"
+      }
+    ]
+  },
+  "plozz-ipad-info": {
+    "width": 1080,
+    "height": 754,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-ipad-info-360.4b630017.avif",
+        "webp": "plozz-ipad-info-360.dee6ecb3.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-ipad-info-560.5e7a9fdd.avif",
+        "webp": "plozz-ipad-info-560.c8fac480.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-ipad-info-800.78f51000.avif",
+        "webp": "plozz-ipad-info-800.d76d2bf8.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-ipad-info-1080.982e567a.avif",
+        "webp": "plozz-ipad-info-1080.da9b0af5.webp"
+      }
+    ]
+  },
+  "plozz-ipad-player": {
+    "width": 1080,
+    "height": 754,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-ipad-player-360.e13a9597.avif",
+        "webp": "plozz-ipad-player-360.158ca0f6.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-ipad-player-560.2fd13e5d.avif",
+        "webp": "plozz-ipad-player-560.a259f0c7.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-ipad-player-800.39890115.avif",
+        "webp": "plozz-ipad-player-800.45c36a2b.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-ipad-player-1080.a501dccc.avif",
+        "webp": "plozz-ipad-player-1080.a3013da4.webp"
+      }
+    ]
+  },
+  "plozz-ipad": {
+    "width": 1080,
+    "height": 754,
+    "rungs": [
+      {
+        "w": 280,
+        "avif": "plozz-ipad-280.6782abbd.avif",
+        "webp": "plozz-ipad-280.648233ec.webp"
+      },
+      {
+        "w": 360,
+        "avif": "plozz-ipad-360.a3c08a2c.avif",
+        "webp": "plozz-ipad-360.b2b70c52.webp"
+      },
+      {
+        "w": 440,
+        "avif": "plozz-ipad-440.4d248fe3.avif",
+        "webp": "plozz-ipad-440.489e82fd.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-ipad-560.750782ee.avif",
+        "webp": "plozz-ipad-560.6804ee1a.webp"
+      },
+      {
+        "w": 700,
+        "avif": "plozz-ipad-700.b9d6ebfe.avif",
+        "webp": "plozz-ipad-700.b0bebd86.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-ipad-800.8904ff11.avif",
+        "webp": "plozz-ipad-800.187f17b5.webp"
+      },
+      {
+        "w": 940,
+        "avif": "plozz-ipad-940.8b86eff2.avif",
+        "webp": "plozz-ipad-940.6d953137.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-ipad-1080.1dae6116.avif",
+        "webp": "plozz-ipad-1080.c56679fd.webp"
+      }
+    ]
+  },
+  "plozz-iphone-detail": {
+    "width": 921,
+    "height": 2000,
+    "rungs": [
+      {
+        "w": 280,
+        "avif": "plozz-iphone-detail-280.8b30597e.avif",
+        "webp": "plozz-iphone-detail-280.1672380c.webp"
+      },
+      {
+        "w": 440,
+        "avif": "plozz-iphone-detail-440.dd8679ad.avif",
+        "webp": "plozz-iphone-detail-440.0d83e9a8.webp"
+      },
+      {
+        "w": 700,
+        "avif": "plozz-iphone-detail-700.a94b386c.avif",
+        "webp": "plozz-iphone-detail-700.48dd2926.webp"
+      },
+      {
+        "w": 921,
+        "avif": "plozz-iphone-detail-921.461caea2.avif",
+        "webp": "plozz-iphone-detail-921.d10dce88.webp"
+      }
+    ]
+  },
+  "plozz-iphone-library": {
+    "width": 420,
+    "height": 912,
+    "rungs": [
+      {
+        "w": 140,
+        "avif": "plozz-iphone-library-140.de1b6d0f.avif",
+        "webp": "plozz-iphone-library-140.7b21dc0c.webp"
+      },
+      {
+        "w": 220,
+        "avif": "plozz-iphone-library-220.c490941d.avif",
+        "webp": "plozz-iphone-library-220.fbc7290e.webp"
+      },
+      {
+        "w": 300,
+        "avif": "plozz-iphone-library-300.84774642.avif",
+        "webp": "plozz-iphone-library-300.5428b1bb.webp"
+      },
+      {
+        "w": 420,
+        "avif": "plozz-iphone-library-420.587d2571.avif",
+        "webp": "plozz-iphone-library-420.60e2cfb3.webp"
+      }
+    ]
+  },
+  "plozz-iphone": {
+    "width": 420,
+    "height": 912,
+    "rungs": [
+      {
+        "w": 140,
+        "avif": "plozz-iphone-140.dec94a9b.avif",
+        "webp": "plozz-iphone-140.21cb518c.webp"
+      },
+      {
+        "w": 220,
+        "avif": "plozz-iphone-220.a33af5bd.avif",
+        "webp": "plozz-iphone-220.f03898eb.webp"
+      },
+      {
+        "w": 300,
+        "avif": "plozz-iphone-300.674b03d4.avif",
+        "webp": "plozz-iphone-300.68513294.webp"
+      },
+      {
+        "w": 420,
+        "avif": "plozz-iphone-420.f26efdab.avif",
+        "webp": "plozz-iphone-420.ac9e9dbc.webp"
+      }
+    ]
+  },
+  "plozz-tv-cast": {
+    "width": 2000,
+    "height": 1125,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-cast-768.27d2d06b.avif",
+        "webp": "plozz-tv-cast-768.3317d66d.webp"
+      },
+      {
+        "w": 1152,
+        "avif": "plozz-tv-cast-1152.fed3dbd9.avif",
+        "webp": "plozz-tv-cast-1152.bd6c94dd.webp"
+      },
+      {
+        "w": 1600,
+        "avif": "plozz-tv-cast-1600.4e4390d2.avif",
+        "webp": "plozz-tv-cast-1600.f11f17dc.webp"
+      },
+      {
+        "w": 2000,
+        "avif": "plozz-tv-cast-2000.1aeea1c8.avif",
+        "webp": "plozz-tv-cast-2000.bd63fb9f.webp"
+      }
+    ]
+  },
+  "plozz-tv-episodes": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-episodes-360.fa453a90.avif",
+        "webp": "plozz-tv-episodes-360.2a961e7d.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-episodes-560.a8e303f1.avif",
+        "webp": "plozz-tv-episodes-560.c8fc4706.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-episodes-800.86aa3b85.avif",
+        "webp": "plozz-tv-episodes-800.5c6616a7.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-episodes-1080.3640b29c.avif",
+        "webp": "plozz-tv-episodes-1080.609083da.webp"
+      }
+    ]
+  },
+  "plozz-tv-featured": {
+    "width": 2000,
+    "height": 1125,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-featured-768.b7e91e22.avif",
+        "webp": "plozz-tv-featured-768.77bdb538.webp"
+      },
+      {
+        "w": 1152,
+        "avif": "plozz-tv-featured-1152.be0a9fef.avif",
+        "webp": "plozz-tv-featured-1152.b9f93ac8.webp"
+      },
+      {
+        "w": 1600,
+        "avif": "plozz-tv-featured-1600.819587aa.avif",
+        "webp": "plozz-tv-featured-1600.d4f0e22c.webp"
+      },
+      {
+        "w": 2000,
+        "avif": "plozz-tv-featured-2000.50a2eb98.avif",
+        "webp": "plozz-tv-featured-2000.1cc4176b.webp"
+      }
+    ]
+  },
+  "plozz-tv-home": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-home-360.1c5a3fec.avif",
+        "webp": "plozz-tv-home-360.9ec00dff.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-home-560.1475004e.avif",
+        "webp": "plozz-tv-home-560.80daa8dd.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-home-800.283c5014.avif",
+        "webp": "plozz-tv-home-800.0aef4b20.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-home-1080.a8d59874.avif",
+        "webp": "plozz-tv-home-1080.757e9d5b.webp"
+      }
+    ]
+  },
+  "plozz-tv-lastofus": {
+    "width": 1812,
+    "height": 1019,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-lastofus-768.d0d8fbb4.avif",
+        "webp": "plozz-tv-lastofus-768.c8f8151a.webp"
+      },
+      {
+        "w": 1152,
+        "avif": "plozz-tv-lastofus-1152.b003538b.avif",
+        "webp": "plozz-tv-lastofus-1152.d601b870.webp"
+      },
+      {
+        "w": 1600,
+        "avif": "plozz-tv-lastofus-1600.7ba602cb.avif",
+        "webp": "plozz-tv-lastofus-1600.ac90a429.webp"
+      },
+      {
+        "w": 1812,
+        "avif": "plozz-tv-lastofus-1812.50d19f24.avif",
+        "webp": "plozz-tv-lastofus-1812.40be2e45.webp"
+      }
+    ]
+  },
+  "plozz-tv-library": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-library-360.eddeea2a.avif",
+        "webp": "plozz-tv-library-360.cc1df418.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-library-560.29bf3cb3.avif",
+        "webp": "plozz-tv-library-560.dcf2e1f6.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-library-800.f5f5f2ce.avif",
+        "webp": "plozz-tv-library-800.1b67ad9d.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-library-1080.75e75bea.avif",
+        "webp": "plozz-tv-library-1080.0a6d930b.webp"
+      }
+    ]
+  },
+  "plozz-tv-lotr": {
+    "width": 1099,
+    "height": 618,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-lotr-768.9e584ae3.avif",
+        "webp": "plozz-tv-lotr-768.d83897cf.webp"
+      },
+      {
+        "w": 1099,
+        "avif": "plozz-tv-lotr-1099.33432875.avif",
+        "webp": "plozz-tv-lotr-1099.7c3f26e7.webp"
+      }
+    ]
+  },
+  "plozz-tv-mario": {
+    "width": 1318,
+    "height": 741,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-mario-768.8aab90b3.avif",
+        "webp": "plozz-tv-mario-768.5682e8f7.webp"
+      },
+      {
+        "w": 1152,
+        "avif": "plozz-tv-mario-1152.b16af1fa.avif",
+        "webp": "plozz-tv-mario-1152.29bf9b89.webp"
+      },
+      {
+        "w": 1318,
+        "avif": "plozz-tv-mario-1318.bb3d9991.avif",
+        "webp": "plozz-tv-mario-1318.1da585cb.webp"
+      }
+    ]
+  },
+  "plozz-tv-office": {
+    "width": 1202,
+    "height": 676,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-office-768.acf37688.avif",
+        "webp": "plozz-tv-office-768.9c4f6f12.webp"
+      },
+      {
+        "w": 1202,
+        "avif": "plozz-tv-office-1202.ceaade59.avif",
+        "webp": "plozz-tv-office-1202.67343055.webp"
+      }
+    ]
+  },
+  "plozz-tv-oppenheimer": {
+    "width": 1125,
+    "height": 633,
+    "rungs": [
+      {
+        "w": 768,
+        "avif": "plozz-tv-oppenheimer-768.963a80bd.avif",
+        "webp": "plozz-tv-oppenheimer-768.6a3f17b3.webp"
+      },
+      {
+        "w": 1125,
+        "avif": "plozz-tv-oppenheimer-1125.16cfda13.avif",
+        "webp": "plozz-tv-oppenheimer-1125.8ee073a1.webp"
+      }
+    ]
+  },
+  "plozz-tv-player": {
+    "width": 1600,
+    "height": 900,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-player-360.0dfd039a.avif",
+        "webp": "plozz-tv-player-360.452c399c.webp"
+      },
+      {
+        "w": 480,
+        "avif": "plozz-tv-player-480.9c026706.avif",
+        "webp": "plozz-tv-player-480.507e4646.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-player-560.eff27e18.avif",
+        "webp": "plozz-tv-player-560.6f57a32a.webp"
+      },
+      {
+        "w": 700,
+        "avif": "plozz-tv-player-700.2b358e9d.avif",
+        "webp": "plozz-tv-player-700.af66ceb0.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-player-800.f0f951f3.avif",
+        "webp": "plozz-tv-player-800.202f6ee5.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-player-1080.971fd3a5.avif",
+        "webp": "plozz-tv-player-1080.ce8a7aef.webp"
+      },
+      {
+        "w": 1300,
+        "avif": "plozz-tv-player-1300.f53f6110.avif",
+        "webp": "plozz-tv-player-1300.3a1d41ec.webp"
+      },
+      {
+        "w": 1600,
+        "avif": "plozz-tv-player-1600.ca5f854f.avif",
+        "webp": "plozz-tv-player-1600.f343dee1.webp"
+      }
+    ]
+  },
+  "plozz-tv-profile-edit": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-profile-edit-360.9128ee24.avif",
+        "webp": "plozz-tv-profile-edit-360.40a99c38.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-profile-edit-560.1e8b9795.avif",
+        "webp": "plozz-tv-profile-edit-560.57647b6f.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-profile-edit-800.931fc7a4.avif",
+        "webp": "plozz-tv-profile-edit-800.20e45f58.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-profile-edit-1080.b2f6be07.avif",
+        "webp": "plozz-tv-profile-edit-1080.6913b98c.webp"
+      }
+    ]
+  },
+  "plozz-tv-profiles": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-profiles-360.85295d8f.avif",
+        "webp": "plozz-tv-profiles-360.8f99e13c.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-profiles-560.785aa2c8.avif",
+        "webp": "plozz-tv-profiles-560.47788e23.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-profiles-800.45132709.avif",
+        "webp": "plozz-tv-profiles-800.0f7f5ea8.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-profiles-1080.22f6e8db.avif",
+        "webp": "plozz-tv-profiles-1080.74ef97de.webp"
+      }
+    ]
+  },
+  "plozz-tv-ratings": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-ratings-360.77b6d913.avif",
+        "webp": "plozz-tv-ratings-360.7460e1ca.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-ratings-560.3bc0eb6a.avif",
+        "webp": "plozz-tv-ratings-560.1d685839.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-ratings-800.0276c37e.avif",
+        "webp": "plozz-tv-ratings-800.c7156a17.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-ratings-1080.80354533.avif",
+        "webp": "plozz-tv-ratings-1080.e368849e.webp"
+      }
+    ]
+  },
+  "plozz-tv-settings": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-settings-360.93013295.avif",
+        "webp": "plozz-tv-settings-360.7b474134.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-settings-560.7ffe9958.avif",
+        "webp": "plozz-tv-settings-560.5e27ce1d.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-settings-800.7adb854e.avif",
+        "webp": "plozz-tv-settings-800.86cf8071.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-settings-1080.d40533fc.avif",
+        "webp": "plozz-tv-settings-1080.0f0149aa.webp"
+      }
+    ]
+  },
+  "plozz-tv-show": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-show-360.f3b44bb0.avif",
+        "webp": "plozz-tv-show-360.87dbc1b6.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-show-560.a2737127.avif",
+        "webp": "plozz-tv-show-560.10f77485.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-show-800.fdbda254.avif",
+        "webp": "plozz-tv-show-800.29dea0f1.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-show-1080.9b7a3809.avif",
+        "webp": "plozz-tv-show-1080.95fc05f2.webp"
+      }
+    ]
+  },
+  "plozz-tv-subtitles": {
+    "width": 1600,
+    "height": 900,
+    "rungs": [
+      {
+        "w": 360,
+        "avif": "plozz-tv-subtitles-360.e76728a8.avif",
+        "webp": "plozz-tv-subtitles-360.8fdf9ee7.webp"
+      },
+      {
+        "w": 480,
+        "avif": "plozz-tv-subtitles-480.3d740439.avif",
+        "webp": "plozz-tv-subtitles-480.9f630793.webp"
+      },
+      {
+        "w": 560,
+        "avif": "plozz-tv-subtitles-560.301a1e08.avif",
+        "webp": "plozz-tv-subtitles-560.cbeeb56b.webp"
+      },
+      {
+        "w": 700,
+        "avif": "plozz-tv-subtitles-700.dddb050b.avif",
+        "webp": "plozz-tv-subtitles-700.af1697b0.webp"
+      },
+      {
+        "w": 800,
+        "avif": "plozz-tv-subtitles-800.ee9d3b01.avif",
+        "webp": "plozz-tv-subtitles-800.6b02026a.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-subtitles-1080.78795350.avif",
+        "webp": "plozz-tv-subtitles-1080.b3392cbd.webp"
+      },
+      {
+        "w": 1300,
+        "avif": "plozz-tv-subtitles-1300.75c09025.avif",
+        "webp": "plozz-tv-subtitles-1300.23d69867.webp"
+      },
+      {
+        "w": 1600,
+        "avif": "plozz-tv-subtitles-1600.5d14e144.avif",
+        "webp": "plozz-tv-subtitles-1600.ff7b6dd0.webp"
+      }
+    ]
+  },
+  "plozz-tv": {
+    "width": 1080,
+    "height": 608,
+    "rungs": [
+      {
+        "w": 280,
+        "avif": "plozz-tv-280.29ac21c8.avif",
+        "webp": "plozz-tv-280.30ca9e59.webp"
+      },
+      {
+        "w": 360,
+        "avif": "plozz-tv-360.8bcd1474.avif",
+        "webp": "plozz-tv-360.4bfef8d2.webp"
+      },
+      {
+        "w": 440,
+        "avif": "plozz-tv-440.d5f52660.avif",
+        "webp": "plozz-tv-440.5f26a5bc.webp"
+      },
+      {
+        "w": 620,
+        "avif": "plozz-tv-620.c2183e92.avif",
+        "webp": "plozz-tv-620.2f4955fa.webp"
+      },
+      {
+        "w": 840,
+        "avif": "plozz-tv-840.4eba3df5.avif",
+        "webp": "plozz-tv-840.0041678a.webp"
+      },
+      {
+        "w": 1080,
+        "avif": "plozz-tv-1080.6f682555.avif",
+        "webp": "plozz-tv-1080.72dc2e3a.webp"
+      }
+    ]
+  }
+}

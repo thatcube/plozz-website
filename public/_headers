@@ -12,3 +12,18 @@
 
 /og-image.svg
   Cache-Control: public, max-age=86400
+
+# Screenshot filenames carry a hash of their build inputs — the master's bytes,
+# the width, and the encoder settings — so a given URL really does always hold
+# the same bytes. Re-shooting a master or changing a quality setting produces a
+# new filename rather than new content at the old one, which is what makes a
+# year of immutable caching safe here.
+/screenshots/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/providers/*
+  Cache-Control: public, max-age=604800
+
+# Astro fingerprints everything under /_astro/ with a content hash.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

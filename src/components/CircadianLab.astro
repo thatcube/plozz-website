@@ -1,16 +1,15 @@
 ---
 /** Just the screen. The dial that explains it lives in the next cell. */
+import Shot from './Shot.astro';
+import { FIGURE } from '../data/imageSizes';
 ---
 
 <div class="sky">
   <div class="sky-screen">
-    <img
-      src="/screenshots/plozz-tv-player.webp"
+    <Shot
+      name="plozz-tv-player"
       alt="A bright daytime scene playing in Plozz, warming and dimming as evening falls"
-      width="2000"
-      height="1125"
-      loading="lazy"
-      decoding="async"
+      sizes={FIGURE}
     />
     <span class="sky-tint" aria-hidden="true"></span>
   </div>

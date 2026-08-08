@@ -8,7 +8,6 @@ export interface Props {
       already says so — a stray crawl of the URL should not add it. */
   noindex?: boolean;
 }
-
 const {
   title = 'Plozz — free Jellyfin, Plex and Emby app for Apple TV',
   description = 'Free, open source media player for Apple TV, iPhone and iPad. Direct plays Jellyfin, Plex, Emby and network shares in Dolby Vision and Atmos. No Pro tier.',
@@ -53,6 +52,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/og-image.png', Astro.site).href} />
     <meta name="twitter:image:alt" content="Plozz — free, open source media player for Jellyfin, Plex & Emby" />
+
+    <!-- Pages that own their LCP image preload it here, where the parser meets
+         it before the markup that uses it. -->
+    <slot name="head" />
   </head>
   <body>
     <slot />
