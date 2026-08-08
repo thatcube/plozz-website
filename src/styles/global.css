@@ -297,6 +297,14 @@ svg {
   max-width: 100%;
 }
 
+/* Every screenshot is wrapped in <picture> to offer AVIF before WebP. Taking
+   the wrapper out of the box tree keeps it invisible to layout, so the rules
+   below can keep targeting img directly and flex/grid parents keep treating
+   the image itself as their child. */
+picture {
+  display: contents;
+}
+
 .container {
   width: 100%;
   max-width: var(--maxw);

@@ -7,43 +7,57 @@
  * Rows are ordered so no two shots of the same device sit next to each other,
  * including across the loop seam. The iPad and iPhone shots are spaced evenly
  * through the Apple TV ones so they read as punctuation rather than a clump.
+ *
+ * Tiles never paint wider than 540 CSS px, so these ladders top out at 1080 and
+ * a phone pulls the 360px rung instead of a full-size screenshot.
+ *
+ * They also load at low priority. Native lazy loading is not enough on a slow
+ * connection: the browser widens its lazy threshold when bandwidth is scarce,
+ * so all sixteen tiles used to start downloading a second into the page and
+ * split the pipe with the hero, dragging LCP out to 44s on Slow 3G.
  */
+import Shot from './Shot.astro';
+import { MARQUEE, MARQUEE_PORTRAIT } from '../data/imageSizes';
+
+/** The tall iPhone tiles paint about a quarter as wide as the landscape ones. */
+const PORTRAIT = new Set(['plozz-iphone', 'plozz-iphone-library']);
+const sizesFor = (name: string) => (PORTRAIT.has(name) ? MARQUEE_PORTRAIT : MARQUEE);
+
 const rowOne = [
-  { src: '/screenshots/plozz-tv-show.webp', alt: 'A series detail screen on Apple TV', w: 2000, h: 1125 },
-  { src: '/screenshots/plozz-ipad-info.webp', alt: 'Episode details during playback on iPad', w: 2000, h: 1397 },
-  { src: '/screenshots/plozz-tv-home.webp', alt: 'Plozz home screen on Apple TV', w: 2000, h: 1119 },
-  { src: '/screenshots/plozz-tv-library.webp', alt: 'Movie library on Apple TV', w: 2000, h: 1125 },
-  { src: '/screenshots/plozz-iphone-library.webp', alt: 'A movie library on iPhone', w: 921, h: 2000 },
-  { src: '/screenshots/plozz-tv-episodes.webp', alt: 'Season and episode picker on Apple TV', w: 2000, h: 1125 },
-  { src: '/screenshots/plozz-ipad-player.webp', alt: 'Playback controls on iPad', w: 2000, h: 1397 },
-  { src: '/screenshots/plozz-tv-settings.webp', alt: 'Settings on Apple TV', w: 2000, h: 1125 },
+  { name: 'plozz-tv-show', alt: 'A series detail screen on Apple TV' },
+  { name: 'plozz-ipad-info', alt: 'Episode details during playback on iPad' },
+  { name: 'plozz-tv-home', alt: 'Plozz home screen on Apple TV' },
+  { name: 'plozz-tv-library', alt: 'Movie library on Apple TV' },
+  { name: 'plozz-iphone-library', alt: 'A movie library on iPhone' },
+  { name: 'plozz-tv-episodes', alt: 'Season and episode picker on Apple TV' },
+  { name: 'plozz-ipad-player', alt: 'Playback controls on iPad' },
+  { name: 'plozz-tv-settings', alt: 'Settings on Apple TV' },
 ];
 
 const rowTwo = [
-  { src: '/screenshots/plozz-tv-ratings.webp', alt: 'Cast and ratings on Apple TV', w: 2000, h: 1125 },
-  { src: '/screenshots/plozz-ipad.webp', alt: 'Plozz on iPad', w: 1084, h: 757 },
-  { src: '/screenshots/plozz-tv-subtitles.webp', alt: 'Subtitle styling during playback', w: 2000, h: 1125 },
-  { src: '/screenshots/plozz-tv-profiles.webp', alt: 'Profile picker on Apple TV', w: 2000, h: 1125 },
-  { src: '/screenshots/plozz-iphone.webp', alt: 'Plozz on iPhone', w: 738, h: 1603 },
-  { src: '/screenshots/plozz-tv.webp', alt: 'A film detail screen on Apple TV', w: 1088, h: 612 },
-  { src: '/screenshots/plozz-ipad-cast.webp', alt: 'Cast list during playback on iPad', w: 2000, h: 1397 },
-  { src: '/screenshots/plozz-tv-profile-edit.webp', alt: 'Editing a profile on Apple TV', w: 2000, h: 1125 },
+  { name: 'plozz-tv-ratings', alt: 'Cast and ratings on Apple TV' },
+  { name: 'plozz-ipad', alt: 'Plozz on iPad' },
+  { name: 'plozz-tv-subtitles', alt: 'Subtitle styling during playback' },
+  { name: 'plozz-tv-profiles', alt: 'Profile picker on Apple TV' },
+  { name: 'plozz-iphone', alt: 'Plozz on iPhone' },
+  { name: 'plozz-tv', alt: 'A film detail screen on Apple TV' },
+  { name: 'plozz-ipad-cast', alt: 'Cast list during playback on iPad' },
+  { name: 'plozz-tv-profile-edit', alt: 'Editing a profile on Apple TV' },
 ];
 ---
 
-<section class="marquee" aria-label="Plozz on Apple TV, iPhone and iPad">
+<section class="marquee" aria-label="Plozz on Apple TV, iPhone and iPad" data-lazy-group>
   <div class="marquee-row">
     <div class="marquee-track">
       {[0, 1].map((pass) =>
         rowOne.map((shot) => (
-          <img
-            src={shot.src}
+          <Shot
+            name={shot.name}
             alt={pass === 0 ? shot.alt : ''}
-            width={shot.w}
-            height={shot.h}
-            loading="lazy"
-            decoding="async"
-            aria-hidden={pass === 1 ? 'true' : undefined}
+            sizes={sizesFor(shot.name)}
+            fetchpriority="low"
+            defer="viewport"
+            ariaHidden={pass === 1}
           />
         ))
       )}
@@ -54,14 +68,13 @@ const rowTwo = [
     <div class="marquee-track is-reverse">
       {[0, 1].map((pass) =>
         rowTwo.map((shot) => (
-          <img
-            src={shot.src}
+          <Shot
+            name={shot.name}
             alt={pass === 0 ? shot.alt : ''}
-            width={shot.w}
-            height={shot.h}
-            loading="lazy"
-            decoding="async"
-            aria-hidden={pass === 1 ? 'true' : undefined}
+            sizes={sizesFor(shot.name)}
+            fetchpriority="low"
+            defer="viewport"
+            ariaHidden={pass === 1}
           />
         ))
       )}

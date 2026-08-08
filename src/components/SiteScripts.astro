@@ -4,6 +4,97 @@
 ---
 
 <script>
+  /**
+   * Promote images that were parked for the viewport.
+   *
+   * Native lazy loading gets this backwards on a slow connection: the browser
+   * widens its "close enough to load" threshold when bandwidth is scarce, so
+   * every marquee tile started downloading a second into the page and split the
+   * pipe with the LCP image. On a 400kbps desktop that dragged largest
+   * contentful paint out past 23s.
+   *
+   * These load on approach instead, 800px ahead of the viewport, so they are in
+   * place before they are scrolled to but never compete with the hero.
+   */
+  const promote = (img) => {
+    const picture = img.closest('picture[data-lazy]');
+    if (!picture) return;
+
+    picture.querySelectorAll('source[data-srcset]').forEach((source) => {
+      source.srcset = source.dataset.srcset;
+      delete source.dataset.srcset;
+    });
+
+    if (img.dataset.src) {
+      img.src = img.dataset.src;
+      delete img.dataset.src;
+    }
+
+    /*
+     * Hand the fetch over to the browser immediately. These still carry
+     * loading="lazy" as a no-JS safety net, but a marquee tile can sit far
+     * along a very wide track, and native lazy loading keeps deferring it there
+     * — the transform animation that eventually brings it into view does not
+     * reliably re-trigger the check, which left blank tiles drifting past. By
+     * this point the section is already close to the viewport, so eager is
+     * exactly right.
+     */
+    img.loading = 'eager';
+
+    delete picture.dataset.lazy;
+  };
+
+  if ('IntersectionObserver' in window) {
+    /*
+     * The marquee is watched as one block rather than tile by tile. Its track
+     * is a transform animation, and a compositor-driven transform does not
+     * reliably re-fire an observer as a tile slides into view — watching them
+     * individually left blank tiles drifting through the row. Approaching the
+     * section loads the whole row at once, which is also cheap: the second copy
+     * of the track reuses the first copy's URLs straight from cache.
+     */
+    const groupObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target
+            .querySelectorAll('picture[data-lazy] img[data-src]')
+            .forEach(promote);
+          groupObserver.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '800px 0px' }
+    );
+
+    document.querySelectorAll('[data-lazy-group]').forEach((group) => {
+      groupObserver.observe(group);
+    });
+
+    // Everything else is watched on its own <img>, because the <picture> is
+    // display: contents and so has no box for the observer to measure.
+    const singles = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          promote(entry.target);
+          singles.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '800px 0px' }
+    );
+
+    document
+      .querySelectorAll('picture[data-lazy] img[data-src]')
+      .forEach((img) => {
+        if (img.closest('[data-lazy-group]')) return;
+        singles.observe(img);
+      });
+  } else {
+    document
+      .querySelectorAll('picture[data-lazy] img[data-src]')
+      .forEach(promote);
+  }
+
   const header = document.querySelector('.site-header');
 
   if (header) {
