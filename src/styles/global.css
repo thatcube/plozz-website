@@ -2894,6 +2894,7 @@ a.cell:hover .cell-arrow {
   --logo-h: 7.7cqh;
   --hub-icon: calc(var(--logo-h) * 1.25);
   --hub-pad: calc(var(--logo-h) * 0.4);
+  --hub-pad-x: calc(var(--logo-h) * 0.68);
   position: relative;
   aspect-ratio: 480 / 380;
   container-type: size;
@@ -2915,6 +2916,7 @@ a.cell:hover .cell-arrow {
        is trimmed here and the source column gives back some width too. */
     --hub-icon: calc(var(--logo-h) * 0.9);
     --hub-pad: calc(var(--logo-h) * 0.26);
+    --hub-pad-x: calc(var(--logo-h) * 0.44);
     aspect-ratio: 480 / 520;
   }
 }
@@ -3039,15 +3041,82 @@ a.cell:hover .cell-arrow {
   display: flex;
   align-items: center;
   gap: calc(var(--hub-icon) * 0.367);
-  padding: var(--hub-pad);
+  /* The mark carries transparent margin: in the optical band its ink starts at
+     x=3 of logo.svg's 32-unit box, so a symmetric box padding lands ~9.4% of
+     the mark's width further out on the left than the type does on the right.
+     Measured at 27.3px vs 23.0px before this. Take that inset back off the
+     left so the two ink gaps match. */
+  /* Bottom is trimmed: the mark is lifted to centre its body rather than its
+     box, which leaves the space under it reading heavier than the space above. */
+  padding: var(--hub-pad) var(--hub-pad-x)
+    calc(var(--hub-pad) - var(--logo-h) * 0.059)
+    calc(var(--hub-pad-x) - var(--hub-icon) * 0.094);
+  overflow: hidden;
   border-radius: calc((var(--hub-icon) + var(--hub-pad) * 2) * 0.36);
   background: #17171a;
   box-shadow: inset 0 0 0 1px var(--border);
 }
 
+/* The wires all land on one point at the hub's left edge, so the light they
+   carry is absorbed there: a soft bloom centred on that point, taller than it
+   is wide so it spreads up and down the edge, and clipped by the container so
+   it reads as light diffusing inside the panel rather than sitting on top of
+   it. The flash rides the same cadence the wire pulses arrive on. */
+.confluence-hub::before,
+.confluence-hub::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: calc(var(--hub-icon) * 1.55);
+  height: 155%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.confluence-hub::before {
+  background: radial-gradient(
+    closest-side,
+    rgba(0, 164, 220, 0.4),
+    rgba(0, 164, 220, 0.12) 55%,
+    rgba(0, 164, 220, 0) 100%
+  );
+}
+
+/* Four pulses, staggered by 1.1s on a 4.4s loop, means an arrival every 1.1s
+   from 4.4s onward. A 1.1s flash delayed to the first arrival stays in step
+   with all of them indefinitely. */
+.confluence-hub::after {
+  background: radial-gradient(
+    closest-side,
+    rgba(120, 214, 255, 0.55),
+    rgba(0, 164, 220, 0.2) 45%,
+    rgba(0, 164, 220, 0) 100%
+  );
+  opacity: 0;
+  animation: hub-absorb 1.1s ease-out 4.4s infinite;
+}
+
+@keyframes hub-absorb {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+  14% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.32);
+  }
+}
+
 .hub-mark {
   display: block;
   flex: none;
+  position: relative;
   width: var(--hub-icon);
   height: var(--hub-icon);
   /* The antennas sit in the box but carry almost no weight, so the solid TV
@@ -3057,12 +3126,12 @@ a.cell:hover .cell-arrow {
 }
 
 .hub-name {
+  position: relative;
   font-size: calc(var(--hub-icon) * 0.587);
   font-weight: 650;
   letter-spacing: -0.02em;
   line-height: 1;
   color: var(--text);
-  padding-right: calc(var(--hub-icon) * 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3070,16 +3139,25 @@ a.cell:hover .cell-arrow {
     animation: none;
     opacity: 0;
   }
+
+  /* The steady bloom stays; only the repeating flash goes. */
+  .confluence-hub::after {
+    animation: none;
+  }
 }
 
 
-/* ---------- iCloud slab ---------- */
+/* ---------- iCloud slab ----------
+   Devices sit on the right, so the wide column is the second one. The visual
+   is placed explicitly rather than reordered: it spans both rows, and `order`
+   would leave auto-placement to drop it into a third row. */
 .icloud-slab {
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
 }
 
 .icloud-visual {
-  grid-row: span 2;
+  grid-column: 2;
+  grid-row: 1 / span 2;
   justify-content: center;
 }
 
@@ -3122,6 +3200,11 @@ a.cell:hover .cell-arrow {
   .merge-visual,
   .icloud-visual {
     grid-row: auto;
+  }
+
+  /* Back to DOM order once stacked, so the devices lead again. */
+  .icloud-visual {
+    grid-column: auto;
   }
 
   .showcase-slab.is-flipped .showcase-demo {
