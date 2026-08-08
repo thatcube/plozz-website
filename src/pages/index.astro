@@ -168,7 +168,7 @@ const siteLd = {
                   class:list={["hero-slide", { "is-active": index === 0 }]}
                   loading={index === 0 ? "eager" : "lazy"}
                   fetchpriority={index === 0 ? "high" : undefined}
-                  defer={index !== 0}
+                  defer={index === 0 ? undefined : "gallery"}
                   rest={{
                     "data-hero-slide": true,
                     "data-slide-label": screenshot.label,
@@ -403,6 +403,8 @@ const siteLd = {
                       name="plozz-ipad"
                       alt="Plozz on iPad"
                       sizes={DEVICE_IPAD}
+                      fetchpriority="low"
+                      defer="viewport"
                       class="device-screen"
                     />
                   </div>
@@ -417,6 +419,8 @@ const siteLd = {
                       name="plozz-iphone-detail"
                       alt="A film detail screen in Plozz on iPhone"
                       sizes={DEVICE_IPHONE}
+                      fetchpriority="low"
+                      defer="viewport"
                       class="device-screen"
                     />
                   </div>
@@ -556,6 +560,23 @@ const siteLd = {
         indexLabel.textContent = String(activeIndex + 1);
       };
 
+      /**
+       * Advance, but only onto a slide that has actually arrived.
+       *
+       * Every slide that becomes visible is a fresh largest-contentful-paint
+       * candidate, so rotating onto one that is still downloading pushes LCP
+       * out to whenever that image finally lands — it measured 44s on Slow 3G.
+       * Waiting also avoids cross-fading to a blank frame. The next slide is
+       * hydrated well ahead of its turn, so on any normal connection this is
+       * ready and the rotation is unaffected.
+       */
+      const advance = () => {
+        const next = (activeIndex + 1) % slides.length;
+        hydrate(slides[next]);
+        if (!slides[next].complete) return;
+        showSlide(next);
+      };
+
       const stop = () => {
         window.clearInterval(timer);
       };
@@ -563,10 +584,7 @@ const siteLd = {
       const start = () => {
         stop();
         if (paused || document.hidden || reducedMotion.matches) return;
-        timer = window.setInterval(
-          () => showSlide((activeIndex + 1) % slides.length),
-          5000,
-        );
+        timer = window.setInterval(advance, 5000);
       };
 
       toggle.addEventListener("click", () => {
@@ -603,43 +621,62 @@ const siteLd = {
       });
 
       toggle.textContent = paused ? "Play" : "Pause";
-      start();
 
       /**
-       * Pull in the slide that comes next once the browser is otherwise idle,
-       * so the first cross-fade has something to fade to. Without this the
-       * timer would fire against an image that has not started downloading yet
-       * and the transition would land on an empty frame.
+       * The gallery does not start on its own — it waits for the visitor to do
+       * something first.
        *
-       * The rest stay deferred and arrive one step ahead of the rotation, so a
-       * visitor who never looks at the hero never pays for them at all.
+       * Every slide that rotates into view is a fresh
+       * largest-contentful-paint candidate, so a carousel that starts on a
+       * timer keeps moving the page's LCP later and later: rotating at the
+       * five second mark measured LCP at 5.98s on a 4G desktop, against 0.9s
+       * for the hero image it had already finished painting. Largest
+       * contentful paint is finalised at the first user input, so holding the
+       * rotation until then means the gallery cannot inflate it, in the lab or
+       * in the field.
        *
-       * On a metered or genuinely slow connection none of that is worth the
-       * bytes: the gallery holds on the first slide, which is a complete
+       * In practice this costs nothing: a pointer move, a scroll or a keypress
+       * all count, and one of those lands within a second or two of arrival.
+       * Someone who never interacts sees the first slide, which is a complete
        * picture of the app on its own.
+       *
+       * The next slide is fetched at the same moment, so it is ready well
+       * before the first five second tick.
+       */
+      const ENGAGEMENT = ["pointerdown", "pointermove", "keydown", "wheel", "touchstart", "scroll"];
+      let armed = false;
+
+      const arm = () => {
+        if (armed) return;
+        armed = true;
+        for (const type of ENGAGEMENT) {
+          window.removeEventListener(type, arm, { capture: true });
+        }
+        hydrate(slides[1 % slides.length]);
+        start();
+      };
+
+      /*
+       * On a metered or genuinely slow connection none of it is worth the
+       * bytes: the gallery stays on the first slide until it is asked for by
+       * hand.
        */
       const connection = navigator.connection;
       const frugal = Boolean(
         connection &&
           (connection.saveData ||
-            /^(slow-)?2g$/.test(connection.effectiveType || "")),
+            /^(slow-)?2g$/.test(connection.effectiveType || "") ||
+            (typeof connection.downlink === "number" && connection.downlink > 0 && connection.downlink < 1.5)),
       );
 
       if (frugal) {
         paused = true;
         toggle.textContent = "Play";
+        armed = true;
         stop();
-      }
-
-      // Nothing rotates while it is paused — whether that is this visitor's
-      // motion preference or the connection check above — so there is no next
-      // slide to warm. Pressing Play hydrates on demand.
-      if (!paused) {
-        const warmNext = () => hydrate(slides[1 % slides.length]);
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(warmNext, { timeout: 2500 });
-        } else {
-          window.setTimeout(warmNext, 1200);
+      } else if (!paused) {
+        for (const type of ENGAGEMENT) {
+          window.addEventListener(type, arm, { capture: true, passive: true, once: false });
         }
       }
     }

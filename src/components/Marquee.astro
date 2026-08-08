@@ -10,6 +10,11 @@
  *
  * Tiles never paint wider than 540 CSS px, so these ladders top out at 1080 and
  * a phone pulls the 360px rung instead of a full-size screenshot.
+ *
+ * They also load at low priority. Native lazy loading is not enough on a slow
+ * connection: the browser widens its lazy threshold when bandwidth is scarce,
+ * so all sixteen tiles used to start downloading a second into the page and
+ * split the pipe with the hero, dragging LCP out to 44s on Slow 3G.
  */
 import Shot from './Shot.astro';
 import { MARQUEE, MARQUEE_PORTRAIT } from '../data/imageSizes';
@@ -41,7 +46,7 @@ const rowTwo = [
 ];
 ---
 
-<section class="marquee" aria-label="Plozz on Apple TV, iPhone and iPad">
+<section class="marquee" aria-label="Plozz on Apple TV, iPhone and iPad" data-lazy-group>
   <div class="marquee-row">
     <div class="marquee-track">
       {[0, 1].map((pass) =>
@@ -50,6 +55,8 @@ const rowTwo = [
             name={shot.name}
             alt={pass === 0 ? shot.alt : ''}
             sizes={sizesFor(shot.name)}
+            fetchpriority="low"
+            defer="viewport"
             ariaHidden={pass === 1}
           />
         ))
@@ -65,6 +72,8 @@ const rowTwo = [
             name={shot.name}
             alt={pass === 0 ? shot.alt : ''}
             sizes={sizesFor(shot.name)}
+            fetchpriority="low"
+            defer="viewport"
             ariaHidden={pass === 1}
           />
         ))

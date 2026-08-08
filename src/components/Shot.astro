@@ -31,12 +31,18 @@ export interface Props {
    * Park the URLs in data-* attributes instead of src/srcset, leaving the
    * element inert until script promotes them.
    *
-   * This exists for the hero gallery, where the slides are stacked on top of
-   * each other inside the frame. They are all technically in the viewport, so
+   * "gallery" is for the hero slides, which are stacked on top of each other
+   * inside the frame. They are all technically in the viewport, so
    * loading="lazy" does not defer them at all and every slide downloads on
-   * arrival. Deferring by hand is the only way to stop that.
+   * arrival; the gallery script promotes them one step ahead of the rotation.
+   *
+   * "viewport" is for everything below the fold. Native lazy loading is not
+   * enough on a slow connection, because the browser widens its lazy threshold
+   * when bandwidth is scarce -- which is exactly backwards. Sixteen marquee
+   * tiles would start downloading a second into the page and split the pipe
+   * with the LCP image. SiteScripts promotes these on approach instead.
    */
-  defer?: boolean;
+  defer?: 'gallery' | 'viewport';
   /** Extra data-* attributes for the hero gallery and the labs. */
   rest?: Record<string, string | boolean | undefined>;
 }
@@ -49,7 +55,7 @@ const {
   loading = 'lazy',
   fetchpriority,
   ariaHidden = false,
-  defer = false,
+  defer,
   rest = {},
 } = Astro.props;
 
@@ -58,7 +64,10 @@ const srcset = (extension: 'avif' | 'webp') => shotSrcset(name, extension);
 const fallback = shotFallback(name);
 ---
 
-<picture data-deferred={defer ? 'true' : undefined}>
+<picture
+  data-deferred={defer === 'gallery' ? 'true' : undefined}
+  data-lazy={defer === 'viewport' ? 'true' : undefined}
+>
   <source
     type="image/avif"
     srcset={defer ? undefined : srcset('avif')}
