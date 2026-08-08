@@ -3015,9 +3015,11 @@ a.cell:hover .cell-arrow {
 }
 
 /* Where everything lands, drawn as the app itself: a rounded tile rather than a
-   node on a diagram. The radius is a percentage of the tile, so the corner keeps
-   its app-icon proportion at every size. The glow is in container units for the
-   same reason -- a fixed-px ring reads twice as thick at phone sizes. */
+   node on a diagram. Background and glyph proportion are taken from the real
+   tvOS app icon in the Plozz repo -- a radial gradient from #19282f out to
+   #1b1c1e, with the mark at 69.4% of the tile. The radius and the glow are in
+   percentages and container units, so both keep their proportion at every size
+   rather than reading twice as heavy on a phone. */
 .confluence-hub {
   position: absolute;
   left: var(--hub-x);
@@ -3028,30 +3030,27 @@ a.cell:hover .cell-arrow {
   display: grid;
   place-items: center;
   border-radius: 23%;
-  background: linear-gradient(155deg, #16222c 0%, #0c0f13 78%);
+  /* Sized so the gradient's radius is 1.2x the mark, the same relationship the
+     tvOS icon has. Forcing the falloff to end at the tile edge instead made the
+     corners noticeably darker than the real icon's. */
+  background: radial-gradient(
+    ellipse 83.3% 83.3% at 50% 50%,
+    #19282f 0%,
+    #19272e 20%,
+    #19252b 40%,
+    #1a2328 60%,
+    #1a2024 80%,
+    #1b1e21 100%
+  );
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
     0 0 0 0.9cqw rgba(0, 164, 220, 0.09),
     0 1.4cqw 2.4cqw rgba(0, 0, 0, 0.5);
 }
 
-/* The sheen an icon tile carries, stopping before it reaches the glyph. */
-.confluence-hub::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.09) 0%,
-    rgba(255, 255, 255, 0) 52%
-  );
-  pointer-events: none;
-}
-
+/* The mark is drawn at 87.5% of its own box, so the box has to run wider than
+   the 69.4% the icon actually shows. */
 .confluence-hub img {
-  position: relative;
-  width: 62%;
+  width: 79.3%;
   height: auto;
   image-rendering: pixelated;
 }
