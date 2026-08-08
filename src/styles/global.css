@@ -2889,9 +2889,11 @@ a.cell:hover .cell-arrow {
 }
 
 .confluence-stage {
-  --lock-right: 31.25%;
-  --hub-x: 88.33%;
+  --lock-right: var(--lock-right-wide);
+  --hub-left: var(--hub-left-wide);
   --logo-h: 7.7cqh;
+  --hub-icon: calc(var(--logo-h) * 1.25);
+  --hub-pad: calc(var(--logo-h) * 0.4);
   position: relative;
   aspect-ratio: 480 / 380;
   container-type: size;
@@ -2903,11 +2905,16 @@ a.cell:hover .cell-arrow {
    slab collapses to one column at 900px and the art is wide again there. */
 @container (max-width: 430px) {
   .confluence-stage {
-    --lock-right: 48.3%;
-    --hub-x: 85%;
+    --lock-right: var(--lock-right-narrow);
+    --hub-left: var(--hub-left-narrow);
     /* Capped at the size the wide arrangement tops out at, so a narrow window
        never shows larger wordmarks than a desktop one. */
     --logo-h: min(9cqh, 34px);
+    /* The lockup runs horizontally, so it costs width the tall arrangement does
+       not have. At the wide proportions it ran past the stage edge, so the hub
+       is trimmed here and the source column gives back some width too. */
+    --hub-icon: calc(var(--logo-h) * 0.9);
+    --hub-pad: calc(var(--logo-h) * 0.26);
     aspect-ratio: 480 / 520;
   }
 }
@@ -3014,28 +3021,48 @@ a.cell:hover .cell-arrow {
   line-height: 1;
 }
 
-/* Where everything lands, shown as the app itself. This is the real iOS app
-   icon from the Plozz repo (App/PlozziOS/Assets.xcassets), not a rebuild of it,
-   so it cannot drift from the icon people actually see. The artwork already
-   carries its own background and glyph proportion; only the squircle mask and a
-   drop shadow are added here, in percentages and container units so they keep
-   their proportion at every size. */
+/* Where everything lands: the same mark-and-word lockup as the site header, so
+   the destination is named rather than left for a first-time visitor to
+   recognise cold. The bare mark is used, not the app icon, because a squircle
+   tile inside a rounded container reads as a logo inside a logo.
+
+   Anchored by its left edge, the side the wires touch, so the label's width
+   cannot drag the convergence point around.
+
+   Proportions are the header's, derived from its rendered 30px mark: the word
+   at 0.587 of the mark, the gap at 0.367, and the same optical lift. */
 .confluence-hub {
   position: absolute;
-  left: var(--hub-x);
+  left: var(--hub-left);
   top: 50%;
-  width: 17.5%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 23%;
-  overflow: hidden;
-  box-shadow: 0 1.4cqw 2.4cqw rgba(0, 0, 0, 0.5);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--hub-icon) * 0.367);
+  padding: var(--hub-pad);
+  border-radius: calc((var(--hub-icon) + var(--hub-pad) * 2) * 0.36);
+  background: #17171a;
+  box-shadow: inset 0 0 0 1px var(--border);
 }
 
-.confluence-hub img {
+.hub-mark {
   display: block;
-  width: 100%;
-  height: 100%;
+  flex: none;
+  width: var(--hub-icon);
+  height: var(--hub-icon);
+  /* The antennas sit in the box but carry almost no weight, so the solid TV
+     body reads low. Lift it to centre the body, not the box. */
+  transform: translateY(calc(var(--hub-icon) * -0.067));
+  image-rendering: pixelated;
+}
+
+.hub-name {
+  font-size: calc(var(--hub-icon) * 0.587);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+  padding-right: calc(var(--hub-icon) * 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {

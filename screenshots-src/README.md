@@ -61,8 +61,9 @@ The hero displays at 1148 CSS px, so 2296px is the target for a crisp 2x. The
 Apple TV shots above land near 1:1 at 1x — crisp on a standard display, soft
 on retina. They are mostly photographic artwork, which upscales far more
 gracefully than fine UI text, so they are acceptable but not ideal.
-`plozz-tv-featured.png` and `plozz-tv-cast.png` are both a full 2000x1125 and
-are the two sharpest frames in the hero, which is why the featured shot leads.
+`plozz-tv-featured.png` is a full 2000x1125 and the sharpest frame in the hero,
+which is why it leads. `plozz-tv-cast.png` matches it for sharpness but is no
+longer used on the site; the master is kept here for safekeeping only.
 
 Several of the Apple TV captures are **16-bit HDR** PNGs (`mario`, `office`,
 `oppenheimer`, `lotr`, `lastofus`). That makes them 4-5 MB despite the low

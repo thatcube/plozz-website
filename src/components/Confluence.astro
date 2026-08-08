@@ -5,10 +5,14 @@
  * Four hairlines leave the source lockups and converge on a single point where
  * the Plozz mark sits. Sources are shown as their real wordmarks so they read
  * as the products people already know; network shares have no logo, so that
- * node is an icon plus the word.
+ * node is an icon plus the word. The hub is named too: every source carries its
+ * name, so leaving the destination unlabelled asked a first-time visitor to
+ * recognise the icon cold.
  *
- * Both layouts are generated from one set of percentages, so the SVG endpoints
- * and the CSS-positioned lockups cannot drift apart. A wide arrangement suits
+ * Both layouts are generated from one set of percentages, and those same numbers
+ * are handed to CSS as custom properties, so the SVG endpoints and the
+ * CSS-positioned lockups cannot drift apart. Editing one side alone previously
+ * left the wires ending 10px inside the hub. A wide arrangement suits
  * the two-column slab; below ~430px of illustration width the wordmarks would
  * be too small to read, so a taller arrangement gives the lockup column roughly
  * half the width and shortens the wire run instead.
@@ -26,28 +30,28 @@ const SOURCES = [
    by both layouts and by the CSS, so rows and wire ends always agree. */
 const ROW_PCT = [11.9, 37.3, 62.7, 88.1];
 
-/* Half the hub tile's width (17.5% of the stage) in viewBox units. Wires stop
-   just short of its flat left edge. */
-const HUB_R = 42;
+/* The hub is a lockup whose width depends on its own type, so it is anchored by
+   its left edge -- the side the wires actually touch. Anchoring by centre would
+   move the convergence point every time the label's width changed. */
 
 type Layout = {
   /* viewBox height; width is always 480 so one unit means the same in both. */
   h: number;
   /* Where the lockup column ends, as a percentage of stage width. */
   lockRight: number;
-  /* Hub centre, as a percentage of stage width. */
-  hubX: number;
+  /* The hub lockup's left edge, as a percentage of stage width. */
+  hubLeft: number;
 };
 
-const WIDE: Layout = { h: 380, lockRight: 31.25, hubX: 88.33 };
-const NARROW: Layout = { h: 520, lockRight: 48.3, hubX: 85 };
+const WIDE: Layout = { h: 380, lockRight: 31.25, hubLeft: 68 };
+const NARROW: Layout = { h: 520, lockRight: 40, hubLeft: 62 };
 
 const VB_W = 480;
 
 function wires(L: Layout) {
   const hubY = L.h / 2;
   const startX = (L.lockRight / 100) * VB_W + 16;
-  const endX = (L.hubX / 100) * VB_W - HUB_R - 2;
+  const endX = (L.hubLeft / 100) * VB_W - 2;
   const run = endX - startX;
 
   return ROW_PCT.map((p) => {
@@ -70,7 +74,10 @@ const LAYOUTS = [
 ];
 ---
 
-<div class="confluence">
+<div
+  class="confluence"
+  style={`--lock-right-wide:${WIDE.lockRight}%;--hub-left-wide:${WIDE.hubLeft}%;--lock-right-narrow:${NARROW.lockRight}%;--hub-left-narrow:${NARROW.hubLeft}%`}
+>
   <div class="confluence-stage">
     {
       LAYOUTS.map(({ cls, L }) => (
@@ -109,7 +116,8 @@ const LAYOUTS = [
     </ul>
 
     <div class="confluence-hub">
-      <img src="/plozz-app-icon.webp" alt="" width="384" height="384" />
+      <img class="hub-mark" src="/logo.svg" alt="" width="32" height="32" />
+      <span class="hub-name">Plozz</span>
     </div>
   </div>
 
