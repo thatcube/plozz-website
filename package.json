@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "images": "node tools/build-images.mjs",
+    "shots": "node tools/sync-shots.mjs",
     "astro": "astro"
   },
   "devDependencies": {

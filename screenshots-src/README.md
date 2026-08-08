@@ -1,8 +1,13 @@
 # Screenshot originals
 
 Pristine, unmodified captures for everything in `public/screenshots/`. These are
-the masters — never edit them in place. They are **not** part of the build:
-Astro only ships `src/` and `public/`, so this folder costs nothing at runtime.
+the masters — never edit them in place.
+
+They are **not** part of the build: Astro only ships `src/` and `public/`, so
+this folder costs nothing at runtime.
+
+**These are captured automatically now.** See "Refreshing the captures" below;
+you should not need a capture card or a physical Apple TV again.
 
 Each file here shares its name with its published counterpart:
 
@@ -21,6 +26,35 @@ yet — they are still worth holding onto for future use:
 
 These are listed in `UNPUBLISHED` in `tools/build-images.mjs`, so regenerating
 skips them rather than quietly deploying screenshots nothing links to.
+
+## Refreshing the captures
+
+The masters used to be photographed off a real Apple TV over HDMI, which is why
+they went stale: refreshing one meant setting up hardware. The app photographs
+itself now.
+
+```sh
+cd ../Plozz && ./tools/capture-shots.sh   # drive a Simulator, write PNGs
+cd -        && npm run shots              # copy the changed ones, re-encode
+```
+
+`npm run shots` is `tools/sync-shots.mjs`. It copies any capture whose bytes
+differ from the master of the same name and then runs the re-encode, so the two
+steps above are the whole loop. A capture with no master here is reported and
+skipped — pass `--adopt` to take it — because a new master only earns a place
+once something on the site renders it. `--dry-run` shows what would change.
+
+The app-side script is the interesting half. It runs Plozz on a tvOS Simulator
+against a real NFS share, waits for the library to finish scanning and
+enriching, and then asks the app for each screen **by name** — the app searches
+its own libraries and pushes the page a tap would have pushed. Nothing walks the
+focus engine, so a shelf reordering cannot silently produce a screenshot of the
+wrong title. Its output is named after the masters in this folder, which is why
+the sync needs no mapping table.
+
+Simulator captures are the same 3840x2160 as the device captures they replace,
+and come from the framebuffer, so they are lossless and free of HDMI capture
+artefacts.
 
 ## Regenerating the published images
 
@@ -152,7 +186,9 @@ The 16-to-8-bit conversion is measured, not assumed: the shipped 2296px AVIF of
 `plozz-tv-lotr` scores DSSIM 0.0051 / PSNR 42.9 dB against the master, against
 0.0229 / 30.7 dB for the downscaled master it replaced.
 
-Note that the captures carry a fully opaque alpha channel that `avifenc` drops.
-That is correct and saves bytes, but it means a naive `compare` between a master
+Older masters carry a fully opaque alpha channel that `avifenc` drops. That is
+correct and saves bytes, but it means a naive `compare` between such a master
 and its encode reads as a huge difference purely from the channel-count
-mismatch. Flatten both before measuring.
+mismatch — DSSIM 0.13 where the truth is 0.005. Flatten both before measuring.
+Captures produced by `capture-shots.sh` are already flattened, because App Store
+Connect rejects a screenshot that has an alpha channel at all.
