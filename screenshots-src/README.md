@@ -44,6 +44,17 @@ steps above are the whole loop. A capture with no master here is reported and
 skipped — pass `--adopt` to take it — because a new master only earns a place
 once something on the site renders it. `--dry-run` shows what would change.
 
+It also **refuses a capture that is a different shape to the master it would
+replace**, because the site sizes its layouts from these: the `sizes` strings,
+the device frames and the marquee's fixed-height tiles all follow the master's
+aspect, so a wrong-shaped master does not look wrong in this folder — it looks
+wrong three layouts away. This is not hypothetical: the iPad masters here are
+landscape and the iPad Simulator captures portrait.
+
+The iPad shots (`plozz-ipad-cast`, `plozz-ipad-player`) are therefore still the
+hand-captured landscape ones. The Simulator run can produce landscape iPad
+captures only if the simulator is rotated first, which `simctl` cannot do.
+
 The app-side script is the interesting half. It runs Plozz on a tvOS Simulator
 against a real NFS share, waits for the library to finish scanning and
 enriching, and then asks the app for each screen **by name** — the app searches

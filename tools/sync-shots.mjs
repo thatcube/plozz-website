@@ -78,6 +78,12 @@ async function dimensions(file) {
   return stdout.trim();
 }
 
+/** Rounded so a 2048x2732 and a 2064x2752 iPad master count as the same shape. */
+function aspectOf(size) {
+  const [width, height] = size.split('x').map(Number);
+  return (width / height).toFixed(2);
+}
+
 async function main() {
   const source = resolveSource();
   const captures = (await readdir(source))
@@ -96,6 +102,7 @@ async function main() {
   const copied = [];
   const unchanged = [];
   const skipped = [];
+  const reshaped = [];
 
   for (const name of captures) {
     const from = path.join(source, name);
@@ -112,6 +119,20 @@ async function main() {
     }
 
     const size = await dimensions(from);
+
+    // A capture may only replace a master of the same shape. The site sizes
+    // every image from its master's aspect — `sizes` strings, device frames,
+    // the marquee's fixed-height tiles — so a portrait capture landing on a
+    // landscape master does not look wrong in this directory, it looks wrong
+    // three layouts away. The iPad masters are landscape and the iPad simulator
+    // captures portrait, which is exactly this case.
+    if (existing.has(name)) {
+      const before = await dimensions(to);
+      if (aspectOf(before) !== aspectOf(size)) {
+        reshaped.push({ name, before, after: size });
+        continue;
+      }
+    }
     const bytes = (await stat(from)).size;
     if (!dryRun) await copyFile(from, to);
     copied.push({ name, size, bytes });
@@ -124,6 +145,15 @@ async function main() {
     );
   }
   if (unchanged.length) console.log(`\n  ${unchanged.length} unchanged`);
+  if (reshaped.length) {
+    console.log(
+      `\n  ${reshaped.length} capture(s) refused — a different shape to the master they would replace.`
+    );
+    console.log('  The site sizes its layouts from these, so swapping them breaks pages elsewhere:');
+    for (const { name, before, after } of reshaped) {
+      console.log(`    ${name.padEnd(28)} master ${before}  capture ${after}`);
+    }
+  }
   if (skipped.length) {
     console.log(
       `\n  ${skipped.length} capture(s) the site has no master for — pass --adopt to take them:`
