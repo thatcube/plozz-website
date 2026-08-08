@@ -305,6 +305,22 @@ picture {
   display: contents;
 }
 
+/* Taking the wrapper out of the box tree promotes its children, so the two
+   <source> elements become flex items of whatever holds the picture. They paint
+   nothing, but they still take a gap each: the marquee's 22px gap was drawn
+   three times between neighbouring tiles, giving 66px horizontally against 22px
+   between the rows. Chrome has no UA rule hiding <source>, because inside a
+   normal <picture> it never generates a box in the first place. Source
+   selection is part of HTML's candidate algorithm and does not consult display,
+   so hiding them costs nothing. */
+picture > source,
+/* device-frames.css blankets `.device *` at (0,1,0), which outranks the bare
+   element selector and turns every <source> inside a device frame back into a
+   rendered box. It is the only such rule in the sheet. */
+.device picture > source {
+  display: none;
+}
+
 .container {
   width: 100%;
   max-width: var(--maxw);
