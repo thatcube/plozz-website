@@ -3,13 +3,14 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Marketing site for Plozz — a free, open-source Apple TV app for Jellyfin & Plex.",
+  "description": "Marketing site for Plozz — a free, open-source Jellyfin, Plex, Emby and network share player for Apple TV, iPhone and iPad.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "images": "node tools/build-images.mjs",
+    "og": "node tools/build-og.mjs",
     "astro": "astro"
   },
   "devDependencies": {
