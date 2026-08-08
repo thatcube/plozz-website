@@ -2,75 +2,118 @@
 /**
  * Four sources, one library.
  *
- * Four hairlines leave four source marks on the left and converge on a single
- * point on the right, where the Plozz mark sits. The curves share an identical
- * easing and land on the same coordinate, so the "meet in one place" reading is
- * literal rather than implied.
+ * Four hairlines leave the source lockups and converge on a single point where
+ * the Plozz mark sits. Sources are shown as their real wordmarks so they read
+ * as the products people already know; network shares have no logo, so that
+ * node is an icon plus the word.
  *
- * Geometry is authored in a 480x380 viewBox and scaled by the container, so the
- * convergence stays exact at every width instead of drifting with layout.
+ * Both layouts are generated from one set of percentages, so the SVG endpoints
+ * and the CSS-positioned lockups cannot drift apart. A wide arrangement suits
+ * the two-column slab; below ~430px of illustration width the wordmarks would
+ * be too small to read, so a taller arrangement gives the lockup column roughly
+ * half the width and shortens the wire run instead.
  */
 import { Icon } from "astro-icon/components";
 
-const NODES = [
-  { y: 46, name: "Plex", icon: "simple-icons:plex", wide: true },
-  { y: 142, name: "Jellyfin", icon: "simple-icons:jellyfin", wide: false },
-  { y: 238, name: "Emby", icon: "simple-icons:emby", wide: false },
-  { y: 334, name: "a NAS", icon: "ph:hard-drives", wide: false },
+const SOURCES = [
+  { name: "Plex", src: "/providers/plex.svg" },
+  { name: "Jellyfin", src: "/providers/jellyfin.svg" },
+  { name: "Emby", src: "/providers/emby.png" },
+  { name: "Shares", icon: "ph:folders" },
 ];
 
-/* Where every line ends: the left edge of the Plozz mark. */
-const HUB_X = 424;
-const HUB_Y = 190;
-/* Where every line starts: just right of a source mark. */
-const START_X = 118;
+/* Vertical position of each source, as a percentage of the stage height. Shared
+   by both layouts and by the CSS, so rows and wire ends always agree. */
+const ROW_PCT = [11.9, 37.3, 62.7, 88.1];
 
-/* Both handles are horizontal, so lines leave and arrive flat and do all their
-   bending in the middle. The outgoing handle scales with vertical distance, so
-   the outer curves hold their line longer and the four arrive as a fan rather
-   than a braid. */
-const path = (y: number) => {
-  const lead = 110 + Math.abs(y - HUB_Y) * 0.5;
-  return `M${START_X} ${y} C${START_X + lead} ${y} ${HUB_X - 150} ${HUB_Y} ${HUB_X - 42} ${HUB_Y}`;
+/* Half the hub tile's width (17.5% of the stage) in viewBox units. Wires stop
+   just short of its flat left edge. */
+const HUB_R = 42;
+
+type Layout = {
+  /* viewBox height; width is always 480 so one unit means the same in both. */
+  h: number;
+  /* Where the lockup column ends, as a percentage of stage width. */
+  lockRight: number;
+  /* Hub centre, as a percentage of stage width. */
+  hubX: number;
 };
+
+const WIDE: Layout = { h: 380, lockRight: 31.25, hubX: 88.33 };
+const NARROW: Layout = { h: 520, lockRight: 48.3, hubX: 85 };
+
+const VB_W = 480;
+
+function wires(L: Layout) {
+  const hubY = L.h / 2;
+  const startX = (L.lockRight / 100) * VB_W + 16;
+  const endX = (L.hubX / 100) * VB_W - HUB_R - 2;
+  const run = endX - startX;
+
+  return ROW_PCT.map((p) => {
+    const y = (p / 100) * L.h;
+    /* Lines leave and arrive flat and do their bending in the middle. The
+       outgoing handle grows with vertical distance, so the outer lines hold
+       their line longer and the four arrive as a fan rather than a braid.
+       Scaling it by the run keeps that shape when the run gets short. */
+    const vFrac = Math.abs(y - hubY) / hubY;
+    const cp1 = startX + run * (0.45 + 0.35 * vFrac);
+    const cp2 = endX - run * 0.5;
+    const r = (n: number) => Math.round(n * 10) / 10;
+    return `M${r(startX)} ${r(y)} C${r(cp1)} ${r(y)} ${r(cp2)} ${hubY} ${r(endX)} ${hubY}`;
+  });
+}
+
+const LAYOUTS = [
+  { cls: "wires-wide", L: WIDE },
+  { cls: "wires-narrow", L: NARROW },
+];
 ---
 
 <div class="confluence">
-  <svg
-    class="confluence-wires"
-    viewBox="0 0 480 380"
-    fill="none"
-    aria-hidden="true"
-    preserveAspectRatio="xMidYMid meet"
-  >
+  <div class="confluence-stage">
     {
-      NODES.map((n, i) => (
-        <g>
-          <path class="wire" d={path(n.y)} />
-          <path class="wire-pulse" d={path(n.y)} style={`--i:${i}`} />
-        </g>
+      LAYOUTS.map(({ cls, L }) => (
+        <svg
+          class:list={["confluence-wires", cls]}
+          viewBox={`0 0 ${VB_W} ${L.h}`}
+          fill="none"
+          aria-hidden="true"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {wires(L).map((d, i) => (
+            <g>
+              <path class="wire" d={d} />
+              <path class="wire-pulse" d={d} style={`--i:${i}`} />
+            </g>
+          ))}
+        </svg>
       ))
     }
-    <circle class="hub-halo" cx={HUB_X} cy={HUB_Y} r="46" />
-  </svg>
 
-  <ul class="confluence-sources">
-    {
-      NODES.map((n) => (
-        <li class="source-node">
-          <span class="source-mark" class:list={{ "is-wide": n.wide }}>
-            <Icon name={n.icon} />
-          </span>
-        </li>
-      ))
-    }
-  </ul>
+    <ul class="confluence-sources">
+      {
+        SOURCES.map((s, i) => (
+          <li class="source-node" style={`--row:${ROW_PCT[i]}%`}>
+            {s.icon ? (
+              <span class="source-shares">
+                <Icon name={s.icon} />
+                <span>{s.name}</span>
+              </span>
+            ) : (
+              <img src={s.src} alt="" />
+            )}
+          </li>
+        ))
+      }
+    </ul>
 
-  <div class="confluence-hub">
-    <img src="/logo.svg" alt="" width="32" height="32" />
+    <div class="confluence-hub">
+      <img src="/logo.svg" alt="" width="32" height="32" />
+    </div>
   </div>
 
   <span class="sr-only">
-    Plozz brings Plex, Jellyfin, Emby and a NAS into one library.
+    Plozz brings Plex, Jellyfin, Emby and network shares into one library.
   </span>
 </div>

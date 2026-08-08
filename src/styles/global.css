@@ -2873,18 +2873,43 @@ a.cell:hover .cell-arrow {
 }
 
 /* ---------- Merge confluence ----------
-   Four hairlines converge on one point. Geometry is authored in a 520x380
-   viewBox; the container is locked to that aspect so the percentage-placed
-   marks land exactly on the SVG's start and end coordinates. */
+   Four hairlines converge on one point. Geometry is authored in a 480-wide
+   viewBox and the stage is locked to that aspect, so the percentage-placed
+   lockups land exactly on the wire ends. The outer element is the query
+   container; the stage inside it is the size container the art scales against,
+   because an element cannot answer its own container query. */
 .confluence {
-  position: relative;
   width: 100%;
   max-width: 560px;
-  aspect-ratio: 480 / 380;
   /* The cell is a column flex, so a width-capped item pins to the left edge.
      Below 900px the slab collapses to one wide column, which would otherwise
      strand a third of the cell empty to the right of the hub. */
   margin: 0 auto;
+  container-type: inline-size;
+}
+
+.confluence-stage {
+  --lock-right: 31.25%;
+  --hub-x: 88.33%;
+  --logo-h: 7.7cqh;
+  position: relative;
+  aspect-ratio: 480 / 380;
+  container-type: size;
+}
+
+/* Wordmarks need to hold a readable size, and below this the wide arrangement
+   cannot give them one. The taller arrangement trades wire run for lockup
+   width. Keyed to the illustration's own width, not the viewport, because the
+   slab collapses to one column at 900px and the art is wide again there. */
+@container (max-width: 430px) {
+  .confluence-stage {
+    --lock-right: 48.3%;
+    --hub-x: 85%;
+    /* Capped at the size the wide arrangement tops out at, so a narrow window
+       never shows larger wordmarks than a desktop one. */
+    --logo-h: min(9cqh, 34px);
+    aspect-ratio: 480 / 520;
+  }
 }
 
 .confluence-wires {
@@ -2895,19 +2920,24 @@ a.cell:hover .cell-arrow {
   overflow: visible;
 }
 
+.confluence-wires.wires-narrow {
+  display: none;
+}
+
+@container (max-width: 430px) {
+  .confluence-wires.wires-wide {
+    display: none;
+  }
+
+  .confluence-wires.wires-narrow {
+    display: block;
+  }
+}
+
 .confluence-wires .wire {
   stroke: var(--border-bright);
   stroke-width: 1.25;
   fill: none;
-}
-
-/* Lives in the SVG rather than as a box-shadow on the hub so it scales with the
-   viewBox; a fixed-px ring reads twice as thick at phone sizes. */
-.confluence-wires .hub-halo {
-  fill: none;
-  stroke: var(--brand);
-  stroke-opacity: 0.1;
-  stroke-width: 9;
 }
 
 /* A short lit segment riding the same path, so the direction of travel reads
@@ -2946,59 +2976,82 @@ a.cell:hover .cell-arrow {
   padding: 0;
 }
 
+/* Pinned by their right edge, so every wire can start at one x no matter how
+   wide the individual wordmark is. */
 .source-node {
   position: absolute;
-  left: 15.833%;
-  width: 11.667%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  right: calc(100% - var(--lock-right));
+  top: var(--row);
+  display: flex;
+  justify-content: flex-end;
+  transform: translateY(-50%);
 }
 
-.source-node:nth-child(1) { top: 12.105%; }
-.source-node:nth-child(2) { top: 37.368%; }
-.source-node:nth-child(3) { top: 62.632%; }
-.source-node:nth-child(4) { top: 87.895%; }
-
-.source-mark {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-  background: var(--bg-elev);
-  color: var(--text-muted);
+.source-node img {
+  display: block;
+  width: auto;
+  height: var(--logo-h);
 }
 
-.source-mark svg {
-  width: 42%;
-  height: 42%;
+/* Network shares are a category rather than a product, so there is no logo to
+   use. Icon plus word, set to the wordmarks' optical weight. */
+.source-shares {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--logo-h) * 0.3);
+  color: var(--text);
 }
 
-/* Plex ships a wordmark rather than a glyph. It fills only the middle band of
-   its 24-unit box, so matching the symbols on box size would leave it optically
-   half their weight; it is sized on drawn height instead. */
-.source-mark.is-wide svg {
-  width: 68%;
-  height: auto;
+.source-shares svg {
+  width: var(--logo-h);
+  height: var(--logo-h);
 }
 
+.source-shares span {
+  font-size: calc(var(--logo-h) * 0.66);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Where everything lands, drawn as the app itself: a rounded tile rather than a
+   node on a diagram. The radius is a percentage of the tile, so the corner keeps
+   its app-icon proportion at every size. The glow is in container units for the
+   same reason -- a fixed-px ring reads twice as thick at phone sizes. */
 .confluence-hub {
   position: absolute;
-  left: 88.333%;
+  left: var(--hub-x);
   top: 50%;
   width: 17.5%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  border: 1px solid var(--border-bright);
-  border-radius: var(--r-pill);
-  background: var(--bg-card);
+  border-radius: 23%;
+  background: linear-gradient(155deg, #16222c 0%, #0c0f13 78%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 0 0 0.9cqw rgba(0, 164, 220, 0.09),
+    0 1.4cqw 2.4cqw rgba(0, 0, 0, 0.5);
+}
+
+/* The sheen an icon tile carries, stopping before it reaches the glyph. */
+.confluence-hub::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0) 52%
+  );
+  pointer-events: none;
 }
 
 .confluence-hub img {
-  width: 54%;
+  position: relative;
+  width: 62%;
   height: auto;
   image-rendering: pixelated;
 }
@@ -3009,6 +3062,7 @@ a.cell:hover .cell-arrow {
     opacity: 0;
   }
 }
+
 
 /* ---------- iCloud slab ---------- */
 .icloud-slab {
