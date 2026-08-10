@@ -24,6 +24,13 @@
 /providers/*
   Cache-Control: public, max-age=604800
 
+# The font filename carries its upstream release (v20), so these bytes never
+# change at this URL — a newer cut of Manrope arrives as a different filename.
+# Same reasoning as the screenshots above, and worth the most aggressive setting
+# available: it is preloaded on the critical path of every page.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Astro fingerprints everything under /_astro/ with a content hash.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable

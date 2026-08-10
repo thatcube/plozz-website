@@ -44,6 +44,17 @@ const socialImageAlt =
     <meta name="author" content="thatcube" />
     <meta name="theme-color" content="#0a0c10" />
 
+    {/* The headline is the LCP on every page and it is set in Manrope, so the
+        font is fetched alongside the stylesheet rather than after it. One file,
+        latin subset, covering the whole 400–700 range. */}
+    <link
+      rel="preload"
+      href="/fonts/manrope-v20-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

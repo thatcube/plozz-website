@@ -1,5 +1,24 @@
 @import "./device-frames.css";
 
+/* Manrope, self-hosted. One variable file covering the whole 400–700 range the
+   design system uses, latin subset only, 24KB — smaller than the three static
+   instances it replaces and a request to our own origin rather than a third
+   party, which keeps the critical path to a single connection.
+
+   `swap` because the fallback metrics are close enough that the reflow is not
+   worth a blank headline: the LCP text paints immediately in the system face
+   and settles into Manrope when it lands. */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/manrope-v20-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ==========================================================================
    Plozz — pixel design system
    Pixel display fonts + a reusable pixel-corner box primitive (.pxbox).
@@ -37,7 +56,7 @@
      lands on the same keyline as text outside one. */
   --panel-inset: 20px;
 
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Three weights, and only three. Hierarchy is carried by size and space;
@@ -54,6 +73,21 @@
   --w-regular: 400;
   --w-strong: 600;
   --w-bold: 700;
+
+  /* Tracking, keyed to optical size. Unlike weight, this genuinely has to vary:
+     the larger type is set, the more the counters open up and the tighter it
+     wants to be. Five steps, each covering a size band, rather than the ten
+     one-off values this replaced — thirteen of which sat between -0.01 and
+     -0.02 on text that was all about a rem tall.
+
+     Tuned for Manrope, which needs less negative tracking than the system face
+     it replaced: it is already compactly spaced and has a tall x-height, so the
+     old -0.055em display setting closed the words up until they touched. */
+  --track-display: -0.03em;  /* 2.4rem and up — hero headlines */
+  --track-heading: -0.025em; /* 1.9–3.1rem — section headings */
+  --track-subhead: -0.02em;  /* 1.15–1.7rem */
+  --track-ui: -0.01em;       /* around 1rem — titles, labels, buttons */
+  --track-caps: 0.08em;      /* uppercase mono labels, which need to open up */
 
   /* Pixel-corner primitive controls (overridable per component) */
   --s: 3px;          /* one pixel "step" */
@@ -349,7 +383,7 @@ h1,
 h2,
 h3 {
   font-weight: var(--w-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-ui);
   line-height: 1.15;
 }
 
@@ -437,7 +471,7 @@ h3 {
   color: var(--text);
   font-size: 1.1rem;
   font-weight: var(--w-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-ui);
 }
 
 .site-brand:focus-visible {
@@ -674,7 +708,7 @@ h3 {
   font-family: var(--font);
   font-weight: var(--w-strong);
   font-size: 0.96rem;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
   cursor: pointer;
   background: rgba(255, 255, 255, 0.07);
@@ -783,17 +817,32 @@ h3 {
 }
 
 .hero h1 {
-  max-width: 1040px;
+  /* Sized to hold the second sentence on one line once the type hits its 5.2rem
+     ceiling: "Plays practically everything." measures about 1050px in Manrope
+     at that size, where the system face this replaced fitted in 1040. The
+     container gives 1152px to play with, so this keeps a little room spare. */
+  max-width: 1120px;
   margin: 0;
-  /* The small-screen floor is 2.4rem rather than something larger because the
-     headline's long words ("practically", "everything.") set the wrap: at
-     2.55rem it takes four lines on a 393px phone, at 2.4rem it takes three and
-     the screenshot clears the fold. Desktop is capped at 5.2rem either way. */
+  /* The floor stays at 2.4rem for impact. Manrope is wider than the system face
+     this replaced, so a 375px phone now takes four lines where that took three;
+     holding three would mean dropping to 2.0rem, and 17% off the headline is a
+     poor trade for one line. The device shot still starts above the fold on a
+     375x667 viewport. Desktop is capped at 5.2rem either way. */
   font-size: clamp(2.4rem, 6.2vw, 5.2rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.055em;
-  line-height: 0.94;
-  text-wrap: balance;
+  letter-spacing: var(--track-display);
+  /* Not below 1. The headline puts a descender directly above an ascender —
+     the "p" of "open" lands on the "t" of "practically" — and at 0.94 the two
+     collided. 1.0 is still tight enough to read as display type while leaving
+     the pair clear of each other. */
+  line-height: 1;
+  /* Not balance. The markup already sets the break with an explicit <br>, and
+     balance treats that as a suggestion: seeing one line of 816px and one of
+     1042px it "helps" by splitting the longer one, which is how a two-line
+     headline became three. `pretty` still guards against an orphaned last word
+     without re-breaking what the markup decided. Below 700px the <br> is
+     hidden and balance genuinely helps, so it comes back there. */
+  text-wrap: pretty;
 }
 
 /* One panel under the headline, so the hero has a single structural object
@@ -810,6 +859,12 @@ h3 {
 @media (max-width: 700px) {
   .h1-break {
     display: none;
+  }
+
+  /* With the forced break gone the headline wraps on its own, and evening the
+     lines out is now an improvement rather than an override. */
+  .hero h1 {
+    text-wrap: balance;
   }
 }
 
@@ -872,7 +927,7 @@ h3 {
   color: var(--text);
   font-size: calc(var(--share-h) * 0.95);
   font-weight: var(--w-strong);
-  letter-spacing: -0.015em;
+  letter-spacing: var(--track-ui);
   line-height: 1;
 }
 
@@ -1135,7 +1190,7 @@ h3 {
   font-family: var(--font);
   font-size: clamp(2.1rem, 3.6vw, 3.1rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.04em;
+  letter-spacing: var(--track-heading);
   line-height: 1.02;
   color: var(--text);
   text-wrap: balance;
@@ -1432,7 +1487,7 @@ section {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.74rem;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--track-caps);
   text-transform: uppercase;
   color: var(--brand);
   margin-bottom: 16px;
@@ -1628,7 +1683,7 @@ section {
   font-size: 0.78rem;
   font-weight: var(--w-strong);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--track-caps);
 }
 
 .platform .status.live {
@@ -1788,7 +1843,7 @@ section {
   border-radius: var(--r-sm);
   font-size: 1rem;
   font-weight: var(--w-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
 }
 
@@ -1810,7 +1865,7 @@ section {
   font-family: var(--font);
   font-size: 0.9rem;
   font-weight: var(--w-strong);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
 }
 
@@ -1993,7 +2048,7 @@ button.btn {
   margin: 0;
   font-size: clamp(2.6rem, 5.4vw, 4.4rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.045em;
+  letter-spacing: var(--track-display);
   line-height: 1.0;
   text-wrap: balance;
 }
@@ -2356,7 +2411,7 @@ button.btn {
 .proof li > span:first-child {
   font-size: 0.98rem;
   font-weight: var(--w-strong);
-  letter-spacing: -0.015em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
 }
 
@@ -2387,7 +2442,7 @@ button.btn {
   font-family: var(--font);
   font-size: clamp(2.1rem, 3.6vw, 3.1rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.04em;
+  letter-spacing: var(--track-heading);
   line-height: 1.02;
   color: var(--text);
   text-wrap: balance;
@@ -2505,7 +2560,7 @@ button.btn {
   font-family: var(--font);
   font-size: clamp(1.15rem, 1.6vw, 1.4rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.025em;
+  letter-spacing: var(--track-subhead);
   line-height: 1.15;
   color: var(--text);
 }
@@ -2542,7 +2597,7 @@ button.btn {
   border-radius: var(--r-pill);
   font-size: 0.92rem;
   font-weight: var(--w-strong);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--track-ui);
   color: var(--text-muted);
   text-decoration: none;
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
@@ -2623,7 +2678,7 @@ button.btn {
   font-family: var(--font);
   font-size: clamp(1.3rem, 2vw, 1.7rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.035em;
+  letter-spacing: var(--track-subhead);
   line-height: 1.1;
   color: var(--text);
 }
@@ -2647,7 +2702,7 @@ button.btn {
 .fmt-name {
   font-size: 0.97rem;
   font-weight: var(--w-strong);
-  letter-spacing: -0.015em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
 }
 
@@ -2677,7 +2732,7 @@ button.btn {
   font-family: var(--font);
   font-size: clamp(1.9rem, 3.4vw, 2.9rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.04em;
+  letter-spacing: var(--track-heading);
   line-height: 1.04;
   color: var(--text);
   text-wrap: balance;
@@ -2699,7 +2754,7 @@ button.btn {
   padding: clamp(16px, 1.9vw, 21px) 0;
   font-size: 1rem;
   font-weight: var(--w-strong);
-  letter-spacing: -0.015em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
   cursor: pointer;
   list-style: none;
@@ -2799,7 +2854,7 @@ button.btn {
   font-family: var(--font);
   font-size: clamp(1.9rem, 3.4vw, 2.9rem);
   font-weight: var(--w-strong);
-  letter-spacing: -0.04em;
+  letter-spacing: var(--track-heading);
   line-height: 1.04;
   color: var(--text);
   text-wrap: balance;
@@ -2869,7 +2924,7 @@ a.cell:hover {
   font-family: var(--font);
   font-size: 1.05rem;
   font-weight: var(--w-strong);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-ui);
   color: var(--text);
 }
 
@@ -3143,7 +3198,7 @@ a.cell:hover .cell-arrow {
 .source-shares span {
   font-size: calc(var(--logo-h) * 0.66);
   font-weight: var(--w-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-ui);
   line-height: 1;
 }
 
@@ -3278,7 +3333,7 @@ a.cell:hover .cell-arrow {
   position: relative;
   font-size: calc(var(--hub-icon) * 0.587);
   font-weight: var(--w-bold);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-ui);
   line-height: 1;
   color: var(--text);
 }
