@@ -1095,14 +1095,21 @@ h3 {
   animation-delay: 0.18s;
 }
 
-/* The hero shot grows into place as it is scrolled into view, and shrinks again
-   on the way back up.
+/* The hero shot grows into place as the page is scrolled, and shrinks again on
+   the way back up.
  *
  * It runs on a scroll timeline rather than a scroll listener, which matters for
  * three reasons: the browser drives it off the main thread, so it cannot stutter
  * behind slow JavaScript; it resolves to the right size at first paint, with no
  * pop from a script that runs after the page has already been drawn; and there
  * is no script to ship at all.
+ *
+ * The timeline is the page's own scroll, not the shot's entry into view. Entry
+ * was the obvious choice and the wrong one: on most desktop viewports this shot
+ * is already fully on screen when the page loads, so an entry-based animation
+ * had already finished before anyone could scroll and the effect never showed
+ * up at all. Measuring from the top of the page instead gives the movement the
+ * same runway on every screen.
  *
  * It ends at 1 — the shot's natural size — rather than growing past it. The
  * hero image is served at 2296px for a 1148px slot, which is exactly 2x on a
@@ -1122,22 +1129,18 @@ h3 {
   }
 }
 
-@supports (animation-timeline: view()) {
+@supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     .hero-devices {
       animation-name: heroRise, heroGrow;
       animation-duration: 0.62s, auto;
       animation-delay: 0.18s, 0s;
       animation-fill-mode: both, both;
-      animation-timeline: auto, view();
-      /* Ends when the shot is fully in view. It starts at 40% of the way in
-         rather than at the first visible pixel because on a desktop viewport
-         the shot is already about 44% on screen when the page loads — anchoring
-         at 0% would spend the entire movement before anyone could watch it.
-         Starting later puts the growth in the part of the scroll people
-         actually see. Past the end the animation is finished and the shot
-         simply stays at full size. */
-      animation-range: normal, entry 40% entry 100%;
+      animation-timeline: auto, scroll(root block);
+      /* Full size after a little over half a screen of scrolling, by which
+         point the shot is comfortably in view on any viewport. Past that the
+         animation is finished and it simply stays there. */
+      animation-range: normal, 0 62vh;
       /* A spring rather than a straight ramp: it runs slightly past full size,
          eases back under, and settles. Because the timeline is the scroll
          position, the overshoot is felt as the shot springing into place as it
