@@ -3469,10 +3469,11 @@ a.cell:hover .cell-arrow {
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-/* Pausing on hover lets someone actually look at a screenshot. */
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
+/* Hovering does not stop the rows. The pointer is over this section for as long
+   as it is being looked at, so pausing there stopped the very thing someone had
+   stopped to watch, and it only ever worked for people using a mouse. Reduced
+   motion still halts the animation outright and makes the rows scrollable by
+   hand, which is the accommodation that reaches everyone. */
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
