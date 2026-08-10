@@ -161,6 +161,9 @@ which wants 2712px and gets 2296. That is still 2.5x effective density, so it is
 left alone deliberately: the extra rung would cost ~400 KB for something nobody
 can see.
 
+`plozz-tv-cast.png` is no longer used on the site; the master is kept here for
+safekeeping only.
+
 ### Do not re-import these through anything that resizes
 
 The masters were briefly committed as downscaled copies — `plozz-tv-lotr` was

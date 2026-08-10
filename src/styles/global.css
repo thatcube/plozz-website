@@ -305,6 +305,22 @@ picture {
   display: contents;
 }
 
+/* Taking the wrapper out of the box tree promotes its children, so the two
+   <source> elements become flex items of whatever holds the picture. They paint
+   nothing, but they still take a gap each: the marquee's 22px gap was drawn
+   three times between neighbouring tiles, giving 66px horizontally against 22px
+   between the rows. Chrome has no UA rule hiding <source>, because inside a
+   normal <picture> it never generates a box in the first place. Source
+   selection is part of HTML's candidate algorithm and does not consult display,
+   so hiding them costs nothing. */
+picture > source,
+/* device-frames.css blankets `.device *` at (0,1,0), which outranks the bare
+   element selector and turns every <source> inside a device frame back into a
+   rendered box. It is the only such rule in the sheet. */
+.device picture > source {
+  display: none;
+}
+
 .container {
   width: 100%;
   max-width: var(--maxw);
@@ -732,7 +748,7 @@ h3 {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  padding: clamp(112px, 12vw, 168px) 0 0;
+  padding: clamp(76px, 9vw, 132px) 0 0;
   text-align: left;
   overflow: hidden;
   background: #0b0b0c;
@@ -753,67 +769,118 @@ h3 {
 .hero h1 {
   max-width: 1040px;
   margin: 0;
-  font-size: clamp(3.5rem, 7vw, 5.8rem);
+  /* The small-screen floor is 2.4rem rather than something larger because the
+     headline's long words ("practically", "everything.") set the wrap: at
+     2.55rem it takes four lines on a 393px phone, at 2.4rem it takes three and
+     the screenshot clears the fold. Desktop is capped at 5.2rem either way. */
+  font-size: clamp(2.4rem, 6.2vw, 5.2rem);
   font-weight: 570;
   letter-spacing: -0.055em;
   line-height: 0.94;
   text-wrap: balance;
 }
 
+/* One panel under the headline, so the hero has a single structural object
+   instead of a loose stack. It holds what Plozz connects to on the left and how
+   to get it on the right.
+
+   The sources are shown as logos rather than spelled out: three brand marks
+   read faster than three labelled columns of names, and the protocol list they
+   used to carry (SMB, NFS, WebDAV, SFTP, FTP) is detail for /network-shares. */
+/* The break is only there to put the longer sentence on the bottom line. Below
+   ~700px the type is at its floor and the second sentence cannot fit on one
+   line anyway, so forcing the break just orphans "source." onto its own line
+   and costs a fourth line. Let it wrap on its own down there. */
+@media (max-width: 700px) {
+  .h1-break {
+    display: none;
+  }
+}
+
 .hero-summary {
   display: grid;
   width: 100%;
-  max-width: none;
-  margin-top: clamp(44px, 5vw, 64px);
+  margin-top: clamp(32px, 3.6vw, 48px);
   grid-template-columns: minmax(0, 1fr) minmax(330px, auto);
-  gap: clamp(36px, 5vw, 72px);
+  gap: 0;
   align-items: center;
-  padding: 28px var(--panel-inset);
+  padding: 26px var(--panel-inset);
   border: 1px solid #27272a;
   border-radius: var(--r-lg);
 }
 
-.hero-facts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.hero-works {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px clamp(18px, 2.2vw, 26px);
+  padding-right: clamp(24px, 3.2vw, 44px);
 }
 
-.hero-facts > div {
-  min-width: 0;
-  padding: 2px clamp(18px, 2.5vw, 32px);
-  border-left: 1px solid #27272a;
+.hero-logos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px clamp(20px, 2.6vw, 30px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.hero-facts > div:first-child {
-  padding-left: 0;
-  border-left: 0;
+/* Sized on drawn height rather than box height: the marks have very different
+   aspect ratios, so matching them on width would leave Plex at twice the
+   optical weight of Jellyfin. */
+.hero-logos img {
+  display: block;
+  width: auto;
+  height: 22px;
 }
 
-.hero-facts dt {
-  margin-bottom: 9px;
+.hero-logos img[alt="Jellyfin"] {
+  height: 24px;
+}
+
+.hero-logos img[alt="Emby"] {
+  height: 23px;
+}
+
+/* Network shares are a category, not a product, so there is no logo to show.
+   Icon plus the name, set to the same weight and size as the three brand marks
+   it sits beside. Shared by the hero panel and the sources cell so the two read
+   as the same object; only --share-h changes between them. */
+.share-lockup {
+  --share-h: 20px;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--share-h) * 0.4);
   color: var(--text);
-  font-size: 0.86rem;
-  font-weight: 650;
-  letter-spacing: -0.01em;
+  font-size: calc(var(--share-h) * 0.95);
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  line-height: 1;
 }
 
-.hero-facts dd {
-  color: var(--text-muted);
-  font-size: 0.86rem;
-  line-height: 1.5;
+.share-lockup svg {
+  width: var(--share-h);
+  height: var(--share-h);
+  flex: none;
 }
 
+/* A quarter of the slab is about 210px of usable width at 1280, so the lockup
+   is sized to clear "Network shares" on one line there; at 30px it wrapped and
+   stood 57px tall against the logos' 32px. */
+.cell-visual .share-lockup {
+  --share-h: 24px;
+  white-space: nowrap;
+}
+
+/* A rule rather than whitespace between the two halves, so the panel reads as
+   one object with two parts: what it connects to, and how to get it. */
 .hero-actions {
   display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  gap: 13px;
-}
-
-.hero-actions > p {
-  color: var(--text-dim);
-  font-size: 0.8rem;
-  letter-spacing: 0.01em;
+  align-items: center;
+  padding-left: clamp(24px, 3.2vw, 44px);
+  border-left: 1px solid #27272a;
 }
 
 .hero-cta {
@@ -828,7 +895,7 @@ h3 {
   position: relative;
   width: 100%;
   min-height: 0;
-  margin: clamp(64px, 7vw, 92px) auto 0;
+  margin: clamp(40px, 4.5vw, 66px) auto 0;
   overflow: visible;
 }
 
@@ -956,17 +1023,21 @@ h3 {
 
   .hero-summary {
     grid-template-columns: 1fr;
-    gap: 24px;
     align-items: start;
   }
 
+  /* Stacked, so the divider turns to run across the panel instead of down it. */
   .hero-actions {
     width: 100%;
     align-items: flex-start;
+    padding: 22px 0 0;
+    border-top: 1px solid #27272a;
+    border-left: 0;
+    margin-top: 22px;
   }
 
   .hero-devices {
-    margin-top: 56px;
+    margin-top: 44px;
   }
 }
 
@@ -977,7 +1048,20 @@ h3 {
 
 
   .hero {
-    padding-top: 84px;
+    padding-top: 56px;
+  }
+
+  /* Short viewports (a 667px iPhone SE) are the case where the screenshot fell
+     entirely below the fold, so the gaps between hero blocks tighten here to
+     buy it back. */
+  .hero-summary {
+    margin-top: 24px;
+    padding: 20px var(--panel-inset);
+    gap: 20px;
+  }
+
+  .hero-devices {
+    margin-top: 32px;
   }
 
 
@@ -989,21 +1073,6 @@ h3 {
     width: 100%;
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .hero-facts {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-facts > div {
-    padding: 15px 0;
-    border-top: 1px solid #27272a;
-    border-left: 0;
-  }
-
-  .hero-facts > div:first-child {
-    padding-top: 0;
-    border-top: 0;
   }
 
   .hero-cta .btn {
@@ -1087,18 +1156,6 @@ h3 {
 
 .ledger-row .lockup-emby {
   height: 29px;
-}
-
-.share-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.share-chips .chip {
-  font-family: var(--font-mono);
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
 }
 
 /* A chevron drawn from a border, so it matches the hairline vocabulary. */
@@ -2814,6 +2871,15 @@ a.cell:hover {
   margin-top: auto;
 }
 
+/* In these cells the logo is the title, so there is no heading and this line is
+   the primary text. Scoped past `.cell p`, which is the same specificity and
+   would otherwise win or lose on source order alone. */
+.cell .cell-foot p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
 .cell-go {
   display: inline-flex;
   align-items: center;
@@ -2838,10 +2904,6 @@ a.cell:hover .cell-go {
 
 a.cell:hover .cell-arrow {
   transform: rotate(45deg) translate(2px, -2px);
-}
-
-.cell .share-chips {
-  align-content: center;
 }
 
 @media (max-width: 900px) {
@@ -2875,46 +2937,361 @@ a.cell:hover .cell-arrow {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 }
 
+/* Spans the three text cells beside it. Must be a span count, not `1 / -1`:
+   the rows here are implicit, so -1 resolves to the end of the *explicit* grid
+   -- row 1 -- and the illustration collapsed to a single row, which pushed two
+   of the cells side by side underneath it. */
 .merge-visual {
-  grid-row: span 2;
+  grid-row: span 3;
   justify-content: center;
 }
 
-/* ---------- Merge statement ----------
-   The possessives recede and the names carry the light, so the four sources
-   read as a list at a glance without being set as one. */
-/* Outspecifies `.cell p`, which is one class plus one element and would
-   otherwise win on specificity. */
-.merge-visual p.merge-say {
-  max-width: 15em;
+/* ---------- Merge confluence ----------
+   Four hairlines converge on one point. Geometry is authored in a 480-wide
+   viewBox and the stage is locked to that aspect, so the percentage-placed
+   lockups land exactly on the wire ends. The outer element is the query
+   container; the stage inside it is the size container the art scales against,
+   because an element cannot answer its own container query. */
+.confluence {
+  width: 100%;
+  max-width: 560px;
+  /* The cell is a column flex, so a width-capped item pins to the left edge.
+     Below 900px the slab collapses to one wide column, which would otherwise
+     strand a third of the cell empty to the right of the hub. */
+  margin: 0 auto;
+  container-type: inline-size;
+}
+
+.confluence-stage {
+  --lock-right: var(--lock-right-wide);
+  --hub-left: var(--hub-left-wide);
+  --logo-h: 7.7cqh;
+  --hub-icon: calc(var(--logo-h) * 1.25);
+  --hub-pad: calc(var(--logo-h) * 0.4);
+  --hub-pad-x: calc(var(--logo-h) * 0.68);
+  position: relative;
+  aspect-ratio: 480 / 380;
+  container-type: size;
+}
+
+/* Wordmarks need to hold a readable size, and below this the wide arrangement
+   cannot give them one. The taller arrangement trades wire run for lockup
+   width. Keyed to the illustration's own width, not the viewport, because the
+   slab collapses to one column at 900px and the art is wide again there. */
+@container (max-width: 430px) {
+  .confluence-stage {
+    --lock-right: var(--lock-right-narrow);
+    --hub-left: var(--hub-left-narrow);
+    /* Capped at the size the wide arrangement tops out at, so a narrow window
+       never shows larger wordmarks than a desktop one. */
+    --logo-h: min(9cqh, 34px);
+    /* The lockup runs horizontally, so it costs width the tall arrangement does
+       not have. At the wide proportions it ran past the stage edge, so the hub
+       is trimmed here and the source column gives back some width too. */
+    --hub-icon: calc(var(--logo-h) * 0.9);
+    --hub-pad: calc(var(--logo-h) * 0.26);
+    --hub-pad-x: calc(var(--logo-h) * 0.44);
+    aspect-ratio: 480 / 520;
+  }
+}
+
+.confluence-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.confluence-wires.wires-narrow {
+  display: none;
+}
+
+@container (max-width: 430px) {
+  .confluence-wires.wires-wide {
+    display: none;
+  }
+
+  .confluence-wires.wires-narrow {
+    display: block;
+  }
+}
+
+.confluence-wires .wire {
+  stroke: var(--border-bright);
+  stroke-width: 1.25;
+  fill: none;
+}
+
+/* A short lit segment riding the same path, so the direction of travel reads as
+   "into Plozz" without animating the line itself.
+
+   pathLength normalises every wire to 100 units. Without it the dash offsets
+   are in real path units, and the outer wires are 231px against the inner
+   ones' 168px, so their pulses reached the hub at different moments.
+
+   With dash D on a 100-unit path and a gap of 100 (period P = D + 100), the
+   dash sits at [P - offset, P - offset + D]. Running the offset from P + D
+   (head on the start) to P - 100 (tail through the end) puts the head on the
+   end at exactly 100 / (100 + D) of that run. D = 25 makes it 80%.
+
+   The run occupies part of the cycle and the wire then rests: 1.5s of travel
+   within the 4.1s period, which is 36.585%, so impact lands at
+   0.8 x 36.585% = 29.268%, or 1.2s. The impact keyframe is stated outright
+   rather than left to fall out of the interpolation, so the moment survives a
+   change to the timings.
+   Linear throughout, because easing would move that moment in time while
+   leaving it at 80% of the value, which is how the flash drifted before.
+
+   No fade-out is needed. Past 29.268% the head has left the path and the tail
+   has not, so the dash is drawn shorter and shorter until it is gone at
+   36.585% -- it
+   is eaten by the panel edge, which is the absorption itself. */
+.confluence-wires .wire-pulse {
+  stroke: var(--brand);
+  stroke-width: 2.6;
+  /* Container units, so the glow keeps its proportion to the wire at every
+     size; a fixed px radius reads far heavier on a phone. Both stops are wide
+     and faint rather than one tight and bright: a small high-alpha shadow just
+     thickens the stroke into a hard edge instead of reading as light. */
+  filter: drop-shadow(0 0 0.75cqw rgba(96, 202, 255, 0.4))
+    drop-shadow(0 0 1.9cqw rgba(0, 164, 220, 0.28));
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 25 100;
+  stroke-dashoffset: 150;
+  animation: confluence-travel 4.1s linear infinite;
+  /* Launch offset comes from the component, which owns the cycle's rhythm. */
+  animation-delay: var(--d);
+}
+
+@keyframes confluence-travel {
+  0% {
+    stroke-dashoffset: 150;
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  29.268% {
+    stroke-dashoffset: 50;
+    opacity: 1;
+  }
+  36.585% {
+    stroke-dashoffset: 25;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 25;
+    opacity: 1;
+  }
+}
+
+.confluence-sources {
+  list-style: none;
   margin: 0;
-  font-size: clamp(1.35rem, 2.5vw, 2.05rem);
-  line-height: 1.34;
-  letter-spacing: -0.025em;
+  padding: 0;
+}
+
+/* Pinned by their right edge, so every wire can start at one x no matter how
+   wide the individual wordmark is. */
+.source-node {
+  position: absolute;
+  right: calc(100% - var(--lock-right));
+  top: var(--row);
+  display: flex;
+  justify-content: flex-end;
+  transform: translateY(-50%);
+}
+
+.source-node img {
+  display: block;
+  width: auto;
+  height: var(--logo-h);
+}
+
+/* Network shares are a category rather than a product, so there is no logo to
+   use. Icon plus word, set to the wordmarks' optical weight. */
+.source-shares {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--logo-h) * 0.3);
   color: var(--text);
-  text-wrap: pretty;
 }
 
-.merge-visual p.merge-say span {
-  color: var(--text-dim);
+.source-shares svg {
+  width: var(--logo-h);
+  height: var(--logo-h);
 }
 
-.merge-visual p.merge-land {
-  max-width: 26em;
-  margin: clamp(18px, 2.2vw, 28px) 0 0;
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-  line-height: 1.55;
-  color: var(--text-muted);
-  text-wrap: pretty;
+.source-shares span {
+  font-size: calc(var(--logo-h) * 0.66);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
-/* ---------- iCloud slab ---------- */
+/* Where everything lands: the same mark-and-word lockup as the site header, so
+   the destination is named rather than left for a first-time visitor to
+   recognise cold. The bare mark is used, not the app icon, because a squircle
+   tile inside a rounded container reads as a logo inside a logo.
+
+   Anchored by its left edge, the side the wires touch, so the label's width
+   cannot drag the convergence point around.
+
+   Proportions are the header's, derived from its rendered 30px mark: the word
+   at 0.587 of the mark, the gap at 0.367, and the same optical lift. */
+.confluence-hub {
+  position: absolute;
+  left: var(--hub-left);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--hub-icon) * 0.367);
+  /* The mark carries transparent margin: in the optical band its ink starts at
+     x=3 of logo.svg's 32-unit box, so a symmetric box padding lands ~9.4% of
+     the mark's width further out on the left than the type does on the right.
+     Measured at 27.3px vs 23.0px before this. Take that inset back off the
+     left so the two ink gaps match. */
+  /* Bottom is trimmed: the mark is lifted to centre its body rather than its
+     box, which leaves the space under it reading heavier than the space above. */
+  padding: var(--hub-pad) var(--hub-pad-x)
+    calc(var(--hub-pad) - var(--logo-h) * 0.059)
+    calc(var(--hub-pad-x) - var(--hub-icon) * 0.094);
+  overflow: hidden;
+  border-radius: calc((var(--hub-icon) + var(--hub-pad) * 2) * 0.3);
+  background: #17171a;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+/* Each arrival then disperses across the surface rather than flaring at the
+   edge: a soft body of light that enters at the contact point, travels the
+   width of the panel, and spreads and dims as it goes. Eased out, so it moves
+   quickly on impact and slows as it dissipates, which is how light actually
+   falls off. Clipped by the container, so it stays inside the surface.
+
+   One layer per wire, each carrying its own wire's delay. Arrivals land about a
+   second apart and a sweep takes about 1.6s to cross, so they still overlap; a
+   single shared element could only ever show one. */
+.hub-absorb {
+  position: absolute;
+  /* Overruns the panel on both axes: the body of light is wider than the
+     surface it crosses, and running it past the top and bottom keeps it full
+     through the middle instead of fading to nothing inside the panel. The
+     container clips the excess. */
+  top: -28%;
+  bottom: -28%;
+  left: 0;
+  width: 116%;
+  transform-origin: center center;
+  /* closest-side, so the gradient always resolves to zero exactly at the
+     layer's own edge. A fixed radius wider than the layer's half-width gets cut
+     off by that edge instead, which drew a hard vertical seam across the panel.
+     The layer is wider than it is tall, so the light spreads along the
+     direction of travel. Blue rather than the cyan-leaning --brand: 210deg
+     against its 196deg, and faint, since several overlap and compound. */
+  background: radial-gradient(
+    closest-side,
+    rgba(125, 187, 255, 0.34),
+    rgba(45, 125, 255, 0.12) 50%,
+    rgba(45, 125, 255, 0) 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  /* Same period and same launch offset as its wire, pushed on by the 29.268% of
+     the period the pulse takes to reach the hub (1.2s of 4.1s), so the two
+     cannot drift. Peaks on its first frame, so the flash is the impact rather than a
+     fade-in after it. */
+  animation: hub-absorb 4.1s linear calc(var(--d) + 1.2s) infinite;
+}
+
+/* Offsets are a share of the layer's own width, and the layer is 116% of the
+   panel, so -55% starts its centre on the panel's left edge and 62% carries it
+   just past the right one.
+
+   The crossing takes 39% of the period, about 1.6s, so the light moves through
+   the panel rather than drifting across it.
+
+   Timed linear with the shape carried by the stops rather than an easing curve.
+   An ease-out ran the opacity down to 0.46 within 600ms, so the light peaked
+   while it was still small and off to the left and had all but gone by the time
+   it reached the panel. Holding it up through the first half of the crossing
+   lets it survive the trip; the x and scale stops still decelerate, so the
+   movement keeps its ease. */
+@keyframes hub-absorb {
+  0% {
+    opacity: 1;
+    transform: translateX(-55%) scale(0.55);
+  }
+  6% {
+    opacity: 0.92;
+    transform: translateX(-20%) scale(0.9);
+  }
+  16% {
+    opacity: 0.72;
+    transform: translateX(10%) scale(1.18);
+  }
+  28% {
+    opacity: 0.4;
+    transform: translateX(36%) scale(1.45);
+  }
+  39% {
+    opacity: 0;
+    transform: translateX(62%) scale(1.75);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(62%) scale(1.75);
+  }
+}
+
+.hub-mark {
+  display: block;
+  flex: none;
+  position: relative;
+  width: var(--hub-icon);
+  height: var(--hub-icon);
+  /* The antennas sit in the box but carry almost no weight, so the solid TV
+     body reads low. Lift it to centre the body, not the box. */
+  transform: translateY(calc(var(--hub-icon) * -0.067));
+  image-rendering: pixelated;
+}
+
+.hub-name {
+  position: relative;
+  font-size: calc(var(--hub-icon) * 0.587);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confluence-wires .wire-pulse {
+    animation: none;
+    opacity: 0;
+  }
+
+  /* The layer's resting state is transparent, so dropping the animation leaves
+     no glow behind. */
+  .hub-absorb {
+    animation: none;
+  }
+}
+
+
+/* ---------- iCloud slab ----------
+   Devices sit on the right, so the wide column is the second one. The visual
+   is placed explicitly rather than reordered: it spans both rows, and `order`
+   would leave auto-placement to drop it into a third row. */
 .icloud-slab {
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
 }
 
 .icloud-visual {
-  grid-row: span 2;
+  grid-column: 2;
+  grid-row: 1 / span 2;
   justify-content: center;
 }
 
@@ -2957,6 +3334,11 @@ a.cell:hover .cell-arrow {
   .merge-visual,
   .icloud-visual {
     grid-row: auto;
+  }
+
+  /* Back to DOM order once stacked, so the devices lead again. */
+  .icloud-visual {
+    grid-column: auto;
   }
 
   .showcase-slab.is-flipped .showcase-demo {
