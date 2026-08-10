@@ -334,10 +334,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   /* `clip`, not `hidden`. Both stop sideways overflow, but `hidden` makes this
-     a scroll container — which forces overflow-y to compute to `auto`, and puts
-     a non-scrolling scroller between the page and anything that looks for one.
-     That is what broke the hero's scroll-driven animation: view() resolved its
-     timeline against a box that never moves. */
+     a scroll container, which forces overflow-y to compute to `auto` and puts
+     a non-scrolling scroller between the page and anything that goes looking
+     for one. `clip` contains the overflow and leaves the page alone. */
   overflow-x: clip;
 }
 
@@ -803,21 +802,11 @@ h3 {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  /* The space underneath is where the shot grows into. It had none at all, so
-     the moment the shot grew downwards it sat on top of the section below —
-     transforms do not take up room, so nothing moves aside to make way.
-     Reserving it here rather than from the script keeps it out of the layout
-     the browser has already painted, which is the difference between a gap and
-     a jolt; the script reads this back and refuses to grow past it, so the two
-     can never disagree. At rest it simply reads as the end of the section. */
-  padding: clamp(76px, 9vw, 132px) 0 clamp(80px, 13vw, 260px);
+  padding: clamp(76px, 9vw, 132px) 0 0;
   text-align: left;
-  /* Sideways only. The hero shot grows towards the bottom of this section as it
-     is scrolled, and clipping both axes would cut it off — but the glows still
-     need containing horizontally or they widen the page. `clip` rather than
-     `hidden` because hidden makes this a scroll container. */
-  overflow-x: clip;
-  overflow-y: visible;
+  /* `clip` rather than `hidden`: it contains the glows just the same, without
+     quietly turning the hero into a scroll container. */
+  overflow: clip;
   background: #0b0b0c;
 }
 
@@ -1102,35 +1091,6 @@ h3 {
 
 .hero-devices {
   animation-delay: 0.18s;
-}
-
-/* The hero shot grows as the page is scrolled, settling when it is centred and
-   nearly filling the window, and shrinking again on the way back up.
- *
- * The size it grows to cannot be written here. It is the window's width divided
- * by the shot's own width, and CSS cannot divide one length by another — so the
- * figure is measured in SiteScripts and written to this property. Scroll-driven
- * CSS animations would not have helped either: Firefox does not implement them
- * at all, so a stylesheet-only version silently did nothing there.
- *
- * The default is 1. Everything below is inert until the script measures, which
- * means the shot is never wrongly sized while the page is loading.
- *
- * It grows downwards, from its own top edge, so it cannot reach the copy above
- * it however large it gets. From the centre — the default — half of the growth
- * travels upwards, which is 180px on a 1080p screen and 350px on a 1440p one
- * against roughly 90px of clear space above, so the shot ran straight through
- * the buttons on every large display. */
-.hero-devices {
-  --hero-grow: 1;
-  scale: var(--hero-grow);
-  transform-origin: 50% 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-devices {
-    scale: 1;
-  }
 }
 
 @media (max-width: 960px) {
