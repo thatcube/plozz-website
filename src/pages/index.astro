@@ -599,18 +599,18 @@ const siteLd = {
         start();
       });
 
-      gallery.addEventListener("mouseenter", () => {
-        stop();
-      });
-      gallery.addEventListener("mouseleave", () => {
-        start();
-      });
-      gallery.addEventListener("focusin", () => {
-        stop();
-      });
-      gallery.addEventListener("focusout", () => {
-        start();
-      });
+      /*
+       * Hovering does not stop the rotation. The pointer spends most of its
+       * time over the hero simply because the hero is the biggest thing on the
+       * screen, so pausing there stops the gallery for people who never asked
+       * for it and leaves the shot sitting on one slide.
+       *
+       * Focus does not stop it either. The only focusable thing inside the
+       * gallery is the Pause button, so a focus rule amounts to "paused while
+       * the Pause button is focused" — which nothing about the button's own
+       * label would tell you. The button stays the way to stop it, and now it
+       * is the only way, so what it reads is always what is happening.
+       */
       document.addEventListener("visibilitychange", start);
       reducedMotion.addEventListener("change", () => {
         if (reducedMotion.matches) {
