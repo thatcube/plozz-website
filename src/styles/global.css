@@ -805,10 +805,12 @@ h3 {
   position: relative;
   padding: clamp(76px, 9vw, 132px) 0 0;
   text-align: left;
-  /* See the note on body: `clip` contains the glows without becoming a scroll
-     container, which the hero shot's view() timeline has to be able to look
-     past to find the page. */
-  overflow: clip;
+  /* Sideways only. The hero shot grows past the bottom of this section as it is
+     scrolled, and clipping both axes would cut it off — but the glows still
+     need containing horizontally or they widen the page. `clip` rather than
+     `hidden` because hidden makes this a scroll container. */
+  overflow-x: clip;
+  overflow-y: visible;
   background: #0b0b0c;
 }
 
@@ -1095,63 +1097,25 @@ h3 {
   animation-delay: 0.18s;
 }
 
-/* The hero shot grows into place as the page is scrolled, and shrinks again on
-   the way back up.
+/* The hero shot grows as the page is scrolled, settling when it is centred and
+   nearly filling the window, and shrinking again on the way back up.
  *
- * It runs on a scroll timeline rather than a scroll listener, which matters for
- * three reasons: the browser drives it off the main thread, so it cannot stutter
- * behind slow JavaScript; it resolves to the right size at first paint, with no
- * pop from a script that runs after the page has already been drawn; and there
- * is no script to ship at all.
+ * The size it grows to cannot be written here. It is the window's width divided
+ * by the shot's own width, and CSS cannot divide one length by another — so the
+ * figure is measured in SiteScripts and written to this property. Scroll-driven
+ * CSS animations would not have helped either: Firefox does not implement them
+ * at all, so a stylesheet-only version silently did nothing there.
  *
- * The timeline is the page's own scroll, not the shot's entry into view. Entry
- * was the obvious choice and the wrong one: on most desktop viewports this shot
- * is already fully on screen when the page loads, so an entry-based animation
- * had already finished before anyone could scroll and the effect never showed
- * up at all. Measuring from the top of the page instead gives the movement the
- * same runway on every screen.
- *
- * It ends at 1 — the shot's natural size — rather than growing past it. The
- * hero image is served at 2296px for a 1148px slot, which is exactly 2x on a
- * retina display; rendering it 20% larger would ask for 2756px, drop the
- * effective density to 1.67x and visibly soften the one image the page is
- * built around. Starting at 0.83 gives the same 1.2x change of size, and puts
- * the sharp, correctly-served size at the end of the movement where it rests.
- *
- * `heroRise` animates transform and opacity; this animates the independent
- * `scale` property, so the two compose instead of fighting over one value. */
-@keyframes heroGrow {
-  from {
-    scale: 0.83;
-  }
-  to {
-    scale: 1;
-  }
+ * The default is 1. Everything below is inert until the script measures, which
+ * means the shot is never wrongly sized while the page is loading. */
+.hero-devices {
+  --hero-grow: 1;
+  scale: var(--hero-grow);
 }
 
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-devices {
-      animation-name: heroRise, heroGrow;
-      animation-duration: 0.62s, auto;
-      animation-delay: 0.18s, 0s;
-      animation-fill-mode: both, both;
-      animation-timeline: auto, scroll(root block);
-      /* Full size after a little over half a screen of scrolling, by which
-         point the shot is comfortably in view on any viewport. Past that the
-         animation is finished and it simply stays there. */
-      animation-range: normal, 0 62vh;
-      /* A spring rather than a straight ramp: it runs slightly past full size,
-         eases back under, and settles. Because the timeline is the scroll
-         position, the overshoot is felt as the shot springing into place as it
-         lands. It peaks about 2% over, which costs nothing in sharpness. */
-      animation-timing-function:
-        cubic-bezier(0.22, 1, 0.36, 1),
-        linear(
-          0, 0.28 12%, 0.62 24%, 0.9 34%, 1.07 44%, 1.13 52%, 1.09 62%,
-          1.02 72%, 0.985 82%, 1.001 92%, 1
-        );
-    }
+@media (prefers-reduced-motion: reduce) {
+  .hero-devices {
+    scale: 1;
   }
 }
 
