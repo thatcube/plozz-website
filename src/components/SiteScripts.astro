@@ -130,6 +130,12 @@
    * picture still fits — a screenshot with its edges cut off is not a
    * screenshot of anything.
    *
+   * It grows downwards, from its own top edge, which is why it can never reach
+   * the copy above it. Growing from the centre sent half the growth upwards,
+   * and that half is not small: 180px on a 1080p screen and 350px on a 1440p
+   * one, against about 90px of clear space, so on every large display the shot
+   * climbed straight through the buttons.
+   *
    * This is JavaScript rather than a CSS scroll timeline for two reasons.
    * Firefox does not implement scroll-driven animations at all, and it is the
    * browser this is mostly looked at in; a stylesheet-only version worked in
@@ -144,9 +150,26 @@
 
   if (heroShot) {
     const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const section = heroShot.closest('.hero');
 
     const GAP = 16; // breathing room either side once it has settled
     const PEAK_GAP = 6; // ...and at the top of the spring's overshoot
+
+    /* The shot may not be drawn at less than three quarters of the resolution
+       it was sent at. Past that it is being stretched rather than shown, and a
+       screenshot of an interface goes soft in exactly the places — hairlines,
+       small type — that make it look like software.
+
+       Without this the growth had no upper bound at all, and a wide monitor
+       took it somewhere absurd: 2x on a 1440p screen and 3x on a 4K one, at
+       which point a 1152px picture is being painted 3468px wide, well past the
+       size it exists at. It looked worse the more screen you had. */
+    const SHARPNESS = 0.75;
+
+    /* ...and a limit on the sheer size of the thing, for the case where a
+       browser hands back more pixels than the display needs. Sharpness would
+       allow the growth to continue; taste would not. */
+    const MAX_WIDTH = 1600;
 
     /* An ease-out-back: it runs 6% past its destination, eases back, and
        settles. That figure is not arbitrary — the resting size already leaves
@@ -190,14 +213,44 @@
       const fit = (gap) =>
         Math.min((viewWidth - gap * 2) / width, (viewHeight - gap * 2) / height);
 
-      // Two ceilings: where it comes to rest, and how far the overshoot may
-      // travel. Without the second the spring's peak would push the edges off
-      // the screen on its way to a resting size that fits perfectly.
-      target = Math.max(1, Math.min(fit(GAP), 1 + (fit(PEAK_GAP) - 1) / OVERSHOOT));
+      /* How many real pixels the browser actually fetched. Reading it off the
+         decoded image rather than naming a number keeps this tied to whatever
+         the srcset ladder is currently serving, and it tracks pixel density on
+         its own: a 2x display is handed a rung twice as wide, so the ceiling
+         works out the same on both. */
+      const slide = heroShot.querySelector('img');
+      const source = slide && slide.naturalWidth ? slide.naturalWidth : 0;
+      const dpr = window.devicePixelRatio || 1;
+      const sharp = source
+        ? source / (width * dpr * SHARPNESS)
+        : Number.POSITIVE_INFINITY;
 
-      // Finish at the scroll position that puts the shot in the middle of the
-      // window — the one place a nearly-full-height picture is wholly visible.
-      const centre = layoutTop(heroShot) + height / 2;
+      /* Room to grow into. The shot grows downwards and a transform takes up no
+         space, so nothing below moves aside — the only thing keeping it off the
+         next section is the padding the hero reserves, read back here so the
+         stylesheet stays the one place that number lives. */
+      const room = section
+        ? parseFloat(getComputedStyle(section).paddingBottom) || 0
+        : 0;
+
+      /* Five ceilings, of two kinds.
+         One applies where it comes to rest: the margin it should leave.
+         The rest apply at the furthest point the spring reaches — a tighter
+         margin it may briefly close to, the resolution it was sent at, the room
+         there is below it, and a plain limit on how large a screenshot has any
+         business being.
+         Dividing the second kind by the overshoot is what keeps the bounce
+         honest: without it the peak sails past every one of those limits on
+         its way to a resting size that respects them. */
+      const peak = Math.min(fit(PEAK_GAP), sharp, MAX_WIDTH / width, 1 + room / height);
+      target = Math.max(1, Math.min(fit(GAP), 1 + (peak - 1) / OVERSHOOT));
+
+      /* Finish at the scroll position that puts the shot in the middle of the
+         window — the one place a nearly-full-height picture is wholly visible.
+         Its centre is measured against the grown height, not the natural one,
+         because growth runs downwards from the top edge: the bottom is what
+         moves, so the middle ends up lower than it starts. */
+      const centre = layoutTop(heroShot) + (height * target) / 2;
       runway = Math.max(160, centre - viewHeight / 2);
     };
 
