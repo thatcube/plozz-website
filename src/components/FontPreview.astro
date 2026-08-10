@@ -171,7 +171,12 @@ const options = [
   (() => {
     const KEY = 'plozz-font';
     const root = document.documentElement;
-    let current = options.find((o) => o.id === localStorage.getItem(KEY)) || options[0];
+    // The URL parameter wins over the remembered choice, and must be read here
+    // too — the early script in <head> already applied it, and starting from
+    // localStorage alone would immediately undo it.
+    const forced = new URLSearchParams(location.search).get('font');
+    let current =
+      options.find((o) => o.id === (forced || localStorage.getItem(KEY))) || options[0];
 
     const bar = document.createElement('div');
     bar.className = 'fontbar';
@@ -229,7 +234,16 @@ const options = [
       apply(options[(options.indexOf(current) + 1) % options.length]);
     });
 
-    document.body.appendChild(bar);
-    apply(current);
+    // This script is in <head>, where document.body does not exist yet, so the
+    // bar has to wait for the parser to reach it.
+    const mount = () => {
+      document.body.appendChild(bar);
+      apply(current);
+    };
+    if (document.readyState === 'loading') {
+      addEventListener('DOMContentLoaded', mount, { once: true });
+    } else {
+      mount();
+    }
   })();
 </script>
