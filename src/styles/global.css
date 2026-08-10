@@ -40,6 +40,21 @@
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* Three weights, and only three. Hierarchy is carried by size and space;
+     weight only says what *kind* of thing a piece of text is. A fourth step
+     would sit close enough to its neighbours to read as an accident rather
+     than a decision — the scale this replaced ran 500/560/570/600/620/640/650,
+     where 560 and 570 differ by about one percent of ink and nobody could tell
+     them apart, including the person choosing between them.
+
+     Use --w-regular for anything you read a sentence of.
+     Use --w-strong  for headings, labels, buttons — text that must land.
+     Use --w-bold    sparingly, where something has to outrank a heading:
+                     the wordmark, product names, a standalone numeral. */
+  --w-regular: 400;
+  --w-strong: 600;
+  --w-bold: 700;
+
   /* Pixel-corner primitive controls (overridable per component) */
   --s: 3px;          /* one pixel "step" */
   --s2: 6px;         /* two steps */
@@ -278,6 +293,7 @@ html {
 
 body {
   font-family: var(--font);
+  font-weight: var(--w-regular);
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
@@ -332,7 +348,7 @@ picture > source,
 h1,
 h2,
 h3 {
-  font-weight: 700;
+  font-weight: var(--w-bold);
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
@@ -420,7 +436,7 @@ h3 {
   border-radius: var(--r-sm);
   color: var(--text);
   font-size: 1.1rem;
-  font-weight: 650;
+  font-weight: var(--w-bold);
   letter-spacing: -0.02em;
 }
 
@@ -635,7 +651,7 @@ h3 {
   border: 1px solid #444448;
   border-radius: 999px;
   color: var(--text);
-  font-weight: 600;
+  font-weight: var(--w-strong);
   background: transparent;
 }
 
@@ -656,7 +672,7 @@ h3 {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
   font-family: var(--font);
-  font-weight: 600;
+  font-weight: var(--w-strong);
   font-size: 0.96rem;
   letter-spacing: -0.01em;
   color: var(--text);
@@ -774,7 +790,7 @@ h3 {
      2.55rem it takes four lines on a 393px phone, at 2.4rem it takes three and
      the screenshot clears the fold. Desktop is capped at 5.2rem either way. */
   font-size: clamp(2.4rem, 6.2vw, 5.2rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.055em;
   line-height: 0.94;
   text-wrap: balance;
@@ -855,7 +871,7 @@ h3 {
   gap: calc(var(--share-h) * 0.4);
   color: var(--text);
   font-size: calc(var(--share-h) * 0.95);
-  font-weight: 620;
+  font-weight: var(--w-strong);
   letter-spacing: -0.015em;
   line-height: 1;
 }
@@ -1118,7 +1134,7 @@ h3 {
   margin: 0;
   font-family: var(--font);
   font-size: clamp(2.1rem, 3.6vw, 3.1rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.04em;
   line-height: 1.02;
   color: var(--text);
@@ -1554,7 +1570,7 @@ section {
   width: 42px;
   height: 42px;
   color: var(--brand);
-  font-weight: 700;
+  font-weight: var(--w-bold);
   font-size: 1.2rem;
   margin-bottom: 16px;
 }
@@ -1610,7 +1626,7 @@ section {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: var(--w-strong);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -1663,7 +1679,7 @@ section {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  font-weight: 600;
+  font-weight: var(--w-strong);
   font-size: 1.02rem;
 }
 
@@ -1693,7 +1709,7 @@ section {
 
 .faq details > p a {
   color: var(--brand);
-  font-weight: 500;
+  font-weight: var(--w-strong);
 }
 
 .faq details > p a:hover {
@@ -1771,7 +1787,7 @@ section {
   padding-inline: 8px;
   border-radius: var(--r-sm);
   font-size: 1rem;
-  font-weight: 640;
+  font-weight: var(--w-bold);
   letter-spacing: -0.02em;
   color: var(--text);
 }
@@ -1793,7 +1809,7 @@ section {
   margin: 0 0 14px;
   font-family: var(--font);
   font-size: 0.9rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.01em;
   color: var(--text);
 }
@@ -1843,7 +1859,7 @@ section {
 button.btn {
   font: inherit;
   font-family: var(--font);
-  font-weight: 600;
+  font-weight: var(--w-strong);
   -webkit-appearance: none;
   appearance: none;
 }
@@ -1976,7 +1992,7 @@ button.btn {
   max-width: 20ch;
   margin: 0;
   font-size: clamp(2.6rem, 5.4vw, 4.4rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.045em;
   line-height: 1.0;
   text-wrap: balance;
@@ -2265,7 +2281,7 @@ button.btn {
 .spoillab-title {
   margin: 16px 0 0;
   font-size: 1rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   color: var(--text);
 }
 
@@ -2339,7 +2355,7 @@ button.btn {
 
 .proof li > span:first-child {
   font-size: 0.98rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.015em;
   color: var(--text);
 }
@@ -2370,7 +2386,7 @@ button.btn {
   margin: 0;
   font-family: var(--font);
   font-size: clamp(2.1rem, 3.6vw, 3.1rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.04em;
   line-height: 1.02;
   color: var(--text);
@@ -2416,7 +2432,7 @@ button.btn {
 .badge-value {
   padding: 9px 13px;
   border-left: 1px solid var(--border);
-  font-weight: 560;
+  font-weight: var(--w-strong);
   color: var(--text);
 }
 
@@ -2488,7 +2504,7 @@ button.btn {
   margin: 0;
   font-family: var(--font);
   font-size: clamp(1.15rem, 1.6vw, 1.4rem);
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.025em;
   line-height: 1.15;
   color: var(--text);
@@ -2525,7 +2541,7 @@ button.btn {
   border: 1px solid var(--border);
   border-radius: var(--r-pill);
   font-size: 0.92rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.01em;
   color: var(--text-muted);
   text-decoration: none;
@@ -2606,7 +2622,7 @@ button.btn {
   margin: 0;
   font-family: var(--font);
   font-size: clamp(1.3rem, 2vw, 1.7rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.035em;
   line-height: 1.1;
   color: var(--text);
@@ -2630,7 +2646,7 @@ button.btn {
 
 .fmt-name {
   font-size: 0.97rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.015em;
   color: var(--text);
 }
@@ -2660,7 +2676,7 @@ button.btn {
   margin: 0;
   font-family: var(--font);
   font-size: clamp(1.9rem, 3.4vw, 2.9rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.04em;
   line-height: 1.04;
   color: var(--text);
@@ -2682,7 +2698,7 @@ button.btn {
   gap: 20px;
   padding: clamp(16px, 1.9vw, 21px) 0;
   font-size: 1rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.015em;
   color: var(--text);
   cursor: pointer;
@@ -2782,7 +2798,7 @@ button.btn {
   margin: 0;
   font-family: var(--font);
   font-size: clamp(1.9rem, 3.4vw, 2.9rem);
-  font-weight: 570;
+  font-weight: var(--w-strong);
   letter-spacing: -0.04em;
   line-height: 1.04;
   color: var(--text);
@@ -2852,7 +2868,7 @@ a.cell:hover {
   margin: 0;
   font-family: var(--font);
   font-size: 1.05rem;
-  font-weight: 560;
+  font-weight: var(--w-strong);
   letter-spacing: -0.02em;
   color: var(--text);
 }
@@ -3126,7 +3142,7 @@ a.cell:hover .cell-arrow {
 
 .source-shares span {
   font-size: calc(var(--logo-h) * 0.66);
-  font-weight: 650;
+  font-weight: var(--w-bold);
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -3261,7 +3277,7 @@ a.cell:hover .cell-arrow {
 .hub-name {
   position: relative;
   font-size: calc(var(--hub-icon) * 0.587);
-  font-weight: 650;
+  font-weight: var(--w-bold);
   letter-spacing: -0.02em;
   line-height: 1;
   color: var(--text);
