@@ -213,16 +213,23 @@
       const fit = (gap) =>
         Math.min((viewWidth - gap * 2) / width, (viewHeight - gap * 2) / height);
 
-      /* How many real pixels the browser actually fetched. Reading it off the
-         decoded image rather than naming a number keeps this tied to whatever
-         the srcset ladder is currently serving, and it tracks pixel density on
-         its own: a 2x display is handed a rung twice as wide, so the ceiling
-         works out the same on both. */
+      /* How much room there is to grow before the picture starts being drawn
+         at less resolution than it was sent at.
+
+         naturalWidth is the width the browser picked this image to fill, in CSS
+         pixels: for a srcset with width descriptors it is the file's real width
+         divided by the density it was chosen at, so the 2296px file selected
+         for a 1148px slot on a retina screen reports 1148. That is exactly the
+         number wanted here, and it is why devicePixelRatio must not appear in
+         this sum — the density is already accounted for, and a denser screen is
+         handed a proportionally larger file, so the ratio comes out the same on
+         every display. Multiplying by it again said the shot was already twice
+         too big for its source and pinned the growth shut on retina screens,
+         while leaving every 1x screen working. */
       const slide = heroShot.querySelector('img');
       const source = slide && slide.naturalWidth ? slide.naturalWidth : 0;
-      const dpr = window.devicePixelRatio || 1;
       const sharp = source
-        ? source / (width * dpr * SHARPNESS)
+        ? source / (width * SHARPNESS)
         : Number.POSITIVE_INFINITY;
 
       /* Room to grow into. The shot grows downwards and a transform takes up no
@@ -280,6 +287,24 @@
 
     start();
     still.addEventListener('change', start);
+
+    /* The size the shot may grow to depends on the resolution of the picture
+       inside it, which is not known until that picture has arrived. Measure
+       again when it does, or the first measurement is taken with no ceiling at
+       all. */
+    const first = heroShot.querySelector('img');
+    if (first && !first.complete) {
+      first.addEventListener(
+        'load',
+        () => {
+          if (!still.matches) {
+            measure();
+            apply();
+          }
+        },
+        { once: true }
+      );
+    }
 
     // The shot is 16:9 with a fixed aspect, so a resize changes both how much
     // room there is and how far away the centre is.
