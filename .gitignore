@@ -1,6 +1,8 @@
 # build output
 dist/
 .output/
+# scratch renders: font contact sheets and anything else tools/ composes
+build/
 
 # wrangler / cloudflare local state
 .wrangler/

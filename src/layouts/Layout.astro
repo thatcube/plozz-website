@@ -1,5 +1,11 @@
 ---
 import '../styles/global.css';
+import FontPreview from '../components/FontPreview.astro';
+
+/** A build-time try-on rig for typefaces, off unless explicitly asked for.
+    `npm run fonts` sets this; a normal build never renders the component, so
+    the shipped pages carry no webfont request and no switcher. */
+const fontPreview = import.meta.env.PLOZZ_FONT_PREVIEW === '1';
 
 export interface Props {
   title?: string;
@@ -61,6 +67,8 @@ const socialImageAlt =
     <!-- Pages that own their LCP image preload it here, where the parser meets
          it before the markup that uses it. -->
     <slot name="head" />
+
+    {fontPreview && <FontPreview />}
   </head>
   <body>
     <slot />

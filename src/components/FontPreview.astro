@@ -1,0 +1,235 @@
+---
+/**
+ * A font try-on rig. Preview only — it is rendered solely when the site is
+ * built or served with PLOZZ_FONT_PREVIEW=1, so nothing here can reach
+ * production. See `npm run fonts`.
+ *
+ * Every bit of type on the site resolves through `--font`, so swapping that one
+ * property re-typesets the whole page. The switcher writes it on <html> and
+ * remembers the choice, which means a candidate can be walked across all nine
+ * pages rather than judged on a single headline.
+ *
+ * The candidates are all open licence (OFL / MIT), all sans, and all *variable*
+ * — the site asks for weights like 560 and 570, which a static font would round
+ * to the nearest hundred and quietly flatten the hierarchy.
+ */
+
+export interface Candidate {
+  id: string;
+  name: string;
+  /** The css2 axis spec. Multi-axis families must list axes alphabetically. */
+  axes: string;
+  /** What it brings, in a few words — the reason to look at it. */
+  note: string;
+}
+
+export const CANDIDATES: Candidate[] = [
+  { id: 'inter', name: 'Inter', axes: 'wght@100..900', note: 'The modern neutral. Closest to today, better fitted.' },
+  { id: 'geist', name: 'Geist', axes: 'wght@100..900', note: 'Technical and crisp. Quietly opinionated.' },
+  { id: 'space-grotesk', name: 'Space Grotesk', axes: 'wght@300..700', note: 'Retro-technical. The most character here.' },
+  { id: 'manrope', name: 'Manrope', axes: 'wght@200..800', note: 'Semi-geometric. Distinctive without shouting.' },
+  { id: 'jakarta', name: 'Plus Jakarta Sans', axes: 'wght@200..800', note: 'Geometric but warm. Friendly at large sizes.' },
+  { id: 'outfit', name: 'Outfit', axes: 'wght@100..900', note: 'Pure geometry. Poster-like headlines.' },
+  { id: 'sora', name: 'Sora', axes: 'wght@100..800', note: 'Squared-off and confident. Reads as software.' },
+  { id: 'bricolage', name: 'Bricolage Grotesque', axes: 'opsz,wdth,wght@12..96,75..100,200..800', note: 'Expressive and editorial. Most personality per line.' },
+  { id: 'instrument', name: 'Instrument Sans', axes: 'wdth,wght@75..100,400..700', note: 'Modern grotesque with a subtle quirk.' },
+  { id: 'archivo', name: 'Archivo', axes: 'wdth,wght@62..125,100..900', note: 'Sturdy grotesque. Excellent tight headlines.' },
+];
+
+const SYSTEM_STACK =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+
+const href =
+  'https://fonts.googleapis.com/css2?' +
+  CANDIDATES.map((c) => `family=${c.name.replace(/ /g, '+')}:${c.axes}`).join('&') +
+  '&display=swap';
+
+const options = [
+  { id: 'system', name: 'System', stack: SYSTEM_STACK, note: 'Today: SF Pro on Apple, Segoe on Windows.' },
+  ...CANDIDATES.map((c) => ({
+    id: c.id,
+    name: c.name,
+    stack: `"${c.name}", ${SYSTEM_STACK}`,
+    note: c.note,
+  })),
+];
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href={href} />
+
+{/* Applied before first paint so a choice survives navigation without a flash
+    of the previous face. */}
+<script is:inline define:vars={{ options }}>
+  (() => {
+    // A `?font=<id>` parameter wins over the remembered choice, so the set can
+    // be driven from outside the browser — that is how the contact sheet in
+    // tools/font-sheet.mjs renders one page ten times.
+    const forced = new URLSearchParams(location.search).get('font');
+    const saved = forced || localStorage.getItem('plozz-font');
+    const hit = options.find((o) => o.id === saved);
+    if (hit && hit.id !== 'system') {
+      document.documentElement.style.setProperty('--font', hit.stack);
+    }
+  })();
+</script>
+
+<style is:inline>
+  .fontbar {
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #fff;
+  }
+  .fontbar__toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(16, 18, 24, 0.82);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+  .fontbar__toggle b {
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .fontbar__kbd {
+    opacity: 0.45;
+    font-size: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+  .fontbar__list {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92vw, 460px);
+    max-height: min(70vh, 620px);
+    overflow: auto;
+    padding: 6px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(16, 18, 24, 0.94);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+  }
+  .fontbar__list[hidden] {
+    display: none;
+  }
+  .fontbar__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 11px 14px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+  }
+  .fontbar__item:hover {
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .fontbar__item[aria-current='true'] {
+    background: rgba(90, 160, 255, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(120, 180, 255, 0.4);
+  }
+  /* The name is set in the face it names, so the list is itself a specimen. */
+  .fontbar__name {
+    display: block;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .fontbar__note {
+    display: block;
+    margin-top: 2px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    line-height: 1.45;
+    opacity: 0.55;
+  }
+</style>
+
+<script is:inline define:vars={{ options }}>
+  (() => {
+    const KEY = 'plozz-font';
+    const root = document.documentElement;
+    let current = options.find((o) => o.id === localStorage.getItem(KEY)) || options[0];
+
+    const bar = document.createElement('div');
+    bar.className = 'fontbar';
+    bar.innerHTML =
+      '<button class="fontbar__toggle" aria-expanded="false">' +
+      'Aa <b class="fontbar__current"></b>' +
+      '<span class="fontbar__kbd">F</span></button>' +
+      '<div class="fontbar__list" hidden role="listbox"></div>';
+
+    const toggle = bar.querySelector('.fontbar__toggle');
+    const label = bar.querySelector('.fontbar__current');
+    const list = bar.querySelector('.fontbar__list');
+
+    const apply = (opt) => {
+      current = opt;
+      if (opt.id === 'system') root.style.removeProperty('--font');
+      else root.style.setProperty('--font', opt.stack);
+      localStorage.setItem(KEY, opt.id);
+      label.textContent = opt.name;
+      list.querySelectorAll('.fontbar__item').forEach((el) => {
+        el.setAttribute('aria-current', String(el.dataset.id === opt.id));
+      });
+    };
+
+    options.forEach((opt) => {
+      const item = document.createElement('button');
+      item.className = 'fontbar__item';
+      item.dataset.id = opt.id;
+      item.innerHTML =
+        '<span class="fontbar__name"></span><span class="fontbar__note"></span>';
+      const name = item.querySelector('.fontbar__name');
+      name.textContent = opt.name;
+      name.style.fontFamily = opt.stack;
+      item.querySelector('.fontbar__note').textContent = opt.note;
+      item.addEventListener('click', () => {
+        apply(opt);
+        list.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+      list.appendChild(item);
+    });
+
+    toggle.addEventListener('click', () => {
+      list.hidden = !list.hidden;
+      toggle.setAttribute('aria-expanded', String(!list.hidden));
+    });
+
+    // `f` steps to the next candidate, so the whole set can be compared against
+    // one fixed piece of layout without the list covering it.
+    addEventListener('keydown', (e) => {
+      if (e.key !== 'f' && e.key !== 'F') return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      apply(options[(options.indexOf(current) + 1) % options.length]);
+    });
+
+    document.body.appendChild(bar);
+    apply(current);
+  })();
+</script>
