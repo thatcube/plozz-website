@@ -333,7 +333,12 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* `clip`, not `hidden`. Both stop sideways overflow, but `hidden` makes this
+     a scroll container — which forces overflow-y to compute to `auto`, and puts
+     a non-scrolling scroller between the page and anything that looks for one.
+     That is what broke the hero's scroll-driven animation: view() resolved its
+     timeline against a box that never moves. */
+  overflow-x: clip;
 }
 
 a {
@@ -800,7 +805,10 @@ h3 {
   position: relative;
   padding: clamp(76px, 9vw, 132px) 0 0;
   text-align: left;
-  overflow: hidden;
+  /* See the note on body: `clip` contains the glows without becoming a scroll
+     container, which the hero shot's view() timeline has to be able to look
+     past to find the page. */
+  overflow: clip;
   background: #0b0b0c;
 }
 
@@ -823,12 +831,12 @@ h3 {
      container gives 1152px to play with, so this keeps a little room spare. */
   max-width: 1120px;
   margin: 0;
-  /* The floor stays at 2.4rem for impact. Manrope is wider than the system face
-     this replaced, so a 375px phone now takes four lines where that took three;
-     holding three would mean dropping to 2.0rem, and 17% off the headline is a
-     poor trade for one line. The device shot still starts above the fold on a
-     375x667 viewport. Desktop is capped at 5.2rem either way. */
-  font-size: clamp(2.4rem, 6.2vw, 5.2rem);
+  /* The floor is 2.2rem: the largest step that still holds the headline to
+     three lines on a 375px phone in Manrope. 2.3rem needs -0.05em of tracking
+     to manage it, which is tighter than the display setting should ever go,
+     and 2.4rem takes four lines however it is tracked. Desktop is capped at
+     5.2rem either way. */
+  font-size: clamp(2.2rem, 6.2vw, 5.2rem);
   font-weight: var(--w-strong);
   letter-spacing: var(--track-display);
   /* Not below 1. The headline puts a descender directly above an ascender —
@@ -1085,6 +1093,63 @@ h3 {
 
 .hero-devices {
   animation-delay: 0.18s;
+}
+
+/* The hero shot grows into place as it is scrolled into view, and shrinks again
+   on the way back up.
+ *
+ * It runs on a scroll timeline rather than a scroll listener, which matters for
+ * three reasons: the browser drives it off the main thread, so it cannot stutter
+ * behind slow JavaScript; it resolves to the right size at first paint, with no
+ * pop from a script that runs after the page has already been drawn; and there
+ * is no script to ship at all.
+ *
+ * It ends at 1 — the shot's natural size — rather than growing past it. The
+ * hero image is served at 2296px for a 1148px slot, which is exactly 2x on a
+ * retina display; rendering it 20% larger would ask for 2756px, drop the
+ * effective density to 1.67x and visibly soften the one image the page is
+ * built around. Starting at 0.83 gives the same 1.2x change of size, and puts
+ * the sharp, correctly-served size at the end of the movement where it rests.
+ *
+ * `heroRise` animates transform and opacity; this animates the independent
+ * `scale` property, so the two compose instead of fighting over one value. */
+@keyframes heroGrow {
+  from {
+    scale: 0.83;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-devices {
+      animation-name: heroRise, heroGrow;
+      animation-duration: 0.62s, auto;
+      animation-delay: 0.18s, 0s;
+      animation-fill-mode: both, both;
+      animation-timeline: auto, view();
+      /* Ends when the shot is fully in view. It starts at 40% of the way in
+         rather than at the first visible pixel because on a desktop viewport
+         the shot is already about 44% on screen when the page loads — anchoring
+         at 0% would spend the entire movement before anyone could watch it.
+         Starting later puts the growth in the part of the scroll people
+         actually see. Past the end the animation is finished and the shot
+         simply stays at full size. */
+      animation-range: normal, entry 40% entry 100%;
+      /* A spring rather than a straight ramp: it runs slightly past full size,
+         eases back under, and settles. Because the timeline is the scroll
+         position, the overshoot is felt as the shot springing into place as it
+         lands. It peaks about 2% over, which costs nothing in sharpness. */
+      animation-timing-function:
+        cubic-bezier(0.22, 1, 0.36, 1),
+        linear(
+          0, 0.28 12%, 0.62 24%, 0.9 34%, 1.07 44%, 1.13 52%, 1.09 62%,
+          1.02 72%, 0.985 82%, 1.001 92%, 1
+        );
+    }
+  }
 }
 
 @media (max-width: 960px) {
