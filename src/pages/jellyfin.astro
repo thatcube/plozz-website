@@ -11,9 +11,20 @@ import Shot from "../components/Shot.astro";
 import { FIGURE } from "../data/imageSizes";
 
 const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Direct plays 4K HDR and Dolby Vision without making Jellyfin transcode. No Pro tier.";
+const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Plays MKV, Dolby Vision and TrueHD on the device, so your server hands over the file.";
 
 const compatibility = [
+  {
+    "name": "Containers",
+    "value": "MKV included, which is the one that usually forces a transcode.",
+    "chips": [
+      "MKV",
+      "WebM",
+      "MP4",
+      "MOV",
+      "TS"
+    ]
+  },
   {
     "name": "Video",
     "chips": [
@@ -45,12 +56,12 @@ const compatibility = [
     ]
   },
   {
-    "name": "Scrub thumbnails",
-    "value": "Jellyfin trickplay tiles."
+    "name": "Signing in",
+    "value": "Quick Connect, or a username and password when your server has it switched off."
   },
   {
-    "name": "One library",
-    "value": "Merges with Plex, Emby and network shares, or keeps its own rows."
+    "name": "Scrub thumbnails",
+    "value": "Jellyfin trickplay tiles, at the highest resolution your server generated."
   }
 ];
 ---
@@ -61,22 +72,25 @@ const compatibility = [
   <main>
     <PageHero
       eyebrow={"Jellyfin"}
-      title={"Stop making Jellyfin transcode."}
+      title={"Jellyfin without the transcode."}
+      lead={"Most Apple TV apps can’t open an MKV, so Jellyfin re-encodes one for them. Plozz decodes it on the device and takes the file as it is."}
     />
 
     <Showcase
-      question={"Will it wreck my server?"}
+      question={"Why does Jellyfin transcode for other apps?"}
+      detail={"Plozz tells your server what it can decode, and that list includes MKV. So Jellyfin marks the file direct-play and sends it untouched — no re-encode, no pegged CPU, no second copy at lower quality."}
     >
       <ul class="proof">
-        <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
-        <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
-        <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
-        <li><span>Your server</span><span>Hands over the file, nothing more</span></li>
+        <li><span>The cause</span><span>Apple’s player cannot demux MKV at all</span></li>
+        <li><span>What that forces</span><span>The server re-encodes, in real time, to something it can open</span></li>
+        <li><span>What Plozz does</span><span>Decodes MKV, AV1, DTS-HD and TrueHD itself</span></li>
+        <li><span>So the server</span><span>Is told the file is playable, and just sends it</span></li>
       </ul>
     </Showcase>
 
     <Showcase
       question={"Can I make the subtitles readable?"}
+      detail={"Text subtitles are drawn on the Apple TV, so the typeface, size and colour are yours rather than whatever was baked in upstream. Picture-based tracks — PGS, DVB, DVD — are images, so Plozz reaches for a text version instead when the file carries one."}
       flip
     >
       <Shot
@@ -88,13 +102,26 @@ const compatibility = [
     </Showcase>
 
     <Showcase
-      question={"Does it skip intros?"}
+      question={"Signing in, without typing a password on a remote"}
+      detail={"Quick Connect is Jellyfin’s own approval flow. Plozz asks your server for a code, you approve it in Jellyfin on something with a real keyboard, and the token lands on the Apple TV."}
     >
       <ul class="proof">
-        <li><span>Off</span><span>Never touch it</span></li>
-        <li><span>On</span><span>Show a Skip button</span></li>
-        <li><span>Auto (delay)</span><span>Skip after five seconds, cancellable</span></li>
-        <li><span>Auto (instant)</span><span>Gone before you notice</span></li>
+        <li><span>Quick Connect</span><span>Approve a six-character code from your phone</span></li>
+        <li><span>Nothing typed</span><span>No password goes near the on-screen keyboard</span></li>
+        <li><span>If it’s switched off</span><span>A username and password still work</span></li>
+        <li><span>More than one person</span><span>Sign in as several Jellyfin users at once</span></li>
+      </ul>
+    </Showcase>
+
+    <Showcase
+      question={"Jellyfin has users. A household has people."}
+      detail={"Your Jellyfin users decide what the server will hand over. Plozz’s profiles decide what the app looks like once it arrives. Both apply at once, so a child can have their own Jellyfin account and a simpler app to reach it through."}
+    >
+      <ul class="proof">
+        <li><span>Profiles</span><span>Plozz’s own, on top of your Jellyfin users</span></li>
+        <li><span>Kids profiles</span><span>A smaller app, with the settings out of reach</span></li>
+        <li><span>Parental PIN</span><span>One household PIN, stored only as a salted verifier</span></li>
+        <li><span>Profile lock</span><span>Optional, and separate — yours, not the household’s</span></li>
       </ul>
     </Showcase>
 
