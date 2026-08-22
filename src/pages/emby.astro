@@ -5,54 +5,13 @@ import SiteFooter from '../components/SiteFooter.astro';
 import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Stage from '../components/Stage.astro';
 import Showcase from '../components/Showcase.astro';
-import FactSection from '../components/FactSection.astro';
 import Shot from "../components/Shot.astro";
-import { FIGURE } from "../data/imageSizes";
+import { STAGE, FIGURE } from "../data/imageSizes";
 
 const title = "Emby client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Emby client for Apple TV, iPhone and iPad. Full playback on every device, with Emby as a first-class source.";
-
-const compatibility = [
-  {
-    "name": "Video",
-    "chips": [
-      "HEVC",
-      "H.264",
-      "VP9",
-      "AV1"
-    ]
-  },
-  {
-    "name": "HDR",
-    "chips": [
-      "Dolby Vision P5",
-      "Dolby Vision P8",
-      "HDR10",
-      "HLG"
-    ]
-  },
-  {
-    "name": "Subtitles",
-    "chips": [
-      "SRT",
-      "ASS",
-      "SSA",
-      "VTT",
-      "PGS",
-      "DVB",
-      "DVD"
-    ]
-  },
-  {
-    "name": "One library",
-    "value": "Merges with Plex, Jellyfin and network shares, or keeps its own rows."
-  },
-  {
-    "name": "Hide anything",
-    "value": "Any library can leave Home and Search without disconnecting."
-  }
-];
+const description = "A free, open source Emby client for Apple TV, iPhone and iPad. Emby is a provider in its own right, down to finding the Atmos its API doesn’t report.";
 ---
 
 <Layout title={title} description={description}>
@@ -60,50 +19,37 @@ const compatibility = [
 
   <main>
     <PageHero
-      eyebrow={"Emby"}
       title={"Emby, not an afterthought."}
+      lead={"Emby and Jellyfin share an ancestor, which is usually where support for the younger one stops. Emby’s own discovery, its own chapter markers, its own trickplay, and the sound it forgets to mention."}
     />
 
-    <Showcase
-      question={"Will it wreck my server?"}
+    <Stage
+      title={"Atmos it never told us about"}
+      caption={"Emby’s API doesn’t always report Dolby Atmos on an E-AC-3 track. Rather than take its word for it, Plozz decodes a single frame after the page has drawn, and adds the badge when it finds one."}
     >
-      <ul class="proof">
-        <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
-        <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
-        <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
-        <li><span>Your server</span><span>Hands over the file, nothing more</span></li>
-      </ul>
-    </Showcase>
+      <Shot
+        name="plozz-tv-lotr"
+        alt="A film detail page in Plozz on Apple TV, showing 4K, Dolby Vision and Dolby Atmos badges beneath the running time"
+        sizes={STAGE}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </Stage>
 
     <Showcase
-      question={"Can I make the subtitles readable?"}
+      question={"Found on your network, not typed in"}
+      detail={"Emby announces itself over the network, so the server is usually already in the list by the time you get to it. Where the two servers differ underneath — how each classifies HDR, where each keeps its intro markers, how each serves scrub thumbnails — Plozz follows Emby rather than guessing from Jellyfin."}
       flip
     >
       <Shot
-        name="plozz-tv-subtitles"
-        alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
+        name="plozz-tv-cast"
+        alt="A cast page in Plozz on Apple TV, showing an actor with the titles they appear in"
         sizes={FIGURE}
         class="shot"
       />
     </Showcase>
 
-    <Showcase
-      question={"Is Emby treated like Jellyfin?"}
-    >
-      <ul class="proof">
-        <li><span>Shared protocol</span><span>MediaBrowser, for both</span></li>
-        <li><span>HDR reporting</span><span>Classified differently, handled per server</span></li>
-        <li><span>Studio IDs</span><span>Formatted differently, handled per server</span></li>
-        <li><span>Status</span><span>A provider in its own right</span></li>
-      </ul>
-    </Showcase>
-
-    <FactSection
-      title="Compatibility"
-      facts={compatibility}
-    />
-
-    <Closer secondaryHref="/features" secondaryLabel="The questions people ask" />
+    <Closer secondaryHref="/features" secondaryLabel="Everything it does" />
   </main>
 
   <SiteFooter />

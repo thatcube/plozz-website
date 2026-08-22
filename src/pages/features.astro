@@ -6,7 +6,6 @@ import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
-import DensityLab from '../components/DensityLab.astro';
 import SpoilerLab from '../components/SpoilerLab.astro';
 import DirectPath from '../components/DirectPath.astro';
 import Offline from '../components/Offline.astro';
@@ -15,9 +14,9 @@ import Nowhere from '../components/Nowhere.astro';
 import Shot from "../components/Shot.astro";
 import { FIGURE } from "../data/imageSizes";
 
-const title = 'Plozz features — the questions people actually ask';
+const title = 'Plozz features — direct play, profiles, subtitles and downloads';
 const description =
-  'Does it direct play? Can I skip intros? Can I fix the subtitles? Can I watch offline? The answers, shown rather than listed.';
+  'Direct play with no transcoding, subtitle styling mid-scene, automatic intro skipping, spoiler protection and offline downloads. Shown rather than listed.';
 ---
 
 <Layout title={title} description={description}>
@@ -25,19 +24,19 @@ const description =
 
   <main>
     <PageHero
-      eyebrow="Features"
-      title="The questions people actually ask."
+      title="Everything it does."
+      lead="Shown rather than listed, because a page of option names is a specification and this is not one."
     />
 
     <Showcase
-      question="Will it wreck my server?"
+      question="Direct play, no transcoding"
       detail="Nothing upstream re-encodes a thing, so your server sits idle while you watch."
     >
       <DirectPath source="Your server" icon="ph:hard-drives" />
     </Showcase>
 
     <Showcase
-      question="Can I make the subtitles readable?"
+      question="Subtitles you can actually read"
       detail="Seven typefaces, two of them built for people who struggle to read subtitles at all. Change any of it mid-scene, without leaving what you're watching."
       flip
     >
@@ -50,21 +49,14 @@ const description =
     </Showcase>
 
     <Showcase
-      question="Does it skip intros?"
+      question="Skip intros automatically"
       detail="Four settings, and the difference between them is what happens to the playhead. Works wherever your server marks its intros and credits."
     >
       <IntroModes />
     </Showcase>
 
     <Showcase
-      question="Can I fit more on screen?"
-      detail="Card size, spacing and columns all move together. Every profile remembers its own."
-    >
-      <DensityLab />
-    </Showcase>
-
-    <Showcase
-      question="Will it spoil the next episode?"
+      question="Spoiler protection"
       detail="Artwork stays hidden and the title just reads Episode 4 until you’ve watched it. Ratings can stay hidden too."
       flip
     >
@@ -72,14 +64,14 @@ const description =
     </Showcase>
 
     <Showcase
-      question="Can I watch on a plane?"
+      question="Offline downloads"
       detail="Queue a film or a whole season on an iPhone or iPad, and stick to Wi-Fi if you’d rather not spend the data. Picture in Picture keeps your subtitles and controls, and the audio carries on when the screen locks."
     >
       <Offline />
     </Showcase>
 
     <Showcase
-      question="What are you doing with my data?"
+      question="No analytics, no account"
       detail="No analytics anywhere in the code, no account to make, and crash reporting stays off until you switch it on. Public builds ship without anywhere to send one anyway."
       flip
     >

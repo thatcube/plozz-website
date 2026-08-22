@@ -5,46 +5,13 @@ import SiteFooter from '../components/SiteFooter.astro';
 import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Stage from '../components/Stage.astro';
 import Showcase from '../components/Showcase.astro';
-import FactSection from '../components/FactSection.astro';
 import Shot from "../components/Shot.astro";
-import { FIGURE } from "../data/imageSizes";
+import { STAGE, FIGURE } from "../data/imageSizes";
 
-const title = "Play SMB, NFS, WebDAV, SFTP and FTP on Apple TV — Plozz";
-const description = "Plozz plays video straight off a network share on Apple TV, iPhone and iPad. SMB3, NFS, WebDAV, SFTP with key auth, FTP over TLS. No media server needed.";
-
-const compatibility = [
-  {
-    "name": "SMB",
-    "value": "SMB3 only. Plozz refuses SMB1 and SMB2 rather than quietly falling back."
-  },
-  {
-    "name": "SFTP",
-    "chips": [
-      "Password",
-      "OpenSSH key",
-      "PEM key"
-    ]
-  },
-  {
-    "name": "FTP",
-    "chips": [
-      "Anonymous",
-      "Named",
-      "Explicit TLS",
-      "Implicit TLS",
-      "Cert pinning"
-    ]
-  },
-  {
-    "name": "NFS",
-    "value": "Mount an export and browse it."
-  },
-  {
-    "name": "WebDAV",
-    "value": "A URL and credentials."
-  }
-];
+const title = "Play a network share on Apple TV — SMB, NFS and WebDAV — Plozz";
+const description = "Point Plozz at a folder on your NAS over SMB, NFS or WebDAV and it builds the library itself. No Plex, no Jellyfin, no Emby, nothing to install on the server.";
 ---
 
 <Layout title={title} description={description}>
@@ -52,50 +19,37 @@ const compatibility = [
 
   <main>
     <PageHero
-      eyebrow={"Network shares"}
-      title={"A folder of films is a perfectly good library."}
+      title={"A folder of films is a library."}
+      lead={"Point Plozz at a share over SMB, NFS or WebDAV and it does the rest: finds the artwork, works out the seasons, and remembers where you stopped. Nothing gets installed on the other end."}
     />
 
-    <Showcase
-      question={"Do I need a media server?"}
+    <Stage
+      title={"Artwork and episodes, from a folder"}
+      caption={"Plozz keeps the library itself — covers, descriptions, seasons and your progress — so a share ends up looking like everything else on the home screen."}
     >
-      <ul class="proof">
-        <li><span>Nothing to install</span><span>No Plex, Jellyfin or Emby required</span></li>
-        <li><span>Nothing to scan</span><span>Browse the folder as it is</span></li>
-        <li><span>Nothing to transcode</span><span>No middleman to re-encode</span></li>
-        <li><span>Merged in</span><span>Sits beside your servers, if you have any</span></li>
-      </ul>
-    </Showcase>
+      <Shot
+        name="plozz-tv-episodes"
+        alt="A season and episode list in Plozz on Apple TV, built from a network share"
+        sizes={STAGE}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </Stage>
 
     <Showcase
-      question={"Can I make the subtitles readable?"}
+      question={"Nothing to install, nothing to maintain"}
+      detail={"No server to keep running, nothing to update, and no library scan waiting on someone else’s hardware. Plozz looks for shares on your network on its own, and a share sits beside your servers on the home screen rather than off in a corner of its own."}
       flip
     >
       <Shot
-        name="plozz-tv-subtitles"
-        alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
+        name="plozz-tv-mario"
+        alt="A film detail page in Plozz on Apple TV, built from files on a network share"
         sizes={FIGURE}
         class="shot"
       />
     </Showcase>
 
-    <Showcase
-      question={"What about subtitles and Up Next?"}
-    >
-      <ul class="proof">
-        <li><span>Sidecar subtitles</span><span>SRT, ASS, SSA and VTT</span></li>
-        <li><span>Where it looks</span><span>The same folder, and a Subs folder beside it</span></li>
-        <li><span>Up Next lead time</span><span>15, 20, 30, 45 or 60 seconds</span></li>
-        <li><span>Resume</span><span>Kept by Plozz, synced across your devices</span></li>
-      </ul>
-    </Showcase>
-
-    <FactSection
-      title="Compatibility"
-      facts={compatibility}
-    />
-
-    <Closer secondaryHref="/features" secondaryLabel="The questions people ask" />
+    <Closer secondaryHref="/features" secondaryLabel="Everything it does" />
   </main>
 
   <SiteFooter />

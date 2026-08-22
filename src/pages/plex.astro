@@ -5,54 +5,13 @@ import SiteFooter from '../components/SiteFooter.astro';
 import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Stage from '../components/Stage.astro';
 import Showcase from '../components/Showcase.astro';
-import FactSection from '../components/FactSection.astro';
 import Shot from "../components/Shot.astro";
-import { FIGURE } from "../data/imageSizes";
+import { STAGE, FIGURE } from "../data/imageSizes";
 
 const title = "Plex client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Direct play 4K HDR without transcoding, with subtitle search and styling built into the player.";
-
-const compatibility = [
-  {
-    "name": "Video",
-    "chips": [
-      "HEVC",
-      "H.264",
-      "VP9",
-      "AV1"
-    ]
-  },
-  {
-    "name": "HDR",
-    "chips": [
-      "Dolby Vision P5",
-      "Dolby Vision P8",
-      "HDR10",
-      "HLG"
-    ]
-  },
-  {
-    "name": "Badges",
-    "chips": [
-      "Dolby Vision",
-      "Atmos",
-      "Digital+",
-      "DTS",
-      "4K",
-      "5.1",
-      "7.1"
-    ]
-  },
-  {
-    "name": "Scrub thumbnails",
-    "value": "Plex BIF thumbnails."
-  },
-  {
-    "name": "One library",
-    "value": "Merges with Jellyfin, Emby and network shares, or keeps its own rows."
-  }
-];
+const description = "A free, open source Plex client for Apple TV, iPhone and iPad. Plex Home users get their own profile, your watchlist comes with you, and it connects to your server directly rather than through a relay.";
 ---
 
 <Layout title={title} description={description}>
@@ -60,50 +19,37 @@ const compatibility = [
 
   <main>
     <PageHero
-      eyebrow={"Plex"}
-      title={"A Plex client that leaves your server alone."}
+      title={"Your Plex Home, on the television."}
+      lead={"Everyone you’ve added to Plex Home gets their own profile here, with the libraries they’re allowed and the PIN they already use."}
     />
 
-    <Showcase
-      question={"Will it wreck my server?"}
+    <Stage
+      title={"Your library, at whatever size suits you"}
+      caption={"Rows, posters and spacing are per profile, so one person’s wall of small covers isn’t everyone’s."}
     >
-      <ul class="proof">
-        <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
-        <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
-        <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
-        <li><span>Your server</span><span>Hands over the file, nothing more</span></li>
-      </ul>
-    </Showcase>
+      <Shot
+        name="plozz-tv-library"
+        alt="A Plex TV Shows library in Plozz on Apple TV, showing a grid of poster art"
+        sizes={STAGE}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </Stage>
 
     <Showcase
-      question={"Can I make the subtitles readable?"}
+      question={"It talks to your server, not through Plex"}
+      detail={"Plex offers a list of ways to reach a server: on your own network, across the internet, or bounced through a relay when nothing else works. Plozz sorts that list and takes the most direct one it can actually reach, so a server sitting in the next room is used like one."}
       flip
     >
       <Shot
-        name="plozz-tv-subtitles"
-        alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
+        name="plozz-tv-oppenheimer"
+        alt="A film detail page in Plozz on Apple TV, showing full-bleed artwork behind the title, rating and playback controls"
         sizes={FIGURE}
         class="shot"
       />
     </Showcase>
 
-    <Showcase
-      question={"What you get with Plex"}
-    >
-      <ul class="proof">
-        <li><span>Subtitle search</span><span>Find and load one from inside the player</span></li>
-        <li><span>Subtitle styling</span><span>Always yours, never the server’s</span></li>
-        <li><span>Skip intros</span><span>Reads the markers your server provides</span></li>
-        <li><span>Plex Home</span><span>Each person gets their own profile</span></li>
-      </ul>
-    </Showcase>
-
-    <FactSection
-      title="Compatibility"
-      facts={compatibility}
-    />
-
-    <Closer secondaryHref="/features" secondaryLabel="The questions people ask" />
+    <Closer secondaryHref="/features" secondaryLabel="Everything it does" />
   </main>
 
   <SiteFooter />

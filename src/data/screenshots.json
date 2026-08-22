@@ -233,8 +233,8 @@
     ]
   },
   "plozz-tv-episodes": {
-    "width": 1080,
-    "height": 608,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 360,
@@ -252,9 +252,19 @@
         "webp": "plozz-tv-episodes-800.583f3868.webp"
       },
       {
-        "w": 1080,
-        "avif": "plozz-tv-episodes-1080.eb05fb5a.avif",
-        "webp": "plozz-tv-episodes-1080.f72025b2.webp"
+        "w": 1152,
+        "avif": "plozz-tv-episodes-1152.865ac819.avif",
+        "webp": "plozz-tv-episodes-1152.ab7d7151.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-episodes-1660.bc7d3d5c.avif",
+        "webp": "plozz-tv-episodes-1660.9a3f9c97.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-episodes-2296.9e6ef3f0.avif",
+        "webp": "plozz-tv-episodes-2296.1eeeb737.webp"
       }
     ]
   },
@@ -337,8 +347,8 @@
     ]
   },
   "plozz-tv-library": {
-    "width": 1080,
-    "height": 608,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 360,
@@ -356,9 +366,19 @@
         "webp": "plozz-tv-library-800.19f66030.webp"
       },
       {
-        "w": 1080,
-        "avif": "plozz-tv-library-1080.9e065749.avif",
-        "webp": "plozz-tv-library-1080.d2ee4d30.webp"
+        "w": 1152,
+        "avif": "plozz-tv-library-1152.bebb8c9a.avif",
+        "webp": "plozz-tv-library-1152.b3ea60b2.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-library-1660.0d8e7a59.avif",
+        "webp": "plozz-tv-library-1660.f2f2161f.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-library-2296.be508431.avif",
+        "webp": "plozz-tv-library-2296.50ec1fb3.webp"
       }
     ]
   },

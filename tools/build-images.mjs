@@ -105,8 +105,10 @@ const USAGE = {
   // Marquee rows only.
   'plozz-tv-show': ['marquee'],
   'plozz-tv-home': ['marquee'],
-  'plozz-tv-library': ['marquee'],
-  'plozz-tv-episodes': ['marquee'],
+  // Also the full-width stage on /plex.
+  'plozz-tv-library': ['marquee', 'hero'],
+  // Also the full-width stage on /network-shares.
+  'plozz-tv-episodes': ['marquee', 'hero'],
   'plozz-tv-settings': ['marquee'],
   'plozz-tv-ratings': ['marquee'],
   // Also the full-width stage on the server pages, where profiles lead.
