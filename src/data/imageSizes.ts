@@ -79,3 +79,11 @@ export const THUMB = '(max-width: 480px) calc(100vw - 118px), 410px';
  */
 export const DEVICE_IPAD = '(max-width: 720px) 310px, 463px';
 export const DEVICE_IPHONE = '(max-width: 720px) 95px, 136px';
+
+/**
+ * .stage-frame, which deliberately breaks past the text column: it runs the
+ * viewport less a 16px gutter each side, up to 1440px.
+ *
+ * measured  390:358  768:736  1024:992  1280:1248  1440:1408  1600+:1440
+ */
+export const STAGE = '(max-width: 1472px) calc(100vw - 32px), 1440px';

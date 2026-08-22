@@ -1,0 +1,47 @@
+---
+/**
+ * A screenshot at the size it deserves.
+ *
+ * The server pages had one container and used it for everything: a heading, a
+ * panel, prose on one side, a picture on the other, three times down the page.
+ * The pictures are the best thing here — full-bleed cover art, real libraries,
+ * the actual set — and that layout had them arriving at about a third of the
+ * page width with a paragraph competing for the same look.
+ *
+ * So this one is wider than the text column and carries no prose at all. The
+ * heading sits on the page keyline like every other heading; the picture
+ * breaks past it; the caption underneath is one line, because a picture this
+ * size has already made the argument.
+ */
+export interface Props {
+  title: string;
+  /** One line. If it needs two, the picture isn't doing its job. */
+  caption?: string;
+}
+
+const { title, caption } = Astro.props;
+const id = title
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-|-$/g, "");
+---
+
+<section class="stage" aria-labelledby={id}>
+  <div class="container">
+    <div class="band-head">
+      <h2 id={id}>{title}</h2>
+    </div>
+  </div>
+
+  <div class="stage-frame">
+    <slot />
+  </div>
+
+  {
+    caption && (
+      <div class="container">
+        <p class="stage-caption">{caption}</p>
+      </div>
+    )
+  }
+</section>

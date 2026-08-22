@@ -1,5 +1,9 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 export interface Fact {
+  /** Optional glyph. Carries meaning here, so a fact either has one or none. */
+  icon?: string;
   name: string;
   value?: string;
   chips?: string[];
@@ -27,6 +31,7 @@ const headingId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$
     <ul class="slab" style={`--cols: ${cols}`}>
       {facts.map((fact) => (
         <li class="cell">
+          {fact.icon && <Icon class="cell-icon" name={fact.icon} />}
           <h3>{fact.name}</h3>
           {fact.value && <p>{fact.value}</p>}
           {fact.chips && (

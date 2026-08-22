@@ -109,8 +109,9 @@ const USAGE = {
   'plozz-tv-episodes': ['marquee'],
   'plozz-tv-settings': ['marquee'],
   'plozz-tv-ratings': ['marquee'],
-  'plozz-tv-profiles': ['marquee'],
-  'plozz-tv-profile-edit': ['marquee'],
+  // Also the full-width stage on the server pages, where profiles lead.
+  'plozz-tv-profiles': ['marquee', 'hero'],
+  'plozz-tv-profile-edit': ['marquee', 'hero'],
   'plozz-ipad-info': ['marquee'],
   'plozz-ipad-player': ['marquee'],
   'plozz-ipad-cast': ['marquee'],

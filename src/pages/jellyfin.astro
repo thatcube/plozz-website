@@ -5,13 +5,33 @@ import SiteFooter from '../components/SiteFooter.astro';
 import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
+import Stage from '../components/Stage.astro';
 import Showcase from '../components/Showcase.astro';
+import FactSection from '../components/FactSection.astro';
 import DirectPath from '../components/DirectPath.astro';
 import Shot from "../components/Shot.astro";
-import { FIGURE } from "../data/imageSizes";
+import { STAGE, FIGURE } from "../data/imageSizes";
 
 const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Plays MKV, Dolby Vision, TrueHD and PGS subtitles on the device, so Jellyfin never transcodes.";
+const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Profiles for everyone in the house, kids profiles, a parental PIN, and 4K HDR that plays straight off your server.";
+
+const locks = [
+  {
+    icon: "ph:users-three",
+    name: "Parental PIN",
+    value: "One household secret, set once. It isn’t a PIN on every grown-up profile, and nothing is gated until it exists."
+  },
+  {
+    icon: "ph:lock-key",
+    name: "Profile lock",
+    value: "Yours alone, and optional. It says don’t open this, where the parental PIN says don’t change that."
+  },
+  {
+    icon: "ph:fingerprint",
+    name: "Never stored",
+    value: "Only a salted, iterated verifier is kept. Four digits is a family speed bump, and we don’t dress it up as more."
+  }
+];
 ---
 
 <Layout title={title} description={description}>
@@ -19,40 +39,46 @@ const description = "A free, open source Jellyfin client for Apple TV, iPhone an
 
   <main>
     <PageHero
-      title={"Jellyfin, without the transcode."}
-      lead={"Your Apple TV opens the file itself. Jellyfin doesn’t have to re-encode anything on the way, so it hands over what’s on the disk and goes back to sitting there."}
+      title={"Everyone gets their own Jellyfin."}
+      lead={"Their libraries, their home screen, their place in the show they’re halfway through. Pick a face on the way in and the app is theirs until someone else picks another."}
+    />
+
+    <Stage
+      title={"A profile each, kids included"}
+      caption={"Profiles are the app’s, not the server’s, so they work the same whether you run Jellyfin, Plex, Emby or a folder on a NAS."}
+    >
+      <Shot
+        name="plozz-tv-profiles"
+        alt="The Plozz profile picker on Apple TV, showing Timmy, mom and dad and Gerard alongside buttons to add a profile or add a kids profile"
+        sizes={STAGE}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </Stage>
+
+    <Showcase
+      question={"A profile for the four-year-old"}
+      detail={"A kids profile is a smaller app: the household settings aren’t on the page, so there’s nothing to wander into. Add a parental PIN and it turns from tidying into a rule — switching out, and reaching the editor that holds the kids flag, both cost the PIN. Without one it still works, and nothing is ever locked behind a key nobody has."}
+      flip
+    >
+      <Shot
+        name="plozz-tv-profile-edit"
+        alt="Editing a profile on Apple TV, choosing an emoji avatar and a tile colour"
+        sizes={FIGURE}
+        class="shot"
+      />
+    </Showcase>
+
+    <FactSection
+      title="Two different locks"
+      facts={locks}
     />
 
     <Showcase
       question={"Nothing happens in the middle"}
-      detail={"Plozz tells Jellyfin what it can decode, and that list covers MKV, AV1, DTS-HD and TrueHD. So the server marks the file direct-play and streams it as it is. No re-encode, no pegged CPU, no second copy at lower quality."}
+      detail={"Plozz tells Jellyfin what it can decode, and that covers MKV, AV1, DTS-HD and TrueHD. The file streams as it is."}
     >
       <DirectPath source="Jellyfin" logo="/providers/jellyfin.svg" />
-    </Showcase>
-
-    <Showcase
-      question={"Why a 4K remux says it can’t be played"}
-      detail={"It’s usually the subtitles. A remux that ships a PGS track as its default asks a player to draw a picture, and Apple’s can’t — so Jellyfin burns the subtitle into the video instead, which means re-encoding the whole film. What comes back is an HDR10 stream the Apple TV then refuses. Plozz draws PGS itself, so the burn-in never starts and the file plays untouched."}
-      flip
-    >
-      <Shot
-        name="plozz-tv-subtitles"
-        alt="The subtitle style panel open during playback, with the typeface, size and position being changed while the scene keeps playing"
-        sizes={FIGURE}
-        class="shot"
-      />
-    </Showcase>
-
-    <Showcase
-      question={"Scrubbing shows the frame you’re heading for"}
-      detail={"Jellyfin generates trickplay tiles for your library, and Plozz reads them at the highest resolution your server made. Hold the remote and the picture under your thumb is the one you’ll land on."}
-    >
-      <Shot
-        name="plozz-tv-player"
-        alt="The Plozz player with the transport bar open, showing a preview thumbnail above the scrub position"
-        sizes={FIGURE}
-        class="shot"
-      />
     </Showcase>
 
     <Closer secondaryHref="/formats" secondaryLabel="Every format, in full" />

@@ -513,8 +513,8 @@
     ]
   },
   "plozz-tv-profile-edit": {
-    "width": 1080,
-    "height": 608,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 360,
@@ -532,15 +532,25 @@
         "webp": "plozz-tv-profile-edit-800.b5488baf.webp"
       },
       {
-        "w": 1080,
-        "avif": "plozz-tv-profile-edit-1080.37579b2e.avif",
-        "webp": "plozz-tv-profile-edit-1080.b2f47a94.webp"
+        "w": 1152,
+        "avif": "plozz-tv-profile-edit-1152.c01371af.avif",
+        "webp": "plozz-tv-profile-edit-1152.911943b2.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-profile-edit-1660.fc4f75ad.avif",
+        "webp": "plozz-tv-profile-edit-1660.c72fb2d4.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-profile-edit-2296.339b3874.avif",
+        "webp": "plozz-tv-profile-edit-2296.72636e79.webp"
       }
     ]
   },
   "plozz-tv-profiles": {
-    "width": 1080,
-    "height": 608,
+    "width": 2296,
+    "height": 1292,
     "rungs": [
       {
         "w": 360,
@@ -558,9 +568,19 @@
         "webp": "plozz-tv-profiles-800.db8f7db1.webp"
       },
       {
-        "w": 1080,
-        "avif": "plozz-tv-profiles-1080.d7b72158.avif",
-        "webp": "plozz-tv-profiles-1080.7c139755.webp"
+        "w": 1152,
+        "avif": "plozz-tv-profiles-1152.e164eb80.avif",
+        "webp": "plozz-tv-profiles-1152.12ce67f6.webp"
+      },
+      {
+        "w": 1660,
+        "avif": "plozz-tv-profiles-1660.3aaf3098.avif",
+        "webp": "plozz-tv-profiles-1660.65b3d683.webp"
+      },
+      {
+        "w": 2296,
+        "avif": "plozz-tv-profiles-2296.e5fd50ee.avif",
+        "webp": "plozz-tv-profiles-2296.d54706bb.webp"
       }
     ]
   },

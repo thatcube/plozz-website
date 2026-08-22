@@ -3358,6 +3358,52 @@ a.cell:hover .cell-arrow {
 }
 
 
+/* A fact's glyph, set at the size of its own heading and a step back in
+   colour, so it labels the row without competing with the word beside it. */
+.cell-icon {
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-bottom: 12px;
+  color: var(--text-dim);
+}
+
+/* ---------- Stage ----------
+   A picture given more room than the column of text beside it. The frame runs
+   wider than .container on purpose: these screenshots are the strongest thing
+   on the page, and the old layout handed them a third of it. */
+.stage {
+  padding-block: clamp(56px, 8vw, 128px);
+}
+
+.stage-frame {
+  width: min(100% - 32px, 1440px);
+  margin: clamp(26px, 3.2vw, 44px) auto 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.stage-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+}
+
+/* One line, sitting back on the page keyline under a picture that has already
+   made the point. */
+.stage-caption {
+  max-width: 62ch;
+  margin: clamp(20px, 2.2vw, 30px) 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
 /* ---------- Direct path ----------
    A file's tracks crossing from the server to the television with nothing in
    between. Same idiom as the confluence above: geometry comes from the
