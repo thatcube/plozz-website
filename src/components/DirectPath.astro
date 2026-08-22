@@ -106,24 +106,12 @@ const pct = (n: number, of: number) => `${Math.round((n / of) * 1000) / 10}%`;
       }
     </div>
 
-    {/* The box itself, drawn rather than borrowed. The Apple TV wordmark
-        belongs to the streaming service, so using it to label the hardware
-        names the wrong thing; a television glyph names something the file
-        never reaches on its own. This is the device: a squat rounded body,
-        seen face on, with its status light. */}
+    {/* The Apple TV mark, and no words beside it: the lockup already sets
+        them, so a label would print the name twice. It is the destination's
+        whole identity here, so it is sized against the source's wordmark
+        rather than against the track labels. */}
     <div class="dpath-node dpath-dest">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect
-          x="2"
-          y="7.5"
-          width="20"
-          height="9"
-          rx="2.6"
-          stroke="currentColor"
-          stroke-width="1.5"></rect>
-        <circle cx="6.4" cy="12" r="0.95" fill="currentColor"></circle>
-      </svg>
-      <span>Apple TV</span>
+      <Icon name="simple-icons:appletv" aria-label="Apple TV" />
     </div>
 
     {

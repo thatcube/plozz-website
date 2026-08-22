@@ -3975,10 +3975,14 @@ a.cell:hover .cell-arrow {
   color: var(--text-muted);
 }
 
+/* The lockup carries its own letterforms, so it is set against the provider
+   wordmark opposite rather than the surrounding type; matched to a cap height
+   it comes out unreadably small. Full white, because it is the only thing
+   naming that end of the diagram. */
 .dpath-dest svg {
-  width: 1.5em;
-  height: 1.5em;
-  color: var(--text-muted);
+  width: auto;
+  height: 2.7em;
+  color: #fff;
 }
 
 .dpath-dest {
