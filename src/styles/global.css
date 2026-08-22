@@ -3368,6 +3368,139 @@ a.cell:hover .cell-arrow {
   color: var(--text-dim);
 }
 
+/* ---------- The two locks ----------
+   A diptych rather than a row of cards: the pair only means anything read
+   against each other, and the drawing carries the difference before the
+   labels do. Same hairline seam as .slab, so it belongs to the same family. */
+.lockpair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-slab);
+  overflow: hidden;
+  background: var(--border);
+}
+
+.lockpair-half {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3vw, 44px);
+  background: #0b0b0c;
+}
+
+.lockpair-half h3 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  letter-spacing: var(--track-subhead);
+}
+
+.lockpair-half p {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+/* The drawing sits in a fixed band so both halves start their type on the
+   same line however tall the artwork happens to be. */
+.lockpair-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: clamp(150px, 17vw, 208px);
+  margin-bottom: clamp(20px, 2.2vw, 30px);
+}
+
+.lp-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(74px, 8.4vw, 104px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* The app's own avatar tint, not a new accent. */
+  background: linear-gradient(160deg, var(--brand-2), var(--brand-2-dark));
+}
+
+.lp-avatar {
+  font-size: clamp(34px, 4vw, 50px);
+  line-height: 1;
+}
+
+/* A name plate under the tile, drawn rather than written: the point is the
+   shape of a profile, and a made-up name would only invite reading. */
+.lp-name {
+  width: clamp(58px, 6.4vw, 78px);
+  height: 9px;
+  border-radius: var(--r-pill);
+  background: #2a2a30;
+}
+
+.lp-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 13px;
+  width: clamp(132px, 15vw, 186px);
+  padding: clamp(18px, 2vw, 24px) clamp(16px, 1.8vw, 22px);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--r-md);
+  background: #101014;
+}
+
+.lp-row {
+  height: 9px;
+  border-radius: var(--r-pill);
+  background: #2a2a30;
+}
+
+.lp-row:nth-child(2) {
+  width: 72%;
+}
+
+.lp-row:nth-child(3) {
+  width: 54%;
+}
+
+/* Sits on the corner the way a badge sits on the real thing, and carries the
+   only lit colour in the drawing so the eye lands on the lock first. */
+.lp-badge {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 3.3vw, 40px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--border-bright);
+  background: #0b0b0c;
+  color: var(--brand);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+.lp-badge svg {
+  width: 55%;
+  height: 55%;
+}
+
+.lockpair-note {
+  max-width: 62ch;
+  margin: clamp(20px, 2.2vw, 30px) 0 0;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+@media (max-width: 700px) {
+  .lockpair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* ---------- Stage ----------
    A picture given more room than the column of text beside it. The frame runs
    wider than .container on purpose: these screenshots are the strongest thing
@@ -3524,8 +3657,11 @@ a.cell:hover .cell-arrow {
   white-space: nowrap;
 }
 
-/* Rides just above its own wire on the flat middle section, where the wire is
-   horizontal and the label cannot sit at an angle to it. */
+/* Sits ON its own wire rather than above it, with the panel colour behind so
+   the wire is occluded and reads as running under the label. Above the wire
+   was fine on a desktop and collided on a phone: the type has a floor, the
+   gaps between wires do not, so at some width the labels always met the line
+   over them. Centred on the wire, they cannot. */
 .dpath-track {
   position: absolute;
   display: flex;
@@ -3533,8 +3669,9 @@ a.cell:hover .cell-arrow {
   gap: 0.45em;
   left: 50%;
   top: var(--y);
-  transform: translate(-50%, -140%);
-  padding: 0 0.6em;
+  transform: translate(-50%, -50%);
+  padding: 0 0.62em;
+  background: #0b0b0c;
   font-size: clamp(11px, 4.4cqh, 16px);
   line-height: 1;
   letter-spacing: var(--track-ui);

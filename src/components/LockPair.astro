@@ -1,0 +1,64 @@
+---
+/**
+ * The two locks, drawn as the two things they actually stand in front of.
+ *
+ * These are easy to confuse and the difference is the whole point, so a pair
+ * of text cards was never going to carry it: one lock guards a *person*, the
+ * other guards the *settings*. Drawing both makes the distinction land before
+ * the labels are read.
+ *
+ * The shapes are the app's own — an emoji avatar on a coloured tile, a stack
+ * of settings rows — so the illustration reads as Plozz rather than as stock
+ * iconography. The padlock sits on the corner of each, in the same place a
+ * badge would sit on the real thing.
+ */
+import { Icon } from "astro-icon/components";
+---
+
+<section class="band" aria-labelledby="two-different-locks">
+  <div class="container">
+    <div class="band-head">
+      <h2 id="two-different-locks">Two different locks</h2>
+    </div>
+
+    <div class="lockpair">
+  <div class="lockpair-half">
+    <div class="lockpair-art">
+      <div class="lp-tile">
+        <div class="lp-avatar" aria-hidden="true">🤪</div>
+        <span class="lp-badge"><Icon name="ph:lock-key-fill" /></span>
+      </div>
+      <span class="lp-name" aria-hidden="true"></span>
+    </div>
+
+    <h3>Profile lock</h3>
+    <p>
+      Stands in front of a person. It says don’t open this, it’s yours alone,
+      and most people never set one.
+    </p>
+  </div>
+
+  <div class="lockpair-half">
+    <div class="lockpair-art">
+      <div class="lp-panel">
+        <span class="lp-row" aria-hidden="true"></span>
+        <span class="lp-row" aria-hidden="true"></span>
+        <span class="lp-row" aria-hidden="true"></span>
+        <span class="lp-badge"><Icon name="ph:lock-key-fill" /></span>
+      </div>
+    </div>
+
+    <h3>Parental PIN</h3>
+    <p>
+      Stands in front of the settings. One secret for the whole house, set
+      once, and nothing is gated until it exists.
+    </p>
+      </div>
+    </div>
+
+    <p class="lockpair-note">
+      Neither PIN is stored — only a salted, iterated verifier. Four digits is
+      a family speed bump, and we don’t dress it up as more.
+    </p>
+  </div>
+</section>

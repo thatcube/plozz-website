@@ -7,7 +7,7 @@ import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Stage from '../components/Stage.astro';
 import Showcase from '../components/Showcase.astro';
-import FactSection from '../components/FactSection.astro';
+import LockPair from '../components/LockPair.astro';
 import DirectPath from '../components/DirectPath.astro';
 import Shot from "../components/Shot.astro";
 import { STAGE, FIGURE } from "../data/imageSizes";
@@ -15,23 +15,6 @@ import { STAGE, FIGURE } from "../data/imageSizes";
 const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
 const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Profiles for everyone in the house, kids profiles, a parental PIN, and 4K HDR that plays straight off your server.";
 
-const locks = [
-  {
-    icon: "ph:users-three",
-    name: "Parental PIN",
-    value: "One household secret, set once. It isn’t a PIN on every grown-up profile, and nothing is gated until it exists."
-  },
-  {
-    icon: "ph:lock-key",
-    name: "Profile lock",
-    value: "Yours alone, and optional. It says don’t open this, where the parental PIN says don’t change that."
-  },
-  {
-    icon: "ph:fingerprint",
-    name: "Never stored",
-    value: "Only a salted, iterated verifier is kept. Four digits is a family speed bump, and we don’t dress it up as more."
-  }
-];
 ---
 
 <Layout title={title} description={description}>
@@ -69,10 +52,7 @@ const locks = [
       />
     </Showcase>
 
-    <FactSection
-      title="Two different locks"
-      facts={locks}
-    />
+    <LockPair />
 
     <Showcase
       question={"Nothing happens in the middle"}
