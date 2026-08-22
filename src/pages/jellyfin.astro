@@ -6,64 +6,12 @@ import Closer from '../components/Closer.astro';
 import SiteScripts from '../components/SiteScripts.astro';
 import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
-import FactSection from '../components/FactSection.astro';
+import DirectPath from '../components/DirectPath.astro';
 import Shot from "../components/Shot.astro";
 import { FIGURE } from "../data/imageSizes";
 
 const title = "Jellyfin client for Apple TV, iPhone and iPad — Plozz";
-const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Plays MKV, Dolby Vision and TrueHD on the device, so your server hands over the file.";
-
-const compatibility = [
-  {
-    "name": "Containers",
-    "value": "MKV included, which is the one that usually forces a transcode.",
-    "chips": [
-      "MKV",
-      "WebM",
-      "MP4",
-      "MOV",
-      "TS"
-    ]
-  },
-  {
-    "name": "Video",
-    "chips": [
-      "HEVC",
-      "H.264",
-      "VP9",
-      "AV1"
-    ]
-  },
-  {
-    "name": "HDR",
-    "chips": [
-      "Dolby Vision P5",
-      "Dolby Vision P8",
-      "HDR10",
-      "HLG"
-    ]
-  },
-  {
-    "name": "Subtitles",
-    "chips": [
-      "SRT",
-      "ASS",
-      "SSA",
-      "VTT",
-      "PGS",
-      "DVB",
-      "DVD"
-    ]
-  },
-  {
-    "name": "Signing in",
-    "value": "Quick Connect, or a username and password when your server has it switched off."
-  },
-  {
-    "name": "Scrub thumbnails",
-    "value": "Jellyfin trickplay tiles, at the highest resolution your server generated."
-  }
-];
+const description = "A free, open source Jellyfin client for Apple TV, iPhone and iPad. Plays MKV, Dolby Vision, TrueHD and PGS subtitles on the device, so Jellyfin never transcodes.";
 ---
 
 <Layout title={title} description={description}>
@@ -71,66 +19,43 @@ const compatibility = [
 
   <main>
     <PageHero
-      eyebrow={"Jellyfin"}
-      title={"Jellyfin without the transcode."}
-      lead={"Most Apple TV apps can’t open an MKV, so Jellyfin re-encodes one for them. Plozz decodes it on the device and takes the file as it is."}
+      title={"Jellyfin, without the transcode."}
+      lead={"Your Apple TV opens the file itself. Jellyfin doesn’t have to re-encode anything on the way, so it hands over what’s on the disk and goes back to sitting there."}
     />
 
     <Showcase
-      question={"Why does Jellyfin transcode for other apps?"}
-      detail={"Plozz tells your server what it can decode, and that list includes MKV. So Jellyfin marks the file direct-play and sends it untouched — no re-encode, no pegged CPU, no second copy at lower quality."}
+      question={"Nothing happens in the middle"}
+      detail={"Plozz tells Jellyfin what it can decode, and that list covers MKV, AV1, DTS-HD and TrueHD. So the server marks the file direct-play and streams it as it is. No re-encode, no pegged CPU, no second copy at lower quality."}
     >
-      <ul class="proof">
-        <li><span>The cause</span><span>Apple’s player cannot demux MKV at all</span></li>
-        <li><span>What that forces</span><span>The server re-encodes, in real time, to something it can open</span></li>
-        <li><span>What Plozz does</span><span>Decodes MKV, AV1, DTS-HD and TrueHD itself</span></li>
-        <li><span>So the server</span><span>Is told the file is playable, and just sends it</span></li>
-      </ul>
+      <DirectPath source="Jellyfin" logo="/providers/jellyfin.svg" />
     </Showcase>
 
     <Showcase
-      question={"Can I make the subtitles readable?"}
-      detail={"Text subtitles are drawn on the Apple TV, so the typeface, size and colour are yours rather than whatever was baked in upstream. Picture-based tracks — PGS, DVB, DVD — are images, so Plozz reaches for a text version instead when the file carries one."}
+      question={"Why a 4K remux says it can’t be played"}
+      detail={"It’s usually the subtitles. A remux that ships a PGS track as its default asks a player to draw a picture, and Apple’s can’t — so Jellyfin burns the subtitle into the video instead, which means re-encoding the whole film. What comes back is an HDR10 stream the Apple TV then refuses. Plozz draws PGS itself, so the burn-in never starts and the file plays untouched."}
       flip
     >
       <Shot
         name="plozz-tv-subtitles"
-        alt="The subtitle style panel open during playback, with OpenDyslexic selected and the subtitle rendered in it"
+        alt="The subtitle style panel open during playback, with the typeface, size and position being changed while the scene keeps playing"
         sizes={FIGURE}
         class="shot"
       />
     </Showcase>
 
     <Showcase
-      question={"Signing in, without typing a password on a remote"}
-      detail={"Quick Connect is Jellyfin’s own approval flow. Plozz asks your server for a code, you approve it in Jellyfin on something with a real keyboard, and the token lands on the Apple TV."}
+      question={"Scrubbing shows the frame you’re heading for"}
+      detail={"Jellyfin generates trickplay tiles for your library, and Plozz reads them at the highest resolution your server made. Hold the remote and the picture under your thumb is the one you’ll land on."}
     >
-      <ul class="proof">
-        <li><span>Quick Connect</span><span>Approve a six-character code from your phone</span></li>
-        <li><span>Nothing typed</span><span>No password goes near the on-screen keyboard</span></li>
-        <li><span>If it’s switched off</span><span>A username and password still work</span></li>
-        <li><span>More than one person</span><span>Sign in as several Jellyfin users at once</span></li>
-      </ul>
+      <Shot
+        name="plozz-tv-player"
+        alt="The Plozz player with the transport bar open, showing a preview thumbnail above the scrub position"
+        sizes={FIGURE}
+        class="shot"
+      />
     </Showcase>
 
-    <Showcase
-      question={"Jellyfin has users. A household has people."}
-      detail={"Your Jellyfin users decide what the server will hand over. Plozz’s profiles decide what the app looks like once it arrives. Both apply at once, so a child can have their own Jellyfin account and a simpler app to reach it through."}
-    >
-      <ul class="proof">
-        <li><span>Profiles</span><span>Plozz’s own, on top of your Jellyfin users</span></li>
-        <li><span>Kids profiles</span><span>A smaller app, with the settings out of reach</span></li>
-        <li><span>Parental PIN</span><span>One household PIN, stored only as a salted verifier</span></li>
-        <li><span>Profile lock</span><span>Optional, and separate — yours, not the household’s</span></li>
-      </ul>
-    </Showcase>
-
-    <FactSection
-      title="Compatibility"
-      facts={compatibility}
-    />
-
-    <Closer secondaryHref="/features" secondaryLabel="The questions people ask" />
+    <Closer secondaryHref="/formats" secondaryLabel="Every format, in full" />
   </main>
 
   <SiteFooter />

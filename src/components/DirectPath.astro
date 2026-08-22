@@ -1,0 +1,123 @@
+---
+/**
+ * What happens to a file between the server and the television: nothing.
+ *
+ * The claim these pages rest on is "direct play", which is jargon, and the
+ * pages used to spend a paragraph explaining it. It is a picture: a file's
+ * tracks leave the server, cross the gap without passing through anything,
+ * and arrive whole. Drawing it says in one look what the paragraph said in
+ * four lines, and it survives someone who only scans.
+ *
+ * The tracks fan apart in the middle on purpose. A transcode is a funnel —
+ * separate streams go in and one re-encoded stream comes out — so showing
+ * them stay separate the whole way across is the actual difference, not a
+ * decoration. Every label is a real codec, because the demo is the only place
+ * real option names belong.
+ *
+ * Geometry lives here rather than in the stylesheet so the wire ends and the
+ * HTML labels are generated from the same numbers and cannot drift apart.
+ */
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  /** Provider wordmark shown at the left. */
+  logo?: string;
+  /** Used instead of a wordmark when the source has no logo of its own. */
+  icon?: string;
+  /** Accessible name for the source, and the label under a bare icon. */
+  source: string;
+}
+
+const { logo, icon, source } = Astro.props;
+
+const VB_W = 480;
+const VB_H = 206;
+
+/* Where the wires leave and land, in viewBox units. Both nodes are lockups of
+   unknown width, so the wires stop at a fixed inset and the nodes are anchored
+   by the edge the wires touch. */
+const START_X = 116;
+const END_X = 364;
+const CENTRE_Y = VB_H / 2;
+
+/* The flat middle, where the labels sit. */
+const MID_L = 168;
+const MID_R = 312;
+
+const TRACKS = [
+  { icon: "ph:film-strip", label: "HEVC · Dolby Vision", y: 51 },
+  { icon: "ph:waveform", label: "TrueHD · Atmos", y: 103 },
+  { icon: "ph:subtitles", label: "PGS · SRT", y: 155 },
+];
+
+/* Leaves and arrives flat, bends only on the way out and the way in. The
+   handles scale with vertical distance so the outer two hold their line rather
+   than sagging toward the middle one. */
+function wire(y: number) {
+  const r = (n: number) => Math.round(n * 10) / 10;
+  const lead = (MID_L - START_X) * 0.55;
+  return [
+    `M${START_X} ${CENTRE_Y}`,
+    `C${r(START_X + lead)} ${CENTRE_Y} ${r(MID_L - lead)} ${y} ${MID_L} ${y}`,
+    `L${MID_R} ${y}`,
+    `C${r(MID_R + lead)} ${y} ${r(END_X - lead)} ${CENTRE_Y} ${END_X} ${CENTRE_Y}`,
+  ].join(" ");
+}
+
+/* Staggered so the three arrivals read as a rhythm rather than a single thick
+   pulse crossing three times. */
+const DELAY_S = [0, 0.42, 0.84];
+
+const pct = (n: number, of: number) => `${Math.round((n / of) * 1000) / 10}%`;
+---
+
+<div class="dpath">
+  <div class="dpath-stage">
+    <svg
+      class="dpath-wires"
+      viewBox={`0 0 ${VB_W} ${VB_H}`}
+      fill="none"
+      aria-hidden="true"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      {TRACKS.map((t) => <path class="dpath-wire" d={wire(t.y)} />)}
+      {
+        TRACKS.map((t, i) => (
+          <path
+            class="dpath-pulse"
+            d={wire(t.y)}
+            pathLength="100"
+            style={`--d:${DELAY_S[i]}s`}
+          />
+        ))
+      }
+    </svg>
+
+    <div class="dpath-node dpath-source">
+      {
+        logo ? (
+          <img src={logo} alt={source} width="120" height="32" />
+        ) : (
+          <span class="dpath-bare">
+            {icon && <Icon name={icon} />}
+            {source}
+          </span>
+        )
+      }
+    </div>
+
+    <div class="dpath-node dpath-dest">
+      <Icon name="ph:television-simple" />
+      <span>Apple TV</span>
+    </div>
+
+    {
+      TRACKS.map((t) => (
+        <span class="dpath-track" style={`--y:${pct(t.y, VB_H)}`}>
+          <Icon name={t.icon} />
+          {t.label}
+        </span>
+      ))
+    }
+  </div>
+</div>

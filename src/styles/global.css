@@ -3358,6 +3358,151 @@ a.cell:hover .cell-arrow {
 }
 
 
+/* ---------- Direct path ----------
+   A file's tracks crossing from the server to the television with nothing in
+   between. Same idiom as the confluence above: geometry comes from the
+   component as percentages, the stage is a size container so every glow and
+   inset scales with it, and the wires are drawn once and lit by a second copy
+   riding the same path. */
+.dpath {
+  container-type: inline-size;
+}
+
+.dpath-stage {
+  position: relative;
+  aspect-ratio: 480 / 206;
+  container-type: size;
+}
+
+.dpath-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dpath-wires .dpath-wire {
+  stroke: var(--border-bright);
+  stroke-width: 1.25;
+  fill: none;
+}
+
+.dpath-wires .dpath-pulse {
+  stroke: var(--brand);
+  stroke-width: 2.6;
+  filter: drop-shadow(0 0 0.75cqw rgba(96, 202, 255, 0.4))
+    drop-shadow(0 0 1.9cqw rgba(0, 164, 220, 0.28));
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 22 100;
+  stroke-dashoffset: 122;
+  animation: dpath-travel 3.4s linear infinite;
+  animation-delay: var(--d, 0s);
+}
+
+/* Runs the dash the whole length and then off the end. The pulse fades in as
+   it leaves the source and out as it reaches the set, so neither end shows a
+   dash appearing from nothing. */
+@keyframes dpath-travel {
+  0% {
+    stroke-dashoffset: 122;
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  76% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+/* Both nodes are lockups of their own width, so each is anchored by the edge
+   the wires touch rather than by its centre: the wire ends are fixed, and a
+   longer wordmark grows away from them instead of moving them. */
+.dpath-node {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transform: translateY(-50%);
+  /* Container height drives the type so the diagram scales as one object, but
+     a phone makes the stage short enough that pure cqh lands near 7px. The
+     clamp is what keeps the annotations readable there; the vertical anchors
+     are exact percentages, so a label growing past its proportional size just
+     sits a little further above its own wire. */
+  font-size: clamp(12px, 5.4cqh, 18px);
+  color: var(--text);
+}
+
+.dpath-source {
+  right: calc(100% - 24.2%);
+  padding-right: 2cqw;
+}
+
+.dpath-source img {
+  display: block;
+  width: auto;
+  height: clamp(18px, 8.5cqh, 34px);
+}
+
+.dpath-bare {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  font-weight: var(--w-strong);
+  white-space: nowrap;
+}
+
+.dpath-track svg {
+  width: 1.15em;
+  height: 1.15em;
+  color: var(--text-dim);
+}
+
+.dpath-bare svg,
+.dpath-dest svg {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--text-muted);
+}
+
+.dpath-dest {
+  left: 75.8%;
+  padding-left: 2cqw;
+  font-weight: var(--w-strong);
+  white-space: nowrap;
+}
+
+/* Rides just above its own wire on the flat middle section, where the wire is
+   horizontal and the label cannot sit at an angle to it. */
+.dpath-track {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  left: 50%;
+  top: var(--y);
+  transform: translate(-50%, -140%);
+  padding: 0 0.6em;
+  font-size: clamp(11px, 4.4cqh, 16px);
+  line-height: 1;
+  letter-spacing: var(--track-ui);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dpath-wires .dpath-pulse {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* ---------- iCloud slab ----------
    Devices sit on the right, so the wide column is the second one. The visual
    is placed explicitly rather than reordered: it spans both rows, and `order`
