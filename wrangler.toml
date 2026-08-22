@@ -11,6 +11,9 @@
 
 name = "plozz-website"
 main = "worker/index.js"
+# Pinned because this login can see several accounts, and without it every
+# command stops to ask which one — which fails outright in CI.
+account_id = "471672cb7947a45f5e43023a1f02d2f5"
 # Kept current deliberately: a stale date pins the runtime to older defaults.
 compatibility_date = "2026-08-18"
 
