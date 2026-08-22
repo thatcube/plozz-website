@@ -3478,103 +3478,105 @@ a.cell:hover .cell-arrow {
   color: var(--text-dim);
 }
 
-/* ---------- Nowhere ----------
-   A drawing of an absence. Three wires leave the set and fade out; there is
-   no node at the far end because that is the whole claim. */
-.nowhere {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  min-height: clamp(140px, 16vw, 190px);
+/* ---------- The ledger ----------
+   Two sides of a line: everything Plozz holds on the viewer's, one switched-off
+   item on ours. The imbalance carries the claim, so the columns are weighted
+   to let it show rather than split evenly. */
+.ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 44px);
 }
 
-.nowhere-device {
+.ledger-side.is-ours {
+  padding-left: clamp(24px, 3vw, 44px);
+  border-left: 1px solid var(--border);
+}
+
+.ledger-head {
   display: flex;
   align-items: center;
-  gap: 0.55em;
-  flex: none;
+  gap: 0.5em;
+  margin: 0 0 clamp(16px, 1.8vw, 22px);
+  font-size: 0.98rem;
   font-weight: var(--w-strong);
-  white-space: nowrap;
+  letter-spacing: var(--track-ui);
+  color: var(--text);
 }
 
-.nowhere-device svg {
-  width: 1.5em;
+/* The Apple TV mark carries the word "tv" in it, so the label beside it names
+   whose it is rather than repeating the product. */
+.ledger-head svg {
+  width: auto;
+  /* Set larger than the words beside it: the mark is a lockup with its own
+     internal type, so matching it to the cap height leaves it unreadable. */
   height: 1.5em;
-  color: var(--text-muted);
+  color: var(--text);
 }
 
-.nowhere-run {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 0;
-  height: clamp(110px, 13vw, 150px);
+.ledger-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
 }
 
-.nowhere-wires {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Two destinations, sitting at the height their own wire arrives at, so the
-   labels can't be read against the wrong line. */
-.nowhere-to {
-  position: absolute;
-  right: 0;
+.ledger-items li {
   display: flex;
+  white-space: nowrap;
   align-items: center;
-  gap: 0.4em;
+  gap: 0.6em;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1;
-  white-space: nowrap;
 }
 
-.nowhere-to svg {
+.ledger-items li svg {
   width: 1.15em;
   height: 1.15em;
+  color: var(--text-dim);
+  flex: none;
 }
 
-.nowhere-real {
-  top: 18.5%;
-  transform: translateY(-50%);
-  color: var(--text);
-  font-weight: var(--w-strong);
+/* Dashed, because it is the one thing here that is a possibility rather than
+   a fact. */
+.ledger-items li.is-off {
+  border-style: dashed;
 }
 
-.nowhere-real svg {
+.ledger-off {
+  margin-left: auto;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: #1a1a1f;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+
+.ledger-note {
+  max-width: 62ch;
+  margin: clamp(22px, 2.4vw, 32px) 0 0;
   color: var(--text-muted);
+  text-wrap: pretty;
 }
 
-/* Struck through, at the weight of the wire that fades before reaching it. */
-.nowhere-absent {
-  top: 83%;
-  transform: translateY(-50%);
-  /* Muted, not dim. It has to stay legible: a struck-through label nobody can
-     read is just a smudge at the end of a dotted line. */
-  color: var(--text-muted);
-  text-decoration: line-through;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
-
-/* Side by side there is no room left for the wire once the device label and
-   the caption have taken theirs, and a fading wire with no run to fade over
-   is just a smudge. Stacking gives the run the full width. */
 @media (max-width: 620px) {
-  .nowhere {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .ledger {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 28px);
   }
 
-  .nowhere-run {
-    width: 100%;
-    height: 104px;
-  }
-
-  .nowhere-to {
-    font-size: 0.9rem;
+  .ledger-side.is-ours {
+    padding-left: 0;
+    padding-top: clamp(20px, 4vw, 28px);
+    border-left: 0;
+    border-top: 1px solid var(--border);
   }
 }
 
@@ -3977,11 +3979,18 @@ a.cell:hover .cell-arrow {
   color: var(--text-dim);
 }
 
-.dpath-bare svg,
-.dpath-dest svg {
+.dpath-bare svg {
   width: 1.5em;
   height: 1.5em;
   color: var(--text-muted);
+}
+
+/* The Apple TV lockup has its own internal type, so it is sized against the
+   provider wordmark opposite rather than against the labels. */
+.dpath-dest svg {
+  width: auto;
+  height: 1.9em;
+  color: var(--text);
 }
 
 .dpath-dest {

@@ -1,59 +1,72 @@
 ---
 /**
- * Where your data goes, which is to your iCloud and not to us.
+ * A line, with your things on one side of it and almost nothing on ours.
  *
- * The first version of this drew three wires fading into nothing, captioned
- * "nothing at the other end". That read well and wasn't quite true: settings
- * and progress really do leave the device, into the viewer's own iCloud. A
- * privacy picture that overstates its case is worse than a paragraph.
+ * This replaces a drawing of wires running to two destinations, one of them
+ * struck through. That version had to be decoded — two curves, a dashed one,
+ * a crossed-out word — and the reader had to assemble the claim themselves.
  *
- * So there are two ends now. One is real and labelled, and it is theirs. The
- * other is us, and that wire is the one that fades out — drawn dashed and
- * fading rather than absent, because the honest claim isn't that nothing
- * leaves, it's that nothing comes here.
+ * A boundary needs no decoding. Everything Plozz holds sits on the viewer's
+ * side of a line; our side holds one item, switched off. The imbalance is the
+ * argument, and it is legible before a single label is read.
+ *
+ * The one item on the right is the honest part. A privacy picture with a
+ * genuinely empty half would be a lie: crash reports exist, they are real,
+ * and they can reach us if someone lets them.
  */
 import { Icon } from "astro-icon/components";
+
+const YOURS = [
+  { icon: "ph:sliders-horizontal", label: "Settings" },
+  { icon: "ph:play-circle", label: "Watch progress" },
+  { icon: "ph:users-three", label: "Profiles" },
+  { icon: "ph:hard-drives", label: "Server details" },
+];
 ---
 
-<div class="nowhere">
-  <div class="nowhere-device">
-    <Icon name="ph:television-simple" />
-    <span>Your Apple TV</span>
+<section class="band" aria-labelledby="nothing-comes-to-us">
+  <div class="container">
+    <div class="band-head">
+      <h2 id="nothing-comes-to-us">Nothing comes to us</h2>
+    </div>
+
+    <div class="ledger">
+  <div class="ledger-side">
+    <p class="ledger-head">
+      <Icon name="simple-icons:appletv" />
+      <span>Yours, and your iCloud</span>
+    </p>
+
+    <ul class="ledger-items">
+      {
+        YOURS.map((y) => (
+          <li>
+            <Icon name={y.icon} />
+            {y.label}
+          </li>
+        ))
+      }
+    </ul>
   </div>
 
-  <div class="nowhere-run">
-    <svg
-      class="nowhere-wires"
-      viewBox="0 0 300 130"
-      fill="none"
-      aria-hidden="true"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <linearGradient id="nowhere-fade" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stop-color="#4a4a52" stop-opacity="1"></stop>
-          <stop offset="0.5" stop-color="#4a4a52" stop-opacity="0.4"></stop>
-          <stop offset="1" stop-color="#4a4a52" stop-opacity="0"></stop>
-        </linearGradient>
-      </defs>
+  <div class="ledger-side is-ours">
+    <p class="ledger-head">Ours</p>
 
-      {/* Up to iCloud: arrives, and stays lit the whole way. */}
-      <path d="M0 65 C70 65 96 24 210 24" stroke="#4a4a52" stroke-width="1.25"
-      ></path>
+    <ul class="ledger-items">
+      <li class="is-off">
+        <Icon name="ph:bug" />
+        Crash reports
+        <span class="ledger-off">off</span>
+      </li>
+    </ul>
+      </div>
+    </div>
 
-      {/* Toward us: leaves, thins out, and never lands. */}
-      <path
-        d="M0 65 C70 65 96 108 210 108"
-        stroke="url(#nowhere-fade)"
-        stroke-width="1.25"
-        stroke-dasharray="3 5"></path>
-    </svg>
-
-    <span class="nowhere-to nowhere-real">
-      <Icon name="ph:cloud" />
-      Your iCloud
-    </span>
-
-    <span class="nowhere-to nowhere-absent">Us</span>
+    <p class="ledger-note">
+      There are no analytics in Plozz, and no Plozz account to make. Your
+      settings and progress sync through your own iCloud, which we can’t read.
+      Crash reports are the one thing that could reach us, and they stay off
+      until you switch them on.
+    </p>
   </div>
-</div>
+</section>
