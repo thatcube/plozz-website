@@ -3504,16 +3504,6 @@ a.cell:hover .cell-arrow {
   color: var(--text);
 }
 
-/* The Apple TV mark carries the word "tv" in it, so the label beside it names
-   whose it is rather than repeating the product. */
-.ledger-head svg {
-  width: auto;
-  /* Set larger than the words beside it: the mark is a lockup with its own
-     internal type, so matching it to the cap height leaves it unreadable. */
-  height: 1.5em;
-  color: var(--text);
-}
-
 .ledger-items {
   list-style: none;
   margin: 0;
@@ -3985,12 +3975,10 @@ a.cell:hover .cell-arrow {
   color: var(--text-muted);
 }
 
-/* The Apple TV lockup has its own internal type, so it is sized against the
-   provider wordmark opposite rather than against the labels. */
 .dpath-dest svg {
-  width: auto;
-  height: 1.9em;
-  color: var(--text);
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--text-muted);
 }
 
 .dpath-dest {
