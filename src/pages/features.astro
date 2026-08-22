@@ -8,6 +8,10 @@ import PageHero from '../components/PageHero.astro';
 import Showcase from '../components/Showcase.astro';
 import DensityLab from '../components/DensityLab.astro';
 import SpoilerLab from '../components/SpoilerLab.astro';
+import DirectPath from '../components/DirectPath.astro';
+import Offline from '../components/Offline.astro';
+import IntroModes from '../components/IntroModes.astro';
+import Nowhere from '../components/Nowhere.astro';
 import Shot from "../components/Shot.astro";
 import { FIGURE } from "../data/imageSizes";
 
@@ -29,12 +33,7 @@ const description =
       question="Will it wreck my server?"
       detail="Nothing upstream re-encodes a thing, so your server sits idle while you watch."
     >
-      <ul class="proof">
-        <li><span>Dolby Vision</span><span>Profiles 5, 7, 8.1 and 8.4</span></li>
-        <li><span>Dolby Atmos</span><span>Stream-copied from E-AC-3, not re-encoded</span></li>
-        <li><span>TrueHD and DTS-HD MA</span><span>Play free, bridged to surround or lossless FLAC</span></li>
-        <li><span>Your server</span><span>Hands over the file, then goes back to sleep</span></li>
-      </ul>
+      <DirectPath source="Your server" icon="ph:hard-drives" />
     </Showcase>
 
     <Showcase
@@ -52,14 +51,9 @@ const description =
 
     <Showcase
       question="Does it skip intros?"
-      detail="Works wherever your server provides intro and credit markers."
+      detail="Four settings, and the difference between them is what happens to the playhead. Works wherever your server marks its intros and credits."
     >
-      <ul class="proof">
-        <li><span>Off</span><span>Never touch it</span></li>
-        <li><span>On</span><span>Show a Skip button</span></li>
-        <li><span>Auto (delay)</span><span>Skip after five seconds, cancellable</span></li>
-        <li><span>Auto (instant)</span><span>Gone before you notice</span></li>
-      </ul>
+      <IntroModes />
     </Showcase>
 
     <Showcase
@@ -79,27 +73,17 @@ const description =
 
     <Showcase
       question="Can I watch on a plane?"
-      detail="Queue a film or a whole season. Stick to Wi-Fi if you’d rather not spend the data."
+      detail="Queue a film or a whole season on an iPhone or iPad, and stick to Wi-Fi if you’d rather not spend the data. Picture in Picture keeps your subtitles and controls, and the audio carries on when the screen locks."
     >
-      <ul class="proof">
-        <li><span>Downloads</span><span>On iPhone and iPad</span></li>
-        <li><span>Picture in Picture</span><span>Keeps the custom controls and subtitles</span></li>
-        <li><span>AirPlay</span><span>Route picker in the player</span></li>
-        <li><span>Background audio</span><span>Keeps going when the screen locks</span></li>
-      </ul>
+      <Offline />
     </Showcase>
 
     <Showcase
       question="What are you doing with my data?"
-      detail="Crash reporting stays off until you turn it on, and public builds ship without a reporting endpoint anyway."
+      detail="No analytics anywhere in the code, no account to make, and crash reporting stays off until you switch it on. Public builds ship without anywhere to send one anyway."
       flip
     >
-      <ul class="proof">
-        <li><span>Analytics</span><span>None, anywhere in the codebase</span></li>
-        <li><span>Crash reports</span><span>Off until you turn them on</span></li>
-        <li><span>Accounts</span><span>There’s no Plozz account to make</span></li>
-        <li><span>Price</span><span>Free, and the source is on GitHub</span></li>
-      </ul>
+      <Nowhere />
     </Showcase>
 
     <Closer secondaryHref="/" secondaryLabel="Back to the start" />

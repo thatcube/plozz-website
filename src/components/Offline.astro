@@ -1,0 +1,49 @@
+---
+/**
+ * A phone with the episodes already on it and no signal to fetch them with.
+ *
+ * "Can I watch on a plane?" is a yes-or-no question, and the honest answer is
+ * a picture of the state you're asking about: three things downloaded, the
+ * network gone, and the app not caring. The rows carry the tick a finished
+ * download really gets, so the drawing matches what the phone looks like when
+ * you actually board.
+ */
+import { Icon } from "astro-icon/components";
+
+const ROWS = [
+  { title: "62%", sub: "S1 · E1" },
+  { title: "78%", sub: "S1 · E2" },
+  { title: "45%", sub: "S1 · E3" },
+];
+---
+
+<div class="offline">
+  <div class="offline-phone">
+    <div class="offline-status">
+      <Icon name="ph:airplane-tilt" />
+      <span class="offline-status-sep"></span>
+      <Icon name="ph:wifi-slash" />
+    </div>
+
+    <ul class="offline-rows">
+      {
+        ROWS.map((r) => (
+          <li>
+            <span class="offline-thumb" aria-hidden="true">
+              <span style={`--w:${r.title}`} />
+            </span>
+            <span class="offline-meta" aria-hidden="true">
+              <span class="offline-line" />
+              <span class="offline-sub">{r.sub}</span>
+            </span>
+            <span class="offline-tick">
+              <Icon name="ph:check-circle-fill" />
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <p class="offline-note">Downloaded, and nothing to reach for.</p>
+</div>

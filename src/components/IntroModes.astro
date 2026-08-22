@@ -1,0 +1,72 @@
+---
+/**
+ * The four intro settings, drawn as four timelines.
+ *
+ * These were a list of option names against one-line descriptions, which is
+ * the least useful way to explain them: the difference between them is what
+ * happens *to the playhead*, and that is a thing with a shape. Four tracks of
+ * the same length, the same intro block on each, and the behaviour drawn on
+ * top says it faster than the sentences did.
+ *
+ * The block sits where an intro sits — a little way in, not at zero — because
+ * a recap usually follows a cold open, and starting it at the left edge would
+ * quietly claim otherwise.
+ */
+import { Icon } from "astro-icon/components";
+
+const MODES = [
+  {
+    name: "Off",
+    note: "Never touch it",
+    kind: "plain",
+  },
+  {
+    name: "On",
+    note: "A Skip button, if you want it",
+    kind: "button",
+  },
+  {
+    name: "Auto, after five seconds",
+    note: "Long enough to change your mind",
+    kind: "countdown",
+  },
+  {
+    name: "Auto, at once",
+    note: "Gone before you notice",
+    kind: "jump",
+  },
+];
+---
+
+<ul class="intro-modes">
+  {
+    MODES.map((m) => (
+      <li class="intro-mode">
+        <div class="intro-mode-head">
+          <span class="intro-mode-name">{m.name}</span>
+          <span class="intro-mode-note">{m.note}</span>
+        </div>
+
+        <div class="intro-track" aria-hidden="true">
+          <span class="intro-band" data-kind={m.kind} />
+
+          {m.kind === "plain" && <span class="intro-head" />}
+
+          {m.kind === "button" && <span class="intro-chip">Skip</span>}
+
+          {m.kind === "countdown" && (
+            <span class="intro-chip is-timed">
+              <Icon name="ph:circle-notch" />5
+            </span>
+          )}
+
+          {m.kind === "jump" && (
+            <span class="intro-jump">
+              <Icon name="ph:skip-forward-fill" />
+            </span>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ul>

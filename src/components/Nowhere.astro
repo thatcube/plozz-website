@@ -1,0 +1,55 @@
+---
+/**
+ * What "nothing leaves" looks like.
+ *
+ * The privacy answer was four rows of prose, which is where prose is least
+ * convincing: every privacy section on the web says this. Drawing it is
+ * better, and the drawing is mostly empty on purpose.
+ *
+ * The wire is the site's own idiom — the same hairline that carries a file
+ * from a server to the set elsewhere on these pages — except here it leaves
+ * the device, fades, and arrives at nothing. There is no node at the far end
+ * because there is nothing at the far end.
+ *
+ * The one label out there exists so the emptiness reads as deliberate.
+ * Without it the picture looks unfinished, which is the risk any drawing of
+ * an absence runs.
+ */
+import { Icon } from "astro-icon/components";
+---
+
+<div class="nowhere">
+  <div class="nowhere-device">
+    <Icon name="ph:television-simple" />
+    <span>Your Apple TV</span>
+  </div>
+
+  <div class="nowhere-run">
+    <svg
+      class="nowhere-wires"
+      viewBox="0 0 300 120"
+      fill="none"
+      aria-hidden="true"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id="nowhere-fade" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#4a4a52" stop-opacity="1"></stop>
+          <stop offset="0.55" stop-color="#4a4a52" stop-opacity="0.45"></stop>
+          <stop offset="1" stop-color="#4a4a52" stop-opacity="0"></stop>
+        </linearGradient>
+      </defs>
+      {
+        [16, 60, 104].map((y) => (
+          <path
+            d={`M0 60 C64 60 78 ${y} 190 ${y}`}
+            stroke="url(#nowhere-fade)"
+            stroke-width="1.25"
+          />
+        ))
+      }
+    </svg>
+
+    <span class="nowhere-end">nothing at the other end</span>
+  </div>
+</div>
