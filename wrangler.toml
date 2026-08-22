@@ -17,6 +17,12 @@ account_id = "471672cb7947a45f5e43023a1f02d2f5"
 # Kept current deliberately: a stale date pins the runtime to older defaults.
 compatibility_date = "2026-08-18"
 
+# www is handled in the zone, by a redirect rule, the same way the other sites
+# here do it. Redirect rules run ahead of Workers, so www never reaches this
+# script and claiming it as a custom domain would only put two owners on one
+# hostname. The Worker keeps its own apex redirect as a backstop for anything
+# that does arrive on www.
+
 [assets]
 directory = "./dist"
 # Lets the Worker read its own static assets, which the 404 handler needs.
