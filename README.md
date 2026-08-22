@@ -25,15 +25,44 @@ npm run build    # outputs static site to dist/
 npm run preview  # preview the production build locally
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
 
-Connected to this repo. On every push to `main`, Cloudflare builds and deploys automatically.
+Connected to this repo through Workers Builds. On every push to `main`,
+Cloudflare runs the build and deploys.
 
 | Setting | Value |
 | --- | --- |
-| Framework preset | Astro |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
+
+Everything else — the static assets, the KV binding, the public client IDs —
+is in [`wrangler.toml`](wrangler.toml) rather than in dashboard settings.
+
+This was a Pages project until Pages stopped receiving new features and
+Cloudflare began pointing static sites at Workers instead.
+
+### Running it the way it deploys
+
+`npm run dev` is the Astro dev server, which is what you want for writing
+pages. It doesn't know about the auth relay, so use Wrangler when touching
+anything under `worker/`:
+
+```bash
+npm run build
+npm run worker      # serves dist/ and the relay together on :8787
+```
+
+### The auth relay
+
+`worker/` holds the OAuth relay for the AniList and MyAnimeList trackers.
+Static assets are served ahead of it, so it only runs for the handful of paths
+in `worker/index.js` that aren't files.
+
+`MAL_CLIENT_SECRET` is the one value not in the repo:
+
+```bash
+npx wrangler secret put MAL_CLIENT_SECRET
+```
 
 ## Editing content
 

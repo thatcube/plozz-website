@@ -1,21 +1,46 @@
-# Cloudflare Pages configuration.
-# The static site is built by Astro (`npm run build` → dist/).
-# The tracker OAuth relay runs as Pages Functions in functions/ (ported from the
-# former standalone Worker that used to live in the thatcube/Plozz repo).
+# Cloudflare Workers configuration.
+#
+# This was a Pages project until the move to Workers: Pages stopped receiving
+# new features in 2025 and Cloudflare now points new and existing static sites
+# at Workers static assets, which has the same hosting behaviour plus the rest
+# of the platform.
+#
+# Two things live here. The Astro build (`npm run build` → dist/) is served as
+# static assets, and the tracker OAuth relay runs as the Worker in worker/,
+# which assets fall through to. Both used to be halves of the Pages project.
 
 name = "plozz-website"
-compatibility_date = "2024-01-01"
-pages_build_output_dir = "dist"
+main = "worker/index.js"
+# Kept current deliberately: a stale date pins the runtime to older defaults.
+compatibility_date = "2026-08-18"
 
-# KV namespace shared with the old Worker, so in-flight sessions/redeem codes
-# survive the migration. Bound as env.AUTH_KV inside functions/.
+[assets]
+directory = "./dist"
+# Lets the Worker read its own static assets, which the 404 handler needs.
+binding = "ASSETS"
+# Matches how Pages resolved paths: /features serves dist/features/index.html,
+# and a request carrying a trailing slash is redirected to the canonical form.
+html_handling = "auto-trailing-slash"
+# Assets are served before the Worker runs, so the relay routes below are only
+# reached because no file matches them. A path that is neither is a 404 the
+# Worker answers with the site's own 404 page.
+not_found_handling = "none"
+
+# KV namespace carried over from the Pages project, and from the standalone
+# Worker before that, so in-flight sessions and redeem codes survive the move.
+# Bound as env.AUTH_KV.
 [[kv_namespaces]]
 binding = "AUTH_KV"
 id = "152ec5bca6e1429d82e5b93e0fc549c3"
 
 # Public OAuth client IDs (safe to commit — these are not secrets).
-# The MAL_CLIENT_SECRET is set separately as an encrypted Pages secret:
-#   npx wrangler pages secret put MAL_CLIENT_SECRET --project-name plozz-website
+# MAL_CLIENT_SECRET is uploaded separately, and note the command changed with
+# the platform:
+#   npx wrangler secret put MAL_CLIENT_SECRET
+# (it was `wrangler pages secret put … --project-name plozz-website` before).
 [vars]
 MAL_CLIENT_ID = "453e05d6355620ecc1047e9dac4dd184"
 ANILIST_CLIENT_ID = "44569"
+
+[observability]
+enabled = true

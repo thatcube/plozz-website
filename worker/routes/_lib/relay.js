@@ -1,5 +1,4 @@
-// Shared helpers for the Plozz auth-relay Pages Functions.
-// Ported from the standalone Cloudflare Worker (thatcube/Plozz worker/).
+// Shared helpers for the Plozz auth-relay routes.
 
 export const BASE_URL = "https://plozz.app";
 export const CODE_TTL = 600; // 10 minutes

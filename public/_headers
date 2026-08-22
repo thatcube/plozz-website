@@ -1,4 +1,5 @@
-# Security headers for Cloudflare Pages
+# Security headers, applied by Workers static assets.
+# https://developers.cloudflare.com/workers/static-assets/headers/
 # https://developers.cloudflare.com/pages/configuration/headers/
 /*
   X-Content-Type-Options: nosniff

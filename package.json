@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Marketing site for Plozz \u2014 a free, open-source Jellyfin, Plex, Emby and network share player for Apple TV, iPhone and iPad.",
+  "description": "Marketing site for Plozz — a free, open-source Jellyfin, Plex, Emby and network share player for Apple TV, iPhone and iPad.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -14,11 +14,14 @@
     "fonts": "PLOZZ_FONT_PREVIEW=1 astro dev",
     "font-sheet": "node tools/font-sheet.mjs",
     "og": "node tools/build-og.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "worker": "wrangler dev --port 8787",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.0.2"
+    "astro": "^7.0.2",
+    "wrangler": "^4.123.0"
   },
   "dependencies": {
     "@iconify-json/ph": "^1.2.2",
